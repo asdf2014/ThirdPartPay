@@ -1,10 +1,11 @@
 .jqcandlestick-container {
-  position: relative;
-  cursor: none;
+    position: relative;
+    cursor: none;
 }
+
 .jqcandlestick-canvas {
-  position: absolute;
-  display: block;
-  height: 100%;
-  width: 100%;
+    position: absolute;
+    display: block;
+    height: 100%;
+    width: 100%;
 }

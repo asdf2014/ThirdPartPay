@@ -2,10 +2,10 @@
 // check for rights
 if (!is_user_logged_in() || !current_user_can('edit_posts'))
     wp_die(__('You are not allowed to be here', 'themify'));
-    if($this->load_form!='module'){
-        $image_size = themify_get_image_sizes_list( true );
-        unset($image_size[key($image_size)]);
-    }
+if ($this->load_form != 'module') {
+    $image_size = themify_get_image_sizes_list(true);
+    unset($image_size[key($image_size)]);
+}
 if ($this->load_form == 'module'):
     $module_settings = apply_filters('themify_builder_module_settings_fields', $module->get_options(), $module);
     $styling_settings = apply_filters('themify_builder_styling_settings_fields', $module->get_styling(), $module);
@@ -28,7 +28,8 @@ if ($this->load_form == 'module'):
         </div>
 
         <div id="themify_builder_lightbox_actions_items">
-            <button id="builder_preview_module" class="builder_button builder_preview_lightbox"><?php _e('Preview', 'themify') ?></button>
+            <button id="builder_preview_module"
+                    class="builder_button builder_preview_lightbox"><?php _e('Preview', 'themify') ?></button>
             <button id="builder_submit_module_settings" class="builder_button"><?php _e('Save', 'themify') ?></button>
         </div>
 
@@ -148,7 +149,7 @@ if ($this->load_form == 'module'):
             'wrap_with_class' => 'tf-group-element tf-group-element-slider',
             'description' => sprintf('<a href="#" class="builder_button tf-gallery-btn">%s</a>', __('Insert Gallery', 'themify'))
         ),
-         // Background Slider Image Size
+        // Background Slider Image Size
         array(
             'id' => 'background_slider_size',
             'label' => __('Image Size', 'themify'),
@@ -466,7 +467,7 @@ if ($this->load_form == 'module'):
             'type' => 'checkbox',
             'label' => false,
             'options' => array(
-                array( 'name' => 'padding', 'value' => __( 'Apply to all padding', 'themify' ) )
+                array('name' => 'padding', 'value' => __('Apply to all padding', 'themify'))
             )
         ),
         // Margin
@@ -570,7 +571,7 @@ if ($this->load_form == 'module'):
             'type' => 'checkbox',
             'label' => false,
             'options' => array(
-                array( 'name' => 'margin', 'value' => __( 'Apply to all margin', 'themify' ) )
+                array('name' => 'margin', 'value' => __('Apply to all margin', 'themify'))
             )
         ),
         // Border
@@ -710,7 +711,7 @@ if ($this->load_form == 'module'):
             'type' => 'checkbox',
             'label' => false,
             'options' => array(
-                array( 'name' => 'border', 'value' => __( 'Apply to all border', 'themify' ) )
+                array('name' => 'border', 'value' => __('Apply to all border', 'themify'))
             )
         ),
     ));
@@ -745,14 +746,15 @@ if ($this->load_form == 'module'):
         )
     ));
 
-    function themify_render_row_fields($fields) {
+    function themify_render_row_fields($fields)
+    {
         foreach ($fields as $field) {
             $wrap_with_class = isset($field['wrap_with_class']) ? $field['wrap_with_class'] : '';
-            echo ( $field['type'] != 'separator' ) ? '<div class="themify_builder_field ' . esc_attr($wrap_with_class) . '">' : '';
+            echo ($field['type'] != 'separator') ? '<div class="themify_builder_field ' . esc_attr($wrap_with_class) . '">' : '';
             if (isset($field['label'])) {
                 echo '<div class="themify_builder_label">' . esc_html($field['label']) . '</div>';
             }
-            echo ( $field['type'] != 'separator' ) ? '<div class="themify_builder_input">' : '';
+            echo ($field['type'] != 'separator') ? '<div class="themify_builder_input">' : '';
             if ($field['type'] != 'multi') {
                 themify_builder_styling_field($field);
             } else {
@@ -760,10 +762,11 @@ if ($this->load_form == 'module'):
                     themify_builder_styling_field($item);
                 }
             }
-            echo ( $field['type'] != 'separator' ) ? '</div>' : ''; // themify_builder_input
-            echo ( $field['type'] != 'separator' ) ? '</div>' : ''; // themify_builder_field
+            echo ($field['type'] != 'separator') ? '</div>' : ''; // themify_builder_input
+            echo ($field['type'] != 'separator') ? '</div>' : ''; // themify_builder_field
         }
     }
+
     ?>
 
     <form id="tfb_row_settings">
@@ -1152,7 +1155,7 @@ if ($this->load_form == 'module'):
             'type' => 'checkbox',
             'label' => false,
             'options' => array(
-                array( 'name' => 'padding', 'value' => __( 'Apply to all padding', 'themify' ) )
+                array('name' => 'padding', 'value' => __('Apply to all padding', 'themify'))
             )
         ),
         // Border
@@ -1292,7 +1295,7 @@ if ($this->load_form == 'module'):
             'type' => 'checkbox',
             'label' => false,
             'options' => array(
-                array( 'name' => 'border', 'value' => __( 'Apply to all border', 'themify' ) )
+                array('name' => 'border', 'value' => __('Apply to all border', 'themify'))
             )
         ),
         array(
@@ -1325,11 +1328,11 @@ if ($this->load_form == 'module'):
                 foreach ($column_settings as $styling):
 
                     $wrap_with_class = isset($styling['wrap_with_class']) ? $styling['wrap_with_class'] : '';
-                    echo ( $styling['type'] != 'separator' ) ? '<div class="themify_builder_field ' . esc_attr($wrap_with_class) . '">' : '';
+                    echo ($styling['type'] != 'separator') ? '<div class="themify_builder_field ' . esc_attr($wrap_with_class) . '">' : '';
                     if (isset($styling['label'])) {
                         echo '<div class="themify_builder_label">' . esc_html($styling['label']) . '</div>';
                     }
-                    echo ( $styling['type'] != 'separator' ) ? '<div class="themify_builder_input">' : '';
+                    echo ($styling['type'] != 'separator') ? '<div class="themify_builder_input">' : '';
                     if ($styling['type'] != 'multi') {
                         themify_builder_styling_field($styling);
                     } else {
@@ -1337,8 +1340,8 @@ if ($this->load_form == 'module'):
                             themify_builder_styling_field($field);
                         }
                     }
-                    echo ( $styling['type'] != 'separator' ) ? '</div>' : ''; // themify_builder_input
-                    echo ( $styling['type'] != 'separator' ) ? '</div>' : ''; // themify_builder_field
+                    echo ($styling['type'] != 'separator') ? '</div>' : ''; // themify_builder_input
+                    echo ($styling['type'] != 'separator') ? '</div>' : ''; // themify_builder_field
 
                 endforeach;
                 ?>

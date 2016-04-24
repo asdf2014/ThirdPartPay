@@ -5,27 +5,29 @@ Description: Skin for Basic
 */
 
 body {
-	background-color: #f5f8f9;
+    background-color: #f5f8f9;
 }
 
 /************************************************************************************
 HEADER
 *************************************************************************************/
 #headerwrap {
-	background-color: #e8eef0;
-	border-bottom: solid 1px #d2dadd;
+    background-color: #e8eef0;
+    border-bottom: solid 1px #d2dadd;
 }
+
 #header {
-	border: none;
+    border: none;
 }
 
 /************************************************************************************
 FOOTER
 *************************************************************************************/
 #footerwrap {
-	background-color: #e8eef0;
-	border-top: solid 1px #d2dadd;
+    background-color: #e8eef0;
+    border-top: solid 1px #d2dadd;
 }
+
 #footer {
-	border: none;
+    border: none;
 }

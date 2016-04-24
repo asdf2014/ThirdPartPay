@@ -1,11 +1,11 @@
 /*
-Simple Javascript undo and redo.
-https://github.com/ArthurClemens/Javascript-Undo-Manager
-*/
+ Simple Javascript undo and redo.
+ https://github.com/ArthurClemens/Javascript-Undo-Manager
+ */
 
-;(function() {
+;(function () {
 
-	'use strict';
+    'use strict';
 
     function removeFromTo(array, from, to) {
         array.splice(from,
@@ -14,18 +14,18 @@ https://github.com/ArthurClemens/Javascript-Undo-Manager
         return array.length;
     }
 
-    var UndoManager = function() {
+    var UndoManager = function () {
 
         var commands = [],
             index = -1,
             limit = 0,
             isExecuting = false,
             callback,
-            
-            // functions
+
+        // functions
             execute;
 
-        execute = function(command, action) {
+        execute = function (command, action) {
             if (!command || typeof command[action] !== "function") {
                 return this;
             }
@@ -40,8 +40,8 @@ https://github.com/ArthurClemens/Javascript-Undo-Manager
         return {
 
             /*
-            Add a command to the queue.
-            */
+             Add a command to the queue.
+             */
             add: function (command) {
                 if (isExecuting) {
                     return this;
@@ -51,12 +51,12 @@ https://github.com/ArthurClemens/Javascript-Undo-Manager
                 commands.splice(index + 1, commands.length - index);
 
                 commands.push(command);
-                
+
                 // if limit is set, remove items from the start
                 if (limit && commands.length > limit) {
-                    removeFromTo(commands, 0, -(limit+1));
+                    removeFromTo(commands, 0, -(limit + 1));
                 }
-                
+
                 // set the current index to the end
                 index = commands.length - 1;
                 if (callback) {
@@ -66,15 +66,15 @@ https://github.com/ArthurClemens/Javascript-Undo-Manager
             },
 
             /*
-            Pass a function to be called on undo and redo actions.
-            */
+             Pass a function to be called on undo and redo actions.
+             */
             setCallback: function (callbackFunc) {
                 callback = callbackFunc;
             },
 
             /*
-            Perform undo: call the undo function at the current index and decrease the index by 1.
-            */
+             Perform undo: call the undo function at the current index and decrease the index by 1.
+             */
             undo: function () {
                 var command = commands[index];
                 if (!command) {
@@ -89,8 +89,8 @@ https://github.com/ArthurClemens/Javascript-Undo-Manager
             },
 
             /*
-            Perform redo: call the redo function at the next index and increase the index by 1.
-            */
+             Perform redo: call the redo function at the next index and increase the index by 1.
+             */
             redo: function () {
                 var command = commands[index + 1];
                 if (!command) {
@@ -105,8 +105,8 @@ https://github.com/ArthurClemens/Javascript-Undo-Manager
             },
 
             /*
-            Clears the memory, losing all stored states. Reset the index.
-            */
+             Clears the memory, losing all stored states. Reset the index.
+             */
             clear: function () {
                 var prev_size = commands.length;
 
@@ -130,25 +130,25 @@ https://github.com/ArthurClemens/Javascript-Undo-Manager
                 return commands;
             },
 
-            getIndex: function() {
+            getIndex: function () {
                 return index;
             },
-            
+
             setLimit: function (l) {
                 limit = l;
             }
         };
     };
 
-	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
-		// AMD. Register as an anonymous module.
-		define(function() {
-			return UndoManager;
-		});
-	} else if (typeof module !== 'undefined' && module.exports) {
-		module.exports = UndoManager;
-	} else {
-		window.UndoManager = UndoManager;
-	}
+    if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(function () {
+            return UndoManager;
+        });
+    } else if (typeof module !== 'undefined' && module.exports) {
+        module.exports = UndoManager;
+    } else {
+        window.UndoManager = UndoManager;
+    }
 
 }());

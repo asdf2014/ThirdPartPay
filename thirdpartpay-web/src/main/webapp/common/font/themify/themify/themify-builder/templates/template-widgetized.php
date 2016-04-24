@@ -3,12 +3,12 @@ if (!defined('ABSPATH'))
     exit; // Exit if accessed directly
 /**
  * Template Widgetized
- * 
+ *
  * Access original fields: $mod_settings
  * @author Themify
  */
 if (TFCache::start_cache('widgetized', self::$post_id, array('ID' => $module_ID))):
-    
+
     $fields_default = array(
         'mod_title_widgetized' => '',
         'sidebar_widgetized' => '',
@@ -21,8 +21,8 @@ if (TFCache::start_cache('widgetized', self::$post_id, array('ID' => $module_ID)
     $animation_effect = $this->parse_animation_effect($animation_effect, $fields_args);
 
     $container_class = implode(' ', apply_filters('themify_builder_module_classes', array(
-        'module', 'module-' . $mod_name, $module_ID, $custom_css_widgetized, $background_repeat, $animation_effect
-                    ), $mod_name, $module_ID, $fields_args)
+            'module', 'module-' . $mod_name, $module_ID, $custom_css_widgetized, $background_repeat, $animation_effect
+        ), $mod_name, $module_ID, $fields_args)
     );
     ?>
 

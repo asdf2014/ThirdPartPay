@@ -3,7 +3,7 @@ if (!defined('ABSPATH'))
     exit; // Exit if accessed directly
 /**
  * Template Icon
- * 
+ *
  * Access original fields: $mod_settings
  * @author Themify
  */
@@ -12,7 +12,7 @@ if (TFCache::start_cache('icon', self::$post_id, array('ID' => $module_ID))):
     $fields_default = array(
         'mod_title_icon' => '',
         'icon_size' => '',
-        'icon_style'=>'',
+        'icon_style' => '',
         'content_icon' => array(),
         'animation_effect' => '',
         'css_icon' => ''
@@ -23,8 +23,8 @@ if (TFCache::start_cache('icon', self::$post_id, array('ID' => $module_ID))):
     $animation_effect = $this->parse_animation_effect($animation_effect, $fields_args);
 
     $container_class = implode(' ', apply_filters('themify_builder_module_classes', array(
-        'module',$module_ID, $css_icon, $animation_effect
-                    ), $mod_name, $module_ID, $fields_args)
+            'module', $module_ID, $css_icon, $animation_effect
+        ), $mod_name, $module_ID, $fields_args)
     );
     $ui_class = implode(' ', array('module-' . $mod_name, $icon_size, $icon_style));
     ?>
@@ -44,21 +44,24 @@ if (TFCache::start_cache('icon', self::$post_id, array('ID' => $module_ID))):
                     'label' => '',
                     'link' => '',
                     'icon' => '',
-                    'new_window'=>false,
-                    'icon_color_bg'=>false,
+                    'new_window' => false,
+                    'icon_color_bg' => false,
                 ));
                 ?>
                 <div class="module-icon-item">
-                    <?php if($content['link']):?>
-                        <a <?php if($content['new_window']):?>target="_blank"<?php endif;?> href="<?php echo esc_url($content['link'])?>">
-                    <?php endif;?>
-                        <?php if($content['icon']):?>
-                            <i class="fa <?php echo $content['icon'];?> ui <?php echo $content['icon_color_bg']?>"></i>
-                        <?php endif;?>
-                        <span><?php esc_attr_e($content['label'])?></span>
-                    <?php if($content['link']):?>
-                        </a>
-                    <?php endif;?>
+                    <?php if ($content['link']): ?>
+                    <a <?php if ($content['new_window']): ?>target="_blank"<?php endif; ?>
+                       href="<?php echo esc_url($content['link']) ?>">
+                        <?php endif;
+                        ?>
+                        <?php if ($content['icon']): ?>
+                            <i class="fa <?php echo $content['icon']; ?> ui <?php echo $content['icon_color_bg'] ?>"></i>
+                        <?php endif; ?>
+                        <span><?php esc_attr_e($content['label']) ?></span>
+                        <?php if ($content['link']): ?>
+                    </a>
+                <?php endif;
+                ?>
                 </div>
             <?php endforeach; ?>
         </div>

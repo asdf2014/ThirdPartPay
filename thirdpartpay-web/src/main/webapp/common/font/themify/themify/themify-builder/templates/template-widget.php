@@ -3,12 +3,12 @@ if (!defined('ABSPATH'))
     exit; // Exit if accessed directly
 /**
  * Template Widget
- * 
+ *
  * Access original fields: $mod_settings
  * @author Themify
  */
 if (TFCache::start_cache('widget', self::$post_id, array('ID' => $module_ID))):
-    
+
     $fields_default = array(
         'mod_title_widget' => '',
         'class_widget' => '',
@@ -23,8 +23,8 @@ if (TFCache::start_cache('widget', self::$post_id, array('ID' => $module_ID))):
     $new_instance = array();
 
     $container_class = implode(' ', apply_filters('themify_builder_module_classes', array(
-        'module', 'module-' . $mod_name, $module_ID, $custom_css_widget, $background_repeat, $animation_effect
-                    ), $mod_name, $module_ID, $fields_args)
+            'module', 'module-' . $mod_name, $module_ID, $custom_css_widget, $background_repeat, $animation_effect
+        ), $mod_name, $module_ID, $fields_args)
     );
     ?>
 

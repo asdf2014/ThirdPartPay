@@ -18,14 +18,6 @@ abstract class Minify
      * @var string[]
      */
     public $data = array();
-
-    /**
-     * Array of patterns to match.
-     *
-     * @var string[]
-     */
-    protected $patterns = array();
-
     /**
      * This array will hold content of strings and regular expressions that have
      * been extracted from the JS source code, so we can reliably match "code",
@@ -34,6 +26,12 @@ abstract class Minify
      * @var string[]
      */
     public $extracted = array();
+    /**
+     * Array of patterns to match.
+     *
+     * @var string[]
+     */
+    protected $patterns = array();
 
     /**
      * Init the minify class - optionally, code may be passed along already.
@@ -51,23 +49,22 @@ abstract class Minify
      *
      * @param string $data
      */
-    public function add($data,$key = false)
+    public function add($data, $key = false)
     {
         // bogus "usage" of parameter $data: scrutinizer warns this variable is
         // not used (we're using func_get_args instead to support overloading),
         // but it still needs to be defined because it makes no sense to have
         // this function without argument :)
         // load data 
-        if(!$key){
+        if (!$key) {
             $value = $this->load($data);
             $key = ($data != $value) ? $data : count($this->data);
-        }
-        else{
+        } else {
             $value = $data;
         }
         // store data
         $this->data[$key] = $value;
-       
+
     }
 
     /**
@@ -93,33 +90,9 @@ abstract class Minify
     }
 
     /**
-     * Save to file.
-     *
-     * @param string $content The minified data.
-     * @param string $path    The path to save the minified data to.
-     *
-     * @throws Exception
-     */
-    protected function save($content, $path)
-    {
-        // create file & open for writing
-        if (($handler = @fopen($path, 'w')) === false) {
-            throw new Exception('The file "'.$path.'" could not be opened. Check if PHP has enough permissions.');
-        }
-
-        // write to file
-        if (@fwrite($handler, $content) === false) {
-            throw new Exception('The file "'.$path.'" could not be written to. Check if PHP has enough permissions.');
-        }
-
-        // close the file
-        @fclose($handler);
-    }
-
-    /**
      * Minify the data & (optionally) saves it to a file.
      *
-     * @param string[optional] $path Path to write the data to.
+     * @param string [optional] $path Path to write the data to.
      *
      * @return string The minified data.
      */
@@ -136,10 +109,43 @@ abstract class Minify
     }
 
     /**
+     * Minify the data.
+     *
+     * @param string [optional] $path Path to write the data to.
+     *
+     * @return string The minified data.
+     */
+    abstract public function execute($path = null);
+
+    /**
+     * Save to file.
+     *
+     * @param string $content The minified data.
+     * @param string $path The path to save the minified data to.
+     *
+     * @throws Exception
+     */
+    protected function save($content, $path)
+    {
+        // create file & open for writing
+        if (($handler = @fopen($path, 'w')) === false) {
+            throw new Exception('The file "' . $path . '" could not be opened. Check if PHP has enough permissions.');
+        }
+
+        // write to file
+        if (@fwrite($handler, $content) === false) {
+            throw new Exception('The file "' . $path . '" could not be written to. Check if PHP has enough permissions.');
+        }
+
+        // close the file
+        @fclose($handler);
+    }
+
+    /**
      * Minify & gzip the data & (optionally) saves it to a file.
      *
-     * @param string[optional] $path  Path to write the data to.
-     * @param int[optional]    $level Compression level, from 0 to 9.
+     * @param string [optional] $path  Path to write the data to.
+     * @param int [optional]    $level Compression level, from 0 to 9.
      *
      * @return string The minified & gzipped data.
      */
@@ -169,31 +175,6 @@ abstract class Minify
         $item->set($content);
 
         return $item;
-    }
-
-    /**
-     * Minify the data.
-     *
-     * @param string[optional] $path Path to write the data to.
-     *
-     * @return string The minified data.
-     */
-    abstract public function execute($path = null);
-
-    /**
-     * Register a pattern to execute against the source content.
-     *
-     * @param string          $pattern     PCRE pattern.
-     * @param string|callable $replacement Replacement value for matched pattern.
-     *
-     * @throws Exception
-     */
-    protected function registerPattern($pattern, $replacement = '')
-    {
-        // study the pattern, we'll execute it more than once
-        $pattern .= 'S';
-
-        $this->patterns[] = array($pattern, $replacement);
     }
 
     /**
@@ -262,7 +243,7 @@ abstract class Minify
             // figure out which part of the string was unmatched; that's the
             // part we'll execute the patterns on again next
             $content = substr($content, $discardLength);
-            $unmatched = (string) substr($content, strpos($content, $match) + strlen($match));
+            $unmatched = (string)substr($content, strpos($content, $match) + strlen($match));
 
             // move the replaced part to $processed and prepare $content to
             // again match batch of patterns against
@@ -286,9 +267,9 @@ abstract class Minify
      * This function will be called plenty of times, where $content will always
      * move up 1 character.
      *
-     * @param string          $pattern     Pattern to match.
+     * @param string $pattern Pattern to match.
      * @param string|callable $replacement Replacement value.
-     * @param string          $content     Content to match pattern against.
+     * @param string $content Content to match pattern against.
      *
      * @return string
      */
@@ -312,7 +293,7 @@ abstract class Minify
      * and after doing all other minifying, we can restore the original content
      * via restoreStrings()
      *
-     * @param string[optional] $chars
+     * @param string [optional] $chars
      */
     protected function extractStrings($chars = '\'"')
     {
@@ -330,8 +311,8 @@ abstract class Minify
             }
 
             $count = count($minifier->extracted);
-            $placeholder = $match[1].$count.$match[1];
-            $minifier->extracted[$placeholder] = $match[1].$match[2].$match[1];
+            $placeholder = $match[1] . $count . $match[1];
+            $minifier->extracted[$placeholder] = $match[1] . $match[2] . $match[1];
 
             return $placeholder;
         };
@@ -348,7 +329,23 @@ abstract class Minify
          * considered as escape-char (times 2) and to get it in the regex,
          * escaped (times 2)
          */
-        $this->registerPattern('/(['.$chars.'])(.*?(?<!\\\\)(\\\\\\\\)*+)\\1/s', $callback);
+        $this->registerPattern('/([' . $chars . '])(.*?(?<!\\\\)(\\\\\\\\)*+)\\1/s', $callback);
+    }
+
+    /**
+     * Register a pattern to execute against the source content.
+     *
+     * @param string $pattern PCRE pattern.
+     * @param string|callable $replacement Replacement value for matched pattern.
+     *
+     * @throws Exception
+     */
+    protected function registerPattern($pattern, $replacement = '')
+    {
+        // study the pattern, we'll execute it more than once
+        $pattern .= 'S';
+
+        $this->patterns[] = array($pattern, $replacement);
     }
 
     /**

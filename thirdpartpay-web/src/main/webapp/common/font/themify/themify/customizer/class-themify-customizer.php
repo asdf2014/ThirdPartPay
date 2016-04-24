@@ -10,7 +10,8 @@ if (current_user_can('manage_options')) {
 /**
  * Themify customizer controls and settings.
  */
-class Themify_Customizer {
+class Themify_Customizer
+{
 
     /**
      * Settings to build controls in Theme Customizer
@@ -51,7 +52,8 @@ class Themify_Customizer {
     /**
      * Initialize class
      */
-    function __construct() {
+    function __construct()
+    {
 
         define('THEMIFY_CUSTOMIZER_URI', THEMIFY_URI . '/customizer');
         define('THEMIFY_CUSTOMIZER_DIR', THEMIFY_DIR . '/customizer');
@@ -97,13 +99,37 @@ class Themify_Customizer {
     }
 
     /**
+     * Checks if the user enabled advanced or basic mode.
+     * Saves option to database to fetch when customizer mode is not indicated by $_GET var.
+     *
+     * @since 2.0.6
+     *
+     * @return bool
+     */
+    function is_advanced_mode()
+    {
+        if (!isset($this->mode)) {
+            $key = 'themify_customizer';
+            // Check that var set is only 'advanced' or 'basic' since it will be saved to db
+            if (isset($_GET[$key]) && ('advanced' == $_GET[$key] || 'basic' == $_GET[$key])) {
+                update_option($key, $_GET[$key]);
+                $this->mode = ('advanced' == $_GET[$key]) ? 'advanced' : 'basic';
+            } else {
+                $this->mode = ('advanced' == get_option($key, 'basic')) ? 'advanced' : 'basic';
+            }
+        }
+        return 'advanced' == $this->mode;
+    }
+
+    /**
      * Build list of styling settings with:
      * - controls for live preview
      * - selectors/properties for CSS rules generation
      *
      * @since 1.0.0
      */
-    function build_settings_and_styles() {
+    function build_settings_and_styles()
+    {
         ////////////////////////
         // Build Controls
         ////////////////////////
@@ -130,7 +156,8 @@ class Themify_Customizer {
      * @param string $section
      * @return array
      */
-    function accordion_start($label = '', $section = 'themify_options') {
+    function accordion_start($label = '', $section = 'themify_options')
+    {
         return array(
             'control' => array(
                 'type' => 'Themify_Sub_Accordion_Start',
@@ -147,14 +174,16 @@ class Themify_Customizer {
      * @param string $section
      * @return array
      */
-    function accordion_end($label = '', $section = 'themify_options') {
+    function accordion_end($label = '', $section = 'themify_options')
+    {
         return array();
     }
 
     /**
      * Enqueue script for custom control.
      */
-    function customize_control_scripts() {
+    function customize_control_scripts()
+    {
 
         // If Customizer is active and user cleared all styling.
         if (isset($_GET['cleared']) && 'true' == $_GET['cleared']) {
@@ -195,9 +224,59 @@ class Themify_Customizer {
     }
 
     /**
+     * Checks if the customize stylesheet exists and enqueues it. Otherwise hooks an action to wp_head to build the CSS and output it.
+     *
+     * @since 2.2.5
+     */
+    function delete_stylesheet()
+    {
+        $css_file = $this->get_stylesheet();
+        $filesystem = Themify_Filesystem::get_instance();
+
+        if ($filesystem->execute->is_file($css_file)) {
+            $filesystem->execute->delete($css_file);
+        }
+    }
+
+    /**
+     * Return the URL or the directory path for the global styling stylesheet.
+     *
+     * @since 2.2.5
+     *
+     * @param string $mode Whether to return the directory or the URL. Can be 'bydir' or 'byurl' correspondingly.
+     *
+     * @return string
+     */
+    function get_stylesheet($mode = 'bydir')
+    {
+
+        static $before;
+        if (!isset($before)) {
+            $upload_dir = wp_upload_dir();
+            $before = array(
+                'bydir' => $upload_dir['basedir'],
+                'byurl' => $upload_dir['baseurl'],
+            );
+        }
+
+        $stylesheet = "$before[$mode]/themify-customizer.css";
+
+        /**
+         * Filters the return URL or directory path including the file name.
+         *
+         * @since 2.2.5
+         *
+         * @param string $stylesheet Path or URL for the global styling stylesheet.
+         * @param string $mode What was being retrieved, 'bydir' or 'byurl'.
+         */
+        return apply_filters('themify_customizer_stylesheet', $stylesheet, $mode);
+    }
+
+    /**
      * Enqueue script for live preview.
      */
-    function live_preview_scripts() {
+    function live_preview_scripts()
+    {
         // Live preview JS
         wp_enqueue_script('themify-customize-preview', THEMIFY_CUSTOMIZER_URI . '/js/themify.customize-preview.js', array('jquery', 'customize-preview', 'underscore', 'backbone'), THEMIFY_VERSION, true);
         $controls = array(
@@ -244,15 +323,16 @@ class Themify_Customizer {
 
     /**
      * Checks if the string ends with a certain substring.
-     * 
+     *
      * @since 2.1.9
-     * 
+     *
      * @param string $haystack Main string to search in.
      * @param string $needle Substring that must be found at the end of main string.
-     * 
+     *
      * @return bool Whether the substring is found at the end of the main string.
      */
-    function endsWith($haystack, $needle) {
+    function endsWith($haystack, $needle)
+    {
         $needle_length = strlen($needle);
         $offset = strlen($haystack) - $needle_length;
         $length = $needle_length;
@@ -264,7 +344,8 @@ class Themify_Customizer {
      *
      * @since 1.0.0
      */
-    function save_option() {
+    function save_option()
+    {
         check_ajax_referer('ajax-nonce', 'nonce');
         if (isset($_POST['option']) && isset($_POST['value'])) {
             update_option($_POST['option'], stripslashes($_POST['value']));
@@ -280,7 +361,8 @@ class Themify_Customizer {
      *
      * @since 1.0.0
      */
-    function get_option() {
+    function get_option()
+    {
         check_ajax_referer('ajax-nonce', 'nonce');
         if (isset($_POST['option']) && '' != $_POST['option']) {
             switch ($_POST['option']) {
@@ -301,33 +383,12 @@ class Themify_Customizer {
     }
 
     /**
-     * Checks if the user enabled advanced or basic mode.
-     * Saves option to database to fetch when customizer mode is not indicated by $_GET var.
-     *
-     * @since 2.0.6
-     *
-     * @return bool
-     */
-    function is_advanced_mode() {
-        if (!isset($this->mode)) {
-            $key = 'themify_customizer';
-            // Check that var set is only 'advanced' or 'basic' since it will be saved to db
-            if (isset($_GET[$key]) && ( 'advanced' == $_GET[$key] || 'basic' == $_GET[$key] )) {
-                update_option($key, $_GET[$key]);
-                $this->mode = ( 'advanced' == $_GET[$key] ) ? 'advanced' : 'basic';
-            } else {
-                $this->mode = ( 'advanced' == get_option($key, 'basic') ) ? 'advanced' : 'basic';
-            }
-        }
-        return 'advanced' == $this->mode;
-    }
-
-    /**
      * Converts encoding for HTML entities not catched by html_entity_decode.
      * @param array $matches
      * @return string
      */
-    function decode_entities($matches) {
+    function decode_entities($matches)
+    {
         return mb_convert_encoding($matches[1], 'UTF-8', 'HTML-ENTITIES');
     }
 
@@ -335,34 +396,35 @@ class Themify_Customizer {
      * Add customizer controls.
      * @param \WP_Customize_Manager $wp_customize
      */
-    function customize_register($wp_customize) {
+    function customize_register($wp_customize)
+    {
 
         foreach (array(
-    'themify-control',
-    'fonts-control',
-    'image-select-control',
-    'text-decoration-control',
-    'background-control',
-    'border-control',
-    'margin-control',
-    'padding-control',
-    'color-control',
-    'color-transparent-control',
-    'width-control',
-    'height-control',
-    'position-control',
-    'customcss-control',
-    'image-control',
-    'logo-control',
-    'tagline-control',
-    'clear-control',
-    'sub-accordion',) as $control) {
+                     'themify-control',
+                     'fonts-control',
+                     'image-select-control',
+                     'text-decoration-control',
+                     'background-control',
+                     'border-control',
+                     'margin-control',
+                     'padding-control',
+                     'color-control',
+                     'color-transparent-control',
+                     'width-control',
+                     'height-control',
+                     'position-control',
+                     'customcss-control',
+                     'image-control',
+                     'logo-control',
+                     'tagline-control',
+                     'clear-control',
+                     'sub-accordion',) as $control) {
             require_once THEMIFY_CUSTOMIZER_DIR . "/class-$control.php";
         }
 
         /**
          * Fires before the main Themify Options section has been added.
-         * 
+         *
          * @param object $wp_customize
          */
         do_action('themify_customizer_before_add_section', $wp_customize);
@@ -378,7 +440,7 @@ class Themify_Customizer {
 
         /**
          * Fires after the main Themify Options section has been added.
-         * 
+         *
          * @param object $wp_customize
          */
         do_action('themify_customizer_after_add_section', $wp_customize);
@@ -389,14 +451,14 @@ class Themify_Customizer {
 
             $setting = isset($field['setting']) ? $field['setting'] : array('default' => '');
             $wp_customize->add_setting(
-                    $setting_id, // serialized solo cuando type es 'option'
-                    array(
-                'default' => isset($setting['default']) ? $setting['default'] : '',
-                'type' => isset($setting['type']) ? $setting['type'] : 'theme_mod',
-                'capability' => isset($setting['capability']) ? $setting['capability'] : 'edit_theme_options',
-                'transport' => isset($setting['transport']) ? $setting['transport'] : 'postMessage',
-                'sanitize_callback' => isset($setting['sanitize']) ? $setting['sanitize'] : false,
-                    )
+                $setting_id, // serialized solo cuando type es 'option'
+                array(
+                    'default' => isset($setting['default']) ? $setting['default'] : '',
+                    'type' => isset($setting['type']) ? $setting['type'] : 'theme_mod',
+                    'capability' => isset($setting['capability']) ? $setting['capability'] : 'edit_theme_options',
+                    'transport' => isset($setting['transport']) ? $setting['transport'] : 'postMessage',
+                    'sanitize_callback' => isset($setting['sanitize']) ? $setting['sanitize'] : false,
+                )
             );
 
             if (isset($field['control'])) {
@@ -408,18 +470,18 @@ class Themify_Customizer {
                 $class = $control['type'];
                 if (class_exists($class)) {
                     $wp_customize->add_control(new $class
-                            (
-                            $wp_customize, $setting_id . '_ctrl', array(
-                        'label' => isset($control['label']) ? $control['label'] : '',
-                        'show_label' => isset($control['show_label']) ? $control['show_label'] : true,
-                        'color_label' => isset($control['color_label']) ? $control['color_label'] : __('Color', 'themify'),
-                        'image_options' => isset($control['image_options']) ? $control['image_options'] : array(),
-                        'font_options' => isset($control['font_options']) ? $control['font_options'] : array(),
-                        'section' => isset($control['section']) ? $control['section'] : 'themify_options',
-                        'settings' => isset($control['settings']) ? $control['settings'] : $setting_id,
-                        'priority' => $priority,
-                        'accordion_id' => $this->get_accordion_id(),
-                            )
+                    (
+                        $wp_customize, $setting_id . '_ctrl', array(
+                            'label' => isset($control['label']) ? $control['label'] : '',
+                            'show_label' => isset($control['show_label']) ? $control['show_label'] : true,
+                            'color_label' => isset($control['color_label']) ? $control['color_label'] : __('Color', 'themify'),
+                            'image_options' => isset($control['image_options']) ? $control['image_options'] : array(),
+                            'font_options' => isset($control['font_options']) ? $control['font_options'] : array(),
+                            'section' => isset($control['section']) ? $control['section'] : 'themify_options',
+                            'settings' => isset($control['settings']) ? $control['settings'] : $setting_id,
+                            'priority' => $priority,
+                            'accordion_id' => $this->get_accordion_id(),
+                        )
                     ));
                 } elseif ('nav_menu' == $class) {
                     $this->add_nav_menu_control($wp_customize, $control['location'], array(
@@ -445,7 +507,7 @@ class Themify_Customizer {
                     $wp_customize->add_control($setting_id . '_ctrl', $options);
                 }
             } elseif (isset($field['builtin'])) {
-                
+
             }
             $priority++;
         }
@@ -468,7 +530,8 @@ class Themify_Customizer {
      *
      * @return number
      */
-    function set_accordion_id() {
+    function set_accordion_id()
+    {
         $this->current_accordion_slug++;
     }
 
@@ -477,7 +540,8 @@ class Themify_Customizer {
      *
      * @return number
      */
-    function get_accordion_id() {
+    function get_accordion_id()
+    {
         return $this->current_accordion_slug;
     }
 
@@ -488,7 +552,8 @@ class Themify_Customizer {
      * @param string $menu_location Location to add menu to.
      * @param array $args Extra arguments to setup the control.
      */
-    function add_nav_menu_control($wp_customize, $menu_location = '', $args = array()) {
+    function add_nav_menu_control($wp_customize, $menu_location = '', $args = array())
+    {
         $locations = get_registered_nav_menus();
         $menus = wp_get_nav_menus();
 
@@ -521,105 +586,15 @@ class Themify_Customizer {
     }
 
     /**
-     * Return the URL or the directory path for the global styling stylesheet.
-     * 
-     * @since 2.2.5
-     *
-     * @param string $mode Whether to return the directory or the URL. Can be 'bydir' or 'byurl' correspondingly. 
-     *
-     * @return string
-     */
-    function get_stylesheet($mode = 'bydir') {
-
-        static $before;
-        if (!isset($before)) {
-            $upload_dir = wp_upload_dir();
-            $before = array(
-                'bydir' => $upload_dir['basedir'],
-                'byurl' => $upload_dir['baseurl'],
-            );
-        }
-
-        $stylesheet = "$before[$mode]/themify-customizer.css";
-
-        /**
-         * Filters the return URL or directory path including the file name.
-         *
-         * @since 2.2.5
-         *
-         * @param string $stylesheet Path or URL for the global styling stylesheet.
-         * @param string $mode What was being retrieved, 'bydir' or 'byurl'.
-         */
-        return apply_filters('themify_customizer_stylesheet', $stylesheet, $mode);
-    }
-
-    /**
-     * Write stylesheet file.
-     * 
-     * @since 2.2.5
-     * 
-     * @return bool
-     */
-    function write_stylesheet($delete_empty = true) {
-        $this->saving_stylesheet = true;
-
-        $css_file = $this->get_stylesheet();
-        $css_to_save = $this->generate_css();
-        $filesystem = Themify_Filesystem::get_instance();
-
-        if (!empty($css_to_save)) {
-            $filesystem->execute->delete($css_file);
-            if ($filesystem->execute->put_contents($css_file, $css_to_save)) {
-                update_option('themify_customizer_stylesheet_timestamp', current_time('y.m.d.H.i.s'));
-                TFCache::removeDirectory(TFCache::get_cache_dir().'styles/');
-            }
-        } elseif ($delete_empty) {
-            $filesystem->execute->delete($css_file);
-            TFCache::removeDirectory(TFCache::get_cache_dir().'styles/');
-        }
-
-        $this->saving_stylesheet = false;
-    }
-
-    /**
-     * Checks if the customize stylesheet exists and enqueues it. Otherwise hooks an action to wp_head to build the CSS and output it.
-     * 
-     * @since 2.2.5
-     */
-    function delete_stylesheet() {
-        $css_file = $this->get_stylesheet();
-        $filesystem = Themify_Filesystem::get_instance();
-
-        if ( $filesystem->execute->is_file( $css_file ) ) {
-            $filesystem->execute->delete( $css_file );
-        }
-    }
-
-    /**
-     * Checks whether a file exists, can be loaded and is not empty.
-     * 
-     * @since 2.2.5
-     * 
-     * @param string $file_path Path in server to the file to check.
-     * 
-     * @return bool
-     */
-    function is_readable_and_not_empty($file_path = '') {
-        if (empty($file_path)) {
-            return false;
-        }
-        return is_readable($file_path) && 0 !== filesize($file_path);
-    }
-
-    /**
      * Tries to enqueue stylesheet. If it's not possible, it hooks an action to wp_head to build the CSS and output it.
-     * 
+     *
      * @since 2.2.5
      */
-    function enqueue_stylesheet() {
+    function enqueue_stylesheet()
+    {
         if (apply_filters('themify_customizer_enqueue_stylesheet', true)) {
             global $wp_customize;
-            if (( $wp_customize instanceof WP_Customize_Manager ) && $wp_customize->is_preview()) {
+            if (($wp_customize instanceof WP_Customize_Manager) && $wp_customize->is_preview()) {
                 add_action('wp_head', array($this, 'output_css'));
             } else {
                 // If enqueue fails, maybe the file doesn't exist...
@@ -639,12 +614,13 @@ class Themify_Customizer {
 
     /**
      * Checks if the customize stylesheet exists and enqueues it.
-     * 
+     *
      * @since 2.2.5
-     * 
+     *
      * @return bool True if enqueue was successful, false otherwise.
      */
-    function test_and_enqueue() {
+    function test_and_enqueue()
+    {
         if ($this->is_readable_and_not_empty($this->get_stylesheet())) {
             wp_enqueue_style('themify-customize', themify_https_esc($this->get_stylesheet('byurl')), array(), $this->get_stylesheet_version());
             return true;
@@ -653,58 +629,71 @@ class Themify_Customizer {
     }
 
     /**
+     * Checks whether a file exists, can be loaded and is not empty.
+     *
+     * @since 2.2.5
+     *
+     * @param string $file_path Path in server to the file to check.
+     *
+     * @return bool
+     */
+    function is_readable_and_not_empty($file_path = '')
+    {
+        if (empty($file_path)) {
+            return false;
+        }
+        return is_readable($file_path) && 0 !== filesize($file_path);
+    }
+
+    /**
      * Return timestamp to use as stylesheet version.
-     * 
+     *
      * @since 2.2.5
      */
-    function get_stylesheet_version() {
+    function get_stylesheet_version()
+    {
         return get_option('themify_customizer_stylesheet_timestamp');
     }
 
     /**
-     * Builds the CSS and outputs it.
-     * 
+     * Write stylesheet file.
+     *
      * @since 2.2.5
+     *
+     * @return bool
      */
-    function output_css() {
-        $css = $this->generate_css();
-        $custom_css = $this->custom_css();
-        if (!empty($css)) {
-            echo "<!--Themify Customize Styling-->\n<style id=\"themify-customize\" type=\"text/css\">\n$css\n</style>\n<!--/Themify Customize Styling-->";
-        }
-        if (!empty($custom_css)) {
-            echo "<!--Themify Custom CSS-->\n<style id=\"themify-customize-customcss\" type=\"text/css\">\n$custom_css\n</style>\n<!--/Themify Custom CSS-->";
-        }
-    }
+    function write_stylesheet($delete_empty = true)
+    {
+        $this->saving_stylesheet = true;
 
-    /**
-     * Enqueues Google Fonts
-     * 
-     * @since 2.2.6
-     * @since 2.2.7 Fonts are enqueued in a single call.
-     */
-    function enqueue_fonts() {
-        $this->generate_css(true); // Call only to enqueue fonts.
-        if (!empty($this->customizer_fonts)) {
-            $subsets = 'latin';
-            $user_subsets = str_replace(' ', '', themify_get('setting-webfonts_subsets'));
-            if (!empty($user_subsets)) {
-                $subsets .= ",$user_subsets";
+        $css_file = $this->get_stylesheet();
+        $css_to_save = $this->generate_css();
+        $filesystem = Themify_Filesystem::get_instance();
+
+        if (!empty($css_to_save)) {
+            $filesystem->execute->delete($css_file);
+            if ($filesystem->execute->put_contents($css_file, $css_to_save)) {
+                update_option('themify_customizer_stylesheet_timestamp', current_time('y.m.d.H.i.s'));
+                TFCache::removeDirectory(TFCache::get_cache_dir() . 'styles/');
             }
-            $customizer_fonts = str_replace(' ', '+', implode('|', $this->customizer_fonts));
-            wp_enqueue_style('customizer-google-fonts', themify_https_esc('http://fonts.googleapis.com/css') . '?family=' . $customizer_fonts . '&subset=' . $subsets);
+        } elseif ($delete_empty) {
+            $filesystem->execute->delete($css_file);
+            TFCache::removeDirectory(TFCache::get_cache_dir() . 'styles/');
         }
+
+        $this->saving_stylesheet = false;
     }
 
     /**
      * Generate CSS rules and output them.
      * @uses filter 'themify_theme_styling' over output.
-     * 
+     *
      * @param bool $fonts_only Whether to extracts fonts or not.
      *
      * @return string
      */
-    function generate_css($fonts_only = false) {
+    function generate_css($fonts_only = false)
+    {
         global $wp_customize;
         $is_customize = isset($wp_customize);
 
@@ -718,8 +707,8 @@ class Themify_Customizer {
             }
 
             if (!$fonts_only) {
-              
-                if ('customcss' == $selector && (!$is_customize || $this->saving_stylesheet )) {
+
+                if ('customcss' == $selector && (!$is_customize || $this->saving_stylesheet)) {
                     $custom_css = $this->custom_css();
                     continue;
                 }
@@ -767,46 +756,8 @@ class Themify_Customizer {
                 $out .= "\n/* Themify Custom CSS */\n" . apply_filters('themify_customizer_custom_css', $custom_css);
             }
         }
-        
+
         return $out;
-    }
-
-    /**
-     * Outputs image width and height for the logo/description image if they are available.
-     *
-     * @param string $mod_name
-     * @return string
-     */
-    function build_image_size_rule($mod_name) {
-        $element = json_decode($this->get_cached_mod($mod_name));
-        $element_props = '';
-        if (!empty($element->imgwidth)) {
-            $element_props .= "\twidth: {$element->imgwidth}px;";
-        }
-        if (!empty($element->imgheight)) {
-            $element_props .= "\n\theight: {$element->imgheight}px;";
-        }
-        return $element_props;
-    }
-
-    /**
-     * Outputs color for the logo in text mode since it's needed for the <a>.
-     *
-     * @param string $mod_name
-     * @return string
-     */
-    function build_color_rule($mod_name) {
-        $element = json_decode($this->get_cached_mod($mod_name));
-        $element_props = '';
-        if (!empty($element->imgwidth)) {
-            $element_props .= "\twidth: {$element->imgwidth}px;";
-        }
-        if (isset($element->color) && '' != $element->color) {
-            $element_props .= "\n\tcolor: #$element->color;";
-            $opacity = ( isset($element->opacity) && '' != $element->opacity ) ? $element->opacity : '1';
-            $element_props .= "\n\tcolor: rgba(" . $this->hex2rgb($element->color) . ',' . $opacity . ');';
-        }
-        return $element_props;
     }
 
     /**
@@ -814,7 +765,8 @@ class Themify_Customizer {
      *
      * @return string
      */
-    function custom_css() {
+    function custom_css()
+    {
         $mod = $this->get_cached_mod('customcss');
 
         // Remove JSON stuff
@@ -849,7 +801,8 @@ class Themify_Customizer {
      *
      * @return mixed|void
      */
-    function get_cached_mod($name, $default = false) {
+    function get_cached_mod($name, $default = false)
+    {
         static $mods;
 
         if (!isset($mods)) {
@@ -880,6 +833,68 @@ class Themify_Customizer {
     }
 
     /**
+     * Outputs image width and height for the logo/description image if they are available.
+     *
+     * @param string $mod_name
+     * @return string
+     */
+    function build_image_size_rule($mod_name)
+    {
+        $element = json_decode($this->get_cached_mod($mod_name));
+        $element_props = '';
+        if (!empty($element->imgwidth)) {
+            $element_props .= "\twidth: {$element->imgwidth}px;";
+        }
+        if (!empty($element->imgheight)) {
+            $element_props .= "\n\theight: {$element->imgheight}px;";
+        }
+        return $element_props;
+    }
+
+    /**
+     * Outputs color for the logo in text mode since it's needed for the <a>.
+     *
+     * @param string $mod_name
+     * @return string
+     */
+    function build_color_rule($mod_name)
+    {
+        $element = json_decode($this->get_cached_mod($mod_name));
+        $element_props = '';
+        if (!empty($element->imgwidth)) {
+            $element_props .= "\twidth: {$element->imgwidth}px;";
+        }
+        if (isset($element->color) && '' != $element->color) {
+            $element_props .= "\n\tcolor: #$element->color;";
+            $opacity = (isset($element->opacity) && '' != $element->opacity) ? $element->opacity : '1';
+            $element_props .= "\n\tcolor: rgba(" . $this->hex2rgb($element->color) . ',' . $opacity . ');';
+        }
+        return $element_props;
+    }
+
+    /**
+     * Converts color in hexadecimal format to RGB format.
+     *
+     * @param string $hex Color in hexadecimal format.
+     * @return string Color in RGB components separated by comma.
+     */
+    function hex2rgb($hex)
+    {
+        $hex = str_replace("#", "", $hex);
+
+        if (strlen($hex) == 3) {
+            $r = hexdec(substr($hex, 0, 1) . substr($hex, 0, 1));
+            $g = hexdec(substr($hex, 1, 1) . substr($hex, 1, 1));
+            $b = hexdec(substr($hex, 2, 1) . substr($hex, 2, 1));
+        } else {
+            $r = hexdec(substr($hex, 0, 2));
+            $g = hexdec(substr($hex, 2, 2));
+            $b = hexdec(substr($hex, 4, 2));
+        }
+        return implode(',', array($r, $g, $b));
+    }
+
+    /**
      * Build a CSS rule.
      *
      * @param string $selector CSS selector.
@@ -890,7 +905,8 @@ class Themify_Customizer {
      * @param bool $fonts_only Whether to extracts fonts or not.
      * @return string CSS rule: selector, property and property value. Empty if 'theme_mod' option specified is empty.
      */
-    function build_css_rule($selector, $style, $mod_name, $prefix = '', $suffix = '', $fonts_only = false) {
+    function build_css_rule($selector, $style, $mod_name, $prefix = '', $suffix = '', $fonts_only = false)
+    {
         $mod = $this->get_cached_mod($mod_name);
         $out = '';
         if (!empty($mod)) {
@@ -959,7 +975,7 @@ class Themify_Customizer {
                 }
                 if (isset($font->color) && '' != $font->color) {
                     $out .= "\n\tcolor: #$font->color;";
-                    $opacity = ( isset($font->opacity) && '' != $font->opacity ) ? $font->opacity : '1';
+                    $opacity = (isset($font->opacity) && '' != $font->opacity) ? $font->opacity : '1';
                     $out .= "\n\tcolor: rgba(" . $this->hex2rgb($font->color) . ',' . $opacity . ');';
                 }
             }
@@ -979,7 +995,7 @@ class Themify_Customizer {
                 $color = json_decode($mod);
                 if (isset($color->color) && '' != $color->color) {
                     $out .= "\n\tcolor: #$color->color;";
-                    $opacity = ( isset($color->opacity) && '' != $color->opacity ) ? $color->opacity : '1';
+                    $opacity = (isset($color->opacity) && '' != $color->opacity) ? $color->opacity : '1';
                     $out .= "\n\tcolor: rgba(" . $this->hex2rgb($color->color) . ',' . $opacity . ');';
                 }
             } elseif ('background' == $style) {
@@ -1005,7 +1021,7 @@ class Themify_Customizer {
                     $out .= "\n\tbackground-color: $bg->transparent;";
                 } elseif (isset($bg->color) && '' != $bg->color) {
                     $out .= "\n\tbackground-color: #$bg->color;";
-                    $opacity = ( isset($bg->opacity) && '' != $bg->opacity ) ? $bg->opacity : '1';
+                    $opacity = (isset($bg->opacity) && '' != $bg->opacity) ? $bg->opacity : '1';
                     $out .= "\n\tbackground-color: rgba(" . $this->hex2rgb($bg->color) . ',' . $opacity . ');';
                 }
             } elseif ('border' == $style) {
@@ -1014,7 +1030,7 @@ class Themify_Customizer {
                 if (isset($border->disabled) && 'disabled' == $border->disabled) {
                     $out .= 'border: none;';
                 } else {
-                    $same = ( isset($border->same) && '' != $border->same ) ? 'same' : '';
+                    $same = (isset($border->same) && '' != $border->same) ? 'same' : '';
                     if ('' == $same) {
                         foreach (array('top', 'right', 'bottom', 'left') as $side) {
                             if (isset($border->{$side})) {
@@ -1030,7 +1046,7 @@ class Themify_Customizer {
                 // Margin/Padding Rule
                 $marginpadding = json_decode($mod);
 
-                $same = ( isset($marginpadding->same) && '' != $marginpadding->same ) ? 'same' : '';
+                $same = (isset($marginpadding->same) && '' != $marginpadding->same) ? 'same' : '';
                 if ('' == $same) {
                     foreach (array('top', 'right', 'bottom', 'left') as $side) {
                         if (isset($marginpadding->{$side})) {
@@ -1094,7 +1110,8 @@ class Themify_Customizer {
      * @param string $property Property to set, can be border or border-left for example
      * @return string
      */
-    function setBorder($border, $property = 'border') {
+    function setBorder($border, $property = 'border')
+    {
         $out = '';
         if (isset($border->style) && 'none' != $border->style) {
             if ('' != $border->style) {
@@ -1105,7 +1122,7 @@ class Themify_Customizer {
             }
             if (isset($border->color) && '' != $border->color) {
                 $out .= "\n\t$property-color: #$border->color;";
-                $opacity = ( isset($border->opacity) && '' != $border->opacity ) ? $border->opacity : '1';
+                $opacity = (isset($border->opacity) && '' != $border->opacity) ? $border->opacity : '1';
                 $out .= "\n\t$property-color: rgba(" . $this->hex2rgb($border->color) . ',' . $opacity . ');';
             }
         } else {
@@ -1121,7 +1138,8 @@ class Themify_Customizer {
      * @param string $property Property to set, can be margin or padding-left for example
      * @return string
      */
-    function setDimension($object, $property = 'margin') {
+    function setDimension($object, $property = 'margin')
+    {
         $out = '';
         if (isset($object->unit) && 'px' != $object->unit) {
             $unit = $object->unit;
@@ -1135,24 +1153,40 @@ class Themify_Customizer {
     }
 
     /**
-     * Converts color in hexadecimal format to RGB format.
+     * Enqueues Google Fonts
      *
-     * @param string $hex Color in hexadecimal format.
-     * @return string Color in RGB components separated by comma.
+     * @since 2.2.6
+     * @since 2.2.7 Fonts are enqueued in a single call.
      */
-    function hex2rgb($hex) {
-        $hex = str_replace("#", "", $hex);
-
-        if (strlen($hex) == 3) {
-            $r = hexdec(substr($hex, 0, 1) . substr($hex, 0, 1));
-            $g = hexdec(substr($hex, 1, 1) . substr($hex, 1, 1));
-            $b = hexdec(substr($hex, 2, 1) . substr($hex, 2, 1));
-        } else {
-            $r = hexdec(substr($hex, 0, 2));
-            $g = hexdec(substr($hex, 2, 2));
-            $b = hexdec(substr($hex, 4, 2));
+    function enqueue_fonts()
+    {
+        $this->generate_css(true); // Call only to enqueue fonts.
+        if (!empty($this->customizer_fonts)) {
+            $subsets = 'latin';
+            $user_subsets = str_replace(' ', '', themify_get('setting-webfonts_subsets'));
+            if (!empty($user_subsets)) {
+                $subsets .= ",$user_subsets";
+            }
+            $customizer_fonts = str_replace(' ', '+', implode('|', $this->customizer_fonts));
+            wp_enqueue_style('customizer-google-fonts', themify_https_esc('http://fonts.googleapis.com/css') . '?family=' . $customizer_fonts . '&subset=' . $subsets);
         }
-        return implode(',', array($r, $g, $b));
+    }
+
+    /**
+     * Builds the CSS and outputs it.
+     *
+     * @since 2.2.5
+     */
+    function output_css()
+    {
+        $css = $this->generate_css();
+        $custom_css = $this->custom_css();
+        if (!empty($css)) {
+            echo "<!--Themify Customize Styling-->\n<style id=\"themify-customize\" type=\"text/css\">\n$css\n</style>\n<!--/Themify Customize Styling-->";
+        }
+        if (!empty($custom_css)) {
+            echo "<!--Themify Custom CSS-->\n<style id=\"themify-customize-customcss\" type=\"text/css\">\n$custom_css\n</style>\n<!--/Themify Custom CSS-->";
+        }
     }
 
     /**
@@ -1161,15 +1195,16 @@ class Themify_Customizer {
      * @param string $location
      * @return string
      */
-    function site_logo($location = '') {
+    function site_logo($location = '')
+    {
         $site_name = get_bloginfo('name');
         $logo = json_decode($this->get_cached_mod($location . '_image'));
         $has_image_src = isset($logo->src) && '' != $logo->src;
         $is_image_mode = isset($logo->mode) && 'image' == $logo->mode;
         if ($is_image_mode) {
-            $url = apply_filters('themify_customizer_logo_home_url', isset($logo->link) && !empty($logo->link) ? $logo->link : home_url() );
+            $url = apply_filters('themify_customizer_logo_home_url', isset($logo->link) && !empty($logo->link) ? $logo->link : home_url());
         } else {
-            $url = apply_filters('themify_customizer_logo_home_url', isset($logo->link) && !empty($logo->link) ? $logo->link : home_url() );
+            $url = apply_filters('themify_customizer_logo_home_url', isset($logo->link) && !empty($logo->link) ? $logo->link : home_url());
         }
         $html = '<a href="' . esc_url($url) . '" title="' . esc_attr($site_name) . '">';
         if (isset($this->settings[$location . '_image']) && $has_image_src && $is_image_mode) {
@@ -1189,7 +1224,8 @@ class Themify_Customizer {
      * @param string $location
      * @return string
      */
-    function site_description($site_desc = '', $location = 'site-tagline') {
+    function site_description($site_desc = '', $location = 'site-tagline')
+    {
         $desc = json_decode($this->get_cached_mod($location));
         $has_image_src = isset($desc->src) && '' != $desc->src;
         $is_image_mode = isset($desc->mode) && 'image' == $desc->mode;

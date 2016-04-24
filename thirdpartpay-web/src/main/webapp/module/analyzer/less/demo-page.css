@@ -9,22 +9,20 @@
 
  * Hover.css Copyright Ian Lunn 2014.
  */
-
 /**
  * The following are default styles for the demo page,
  * you don't need to include these on your own site.
  */
-
 @import url(http://fonts.googleapis.com/css?family=Roboto);
 
 body {
-  margin: 0;
+    margin: 0;
 }
 
 .main {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .browsehappy {
@@ -39,7 +37,7 @@ body {
 }
 
 img {
-  border: none;
+    border: none;
 }
 
 small {
@@ -52,20 +50,20 @@ p,
 }
 
 [class^="hvr-"] {
-  /*display: inline-block;*/
-  /*vertical-align: middle;*/
-  margin: .4em;
-  padding: 1em;
-  cursor: pointer;
-     background: #e1e1e1;
+    /*display: inline-block;*/
+    /*vertical-align: middle;*/
+    margin: .4em;
+    padding: 1em;
+    cursor: pointer;
+    background: #e1e1e1;
     text-decoration: none;
     color: #000;
-     /* -webkit-tap-highlight-color: rgba(0,0,0,0);*/
+    /* -webkit-tap-highlight-color: rgba(0,0,0,0);*/
     border-radius: 3px;
 }
 
 .aligncenter {
-  text-align: center;
+    text-align: center;
 }
 
 .sup {
@@ -94,15 +92,15 @@ a {
 }
 
 .tutorial {
-  display: inline-block;
-  font-size: .8em;
-  font-weight: bold;
+    display: inline-block;
+    font-size: .8em;
+    font-weight: bold;
 }
 
 .tutorial:hover,
 .tutorial:focus,
 .tutorial:active {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 

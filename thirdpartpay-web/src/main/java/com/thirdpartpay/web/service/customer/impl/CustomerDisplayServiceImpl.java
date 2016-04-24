@@ -21,9 +21,8 @@ import java.util.Map;
 @Service("customerDisplayService")
 public class CustomerDisplayServiceImpl implements ICustomerDisplayService {
 
-    private static Logger _log = Logger.getLogger(CustomerDisplayServiceImpl.class);
     private static final DecimalFormat df = new DecimalFormat("#.00");
-
+    private static Logger _log = Logger.getLogger(CustomerDisplayServiceImpl.class);
     @Autowired
     private ICustomerService customerService;
 

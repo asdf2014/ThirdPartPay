@@ -6,7 +6,7 @@
  *
  * Author: Torstein Honsi
  *
- * 
+ *
  * Development plan
  * - Column range.
  * - Heatmap.
@@ -16,12 +16,12 @@
  * - Check inverted charts.
  * - Check reversed axes.
  * - Chart callback should be async after last series is drawn. (But not necessarily, we don't do
-     that with initial series animation).
+ that with initial series animation).
  * - Cache full-size image so we don't have to redraw on hide/show and zoom up. But k-d-tree still
  *   needs to be built.
  * - Test IE9 and IE10.
- * - Stacking is not perhaps not correct since it doesn't use the translation given in 
- *   the translate method. If this gets to complicated, a possible way out would be to 
+ * - Stacking is not perhaps not correct since it doesn't use the translation given in
+ *   the translate method. If this gets to complicated, a possible way out would be to
  *   have a simplified renderCanvas method that simply draws the areaPath on a canvas.
  *
  * If this module is taken in as part of the core
@@ -36,12 +36,12 @@
  * - Columns are always one pixel wide. Don't set the threshold too low.
  *
  * Optimizing tips for users
- * - For scatter plots, use a marker.radius of 1 or less. It results in a rectangle being drawn, which is 
+ * - For scatter plots, use a marker.radius of 1 or less. It results in a rectangle being drawn, which is
  *   considerably faster than a circle.
  * - Set extremes (min, max) explicitly on the axes in order for Highcharts to avoid computing extremes.
  * - Set enableMouseTracking to false on the series to improve total rendering time.
  * - The default threshold is set based on one series. If you have multiple, dense series, the combined
- *   number of points drawn gets higher, and you may want to set the threshold lower in order to 
+ *   number of points drawn gets higher, and you may want to set the threshold lower in order to
  *   use optimizations.
  */
 
@@ -58,7 +58,8 @@
 
     var win = H.win,
         doc = win.document,
-        noop = function () {},
+        noop = function () {
+        },
         Color = H.Color,
         Series = H.Series,
         seriesTypes = H.seriesTypes,
@@ -77,7 +78,7 @@
     function eachAsync(arr, fn, finalFunc, chunkSize, i) {
         i = i || 0;
         chunkSize = chunkSize || CHUNK_SIZE;
-        
+
         var threshold = i + chunkSize,
             proceed = true;
 
@@ -111,22 +112,23 @@
         function branch(proceed) {
             var letItPass = this.options.stacking && (method === 'translate' || method === 'generatePoints');
             if ((this.processedXData || this.options.data).length < (this.options.boostThreshold || Number.MAX_VALUE) ||
-                    letItPass) {
+                letItPass) {
 
                 // Clear image
                 if (method === 'render' && this.image) {
-                    this.image.attr({ href: '' });
+                    this.image.attr({href: ''});
                     this.animate = null; // We're zooming in, don't run animation
                 }
 
                 proceed.call(this);
 
-            // If a canvas version of the method exists, like renderCanvas(), run
+                // If a canvas version of the method exists, like renderCanvas(), run
             } else if (this[method + 'Canvas']) {
 
                 this[method + 'Canvas']();
             }
         }
+
         wrap(Series.prototype, method, branch);
 
         // A special case for some types - its translate method is already wrapped
@@ -200,7 +202,7 @@
         },
 
         /**
-         * Create a hidden canvas to draw the graph on. The contents is later copied over 
+         * Create a hidden canvas to draw the graph on. The contents is later copied over
          * to an SVG image element.
          */
         getContext: function () {
@@ -235,11 +237,11 @@
             return ctx;
         },
 
-        /** 
+        /**
          * Draw the canvas image inside an SVG image
          */
         canvasToSVG: function () {
-            this.image.attr({ href: this.canvas.toDataURL('image/png') });
+            this.image.attr({href: this.canvas.toDataURL('image/png')});
         },
 
         cvsLineTo: function (ctx, clientX, plotY) {
@@ -291,8 +293,8 @@
                 minI,
                 maxI,
                 fillColor = series.fillOpacity ?
-                        new Color(series.color).setOpacity(pick(options.fillOpacity, 0.75)).get() :
-                        series.color,
+                    new Color(series.color).setOpacity(pick(options.fillOpacity, 0.75)).get() :
+                    series.color,
                 stroke = function () {
                     if (doFill) {
                         ctx.fillStyle = fillColor;
@@ -525,7 +527,7 @@
                 delete series.buildKDTree; // Go back to prototype, ready to build
                 series.buildKDTree();
 
-             // Don't do async on export, the exportChart, getSVGForExport and getSVG methods are not chained for it.
+                // Don't do async on export, the exportChart, getSVGForExport and getSVG methods are not chained for it.
             }, chart.renderer.forExport ? Number.MAX_VALUE : undefined);
         }
     });

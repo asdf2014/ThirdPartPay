@@ -5,11 +5,12 @@
  *
  * @package default
  */
-class TFCache {
+class TFCache
+{
 
+    public static $turnoff_cache = NULL;
     private static $upload_dir = false;
     private static $cache = array();
-    public static $turnoff_cache = NULL;
     private static $role = array();
     private static $script_iscreated = false;
     private static $style_iscreated = false;
@@ -27,7 +28,8 @@ class TFCache {
      *
      * return boolean
      */
-    public static function start_cache($tag, $post_id = false, array $args = array(), $time = 30) {
+    public static function start_cache($tag, $post_id = false, array $args = array(), $time = 30)
+    {
         if (self::$turnoff_cache === NULL) {
             self::$turnoff_cache = self::is_cache_activate();
         }
@@ -47,11 +49,87 @@ class TFCache {
     }
 
     /**
+     * Check cache is disabled or builder is active or in admin
+     *
+     * return boolean
+     */
+    public static function is_cache_activate()
+    {
+        $active = (is_user_logged_in() && current_user_can('manage_options')) || is_admin() || themify_get('setting-page_builder_cache') || themify_get('setting-page_builder_is_active') != 'enable' ? true : false;
+        return apply_filters('themify_builder_is_cache_active', $active);
+    }
+
+    /**
+     * Get tag cached directory
+     *
+     * @param string $tag
+     * @param integer $post_id
+     * @param array $args
+     *
+     * return string
+     */
+    public static function get_tag_cache_dir($tag, $post_id = false, array $args = array())
+    {
+        $cache_dir = self::get_cache_dir();
+        if ($post_id) {
+            $cache_dir .= $post_id . '/';
+        }
+        if ($tag) {
+            $tag = trim($tag);
+            $cache_dir .= $tag . '/';
+            $tag = !empty($args) ? sprintf("%u", crc32(serialize(array_change_key_case($args, CASE_LOWER)))) : 'default';
+            if (!self::$role) {
+                $current_user = wp_get_current_user();
+                self::$role = ($current_user instanceof WP_User) ? sprintf("-%u", crc32(serialize(array_keys(array_change_key_case($current_user->roles, CASE_LOWER))))) : '';
+            }
+            $cache_dir .= $tag . self::$role . '.html';
+        }
+        return $cache_dir;
+    }
+
+    /**
+     * Get cached directory
+     *
+     * return string
+     */
+    public static function get_cache_dir($base = false)
+    {
+        $upload_dir = !self::$upload_dir ? wp_upload_dir() : self::$upload_dir;
+
+        $dir_info = $base ? (is_ssl() ? str_replace('http://', 'https://', $upload_dir['baseurl']) : $upload_dir['baseurl']) : $upload_dir['basedir'];
+        $dir_info .= '/themify-builder/cache/' . get_template() . '/';
+        if (!$base && !is_dir($dir_info)) {
+            wp_mkdir_p($dir_info);
+        }
+        return $dir_info;
+    }
+
+    /**
+     * Check if cache time
+     *
+     * return boolean
+     */
+    public static function check_cache($cache_dir, $time = 30)
+    {
+
+        if (!is_file($cache_dir)) {
+            return false;
+        } else {
+            $last = (strtotime('now') - filemtime($cache_dir)) / 60;
+            if ($last >= $time) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * End Caching
      *
      * return void
      */
-    public static function end_cache() {
+    public static function end_cache()
+    {
         if (!self::$turnoff_cache && !empty(self::$cache)) {
             self::$started--;
             if (self::$started == 0) {
@@ -83,74 +161,31 @@ class TFCache {
     }
 
     /**
-     * Check cache is disabled or builder is active or in admin
+     * Minify html
      *
-     * return boolean
-     */
-    public static function is_cache_activate() {
-        $active = (is_user_logged_in() && current_user_can('manage_options'))  || is_admin() || themify_get('setting-page_builder_cache') || themify_get('setting-page_builder_is_active') != 'enable' ? true : false;
-        return apply_filters( 'themify_builder_is_cache_active', $active );
-    }
-
-    /**
-     * Get tag cached directory
-     *
-     * @param string $tag
-     * @param integer $post_id
-     * @param array $args
+     * @param string $input
      *
      * return string
      */
-    public static function get_tag_cache_dir($tag, $post_id = false, array $args = array()) {
-        $cache_dir = self::get_cache_dir();
-        if ($post_id) {
-            $cache_dir.=$post_id . '/';
-        }
-        if ($tag) {
-            $tag = trim($tag);
-            $cache_dir.=$tag . '/';
-            $tag = !empty($args) ? sprintf("%u", crc32(serialize(array_change_key_case($args, CASE_LOWER)))) : 'default';
-            if (!self::$role) {
-                $current_user = wp_get_current_user();
-                self::$role = ($current_user instanceof WP_User) ? sprintf("-%u", crc32(serialize(array_keys(array_change_key_case($current_user->roles, CASE_LOWER))))) : '';
-            }
-            $cache_dir.=$tag . self::$role . '.html';
-        }
-        return $cache_dir;
+    public static function minify_html($input)
+    {
+        if (trim($input) === "")
+            return $input;
+
+        // Minify Inline <style> Tag CSS.
+        $input = preg_replace_callback('|<style\b[^>]*>(.*?)</style>|s', array('TFCache', 'minify_css_callback'), $input);
+        return Minify_HTML::minify($input, array('jsCleanComments' => false));
     }
 
     /**
-     * Get cached directory
-     *
-     * return string
-     */
-    public static function get_cache_dir($base = false) {
-        $upload_dir = !self::$upload_dir ? wp_upload_dir() : self::$upload_dir;
-
-        $dir_info = $base ? (is_ssl()?str_replace('http://','https://',$upload_dir['baseurl']):$upload_dir['baseurl']) : $upload_dir['basedir'];
-        $dir_info.='/themify-builder/cache/' . get_template() . '/';
-        if (!$base && !is_dir($dir_info)) {
-            wp_mkdir_p($dir_info);
-        }
-        return $dir_info;
-    }
-
-    /**
-     * Check if cache time
+     * Remove directory recursively
      *
      * return boolean
      */
-    public static function check_cache($cache_dir, $time = 30) {
-
-        if (!is_file($cache_dir)) {
-            return false;
-        } else {
-            $last = (strtotime('now') - filemtime($cache_dir)) / 60;
-            if ($last >= $time) {
-                return false;
-            }
-        }
-        return true;
+    public static function removeDirectory($path)
+    {
+        $wp_filesystem = Themify_Filesystem::get_instance();
+        return $wp_filesystem->execute->exists($path) ? $wp_filesystem->execute->rmdir($path, true) : true;
     }
 
     /**
@@ -162,13 +197,13 @@ class TFCache {
      *
      * return boolean
      */
-    public static function remove_cache($tag = '', $post_id = false, array $args = array()) {
+    public static function remove_cache($tag = '', $post_id = false, array $args = array())
+    {
         $cache_dir = self::get_tag_cache_dir($tag, $post_id, $args);
-        if($post_id){
-            if(function_exists('wp_cache_post_change')){
-               wp_cache_post_change($post_id);
-            }
-            elseif (function_exists('w3tc_pgcache_flush_post')){
+        if ($post_id) {
+            if (function_exists('wp_cache_post_change')) {
+                wp_cache_post_change($post_id);
+            } elseif (function_exists('w3tc_pgcache_flush_post')) {
                 w3tc_pgcache_flush_post($post_id);
             }
         }
@@ -185,34 +220,9 @@ class TFCache {
         return false;
     }
 
-    /**
-     * Remove directory recursively
-     *
-     * return boolean
-     */
-    public static function removeDirectory($path) {
-        $wp_filesystem = Themify_Filesystem::get_instance();
-        return $wp_filesystem->execute->exists($path) ? $wp_filesystem->execute->rmdir($path, true) : true;
-    }
-
-    public static function minify_css_callback($matches) {
+    public static function minify_css_callback($matches)
+    {
         return self::minify_css($matches[0]);
-    }
-
-    /**
-     * Minify html
-     *
-     * @param string $input
-     *
-     * return string
-     */
-    public static function minify_html($input) {
-        if (trim($input) === "")
-            return $input;
-
-        // Minify Inline <style> Tag CSS.
-        $input = preg_replace_callback('|<style\b[^>]*>(.*?)</style>|s', array('TFCache', 'minify_css_callback'), $input);
-        return Minify_HTML::minify($input, array('jsCleanComments' => false));
     }
 
     /**
@@ -222,30 +232,31 @@ class TFCache {
      *
      * return string
      */
-    public static function minify_css($input) {
+    public static function minify_css($input)
+    {
 
         return preg_replace(
-                array(
-            // Remove comments
-            '#("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\')|\/\*(?!\!)(?>.*?\*\/)#s',
-            // Remove unused white-spaces
-            '#("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\'|\/\*(?>.*?\*\/))|\s*+;\s*+(})\s*+|\s*+([*$~^|]?+=|[{};,>~+]|\s*+-(?![0-9\.])|!important\b)\s*+|([[(:])\s++|\s++([])])|\s++(:)\s*+(?!(?>[^{}"\']++|"(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\')*+{)|^\s++|\s++\z|(\s)\s+#si',
-            // Replace `0(cm|em|ex|in|mm|pc|pt|px|vh|vw|%)` with `0`
-            '#(?<=[:\s])(0)(cm|em|ex|in|mm|pc|pt|px|vh|vw|%)#si',
-            // Replace `:0 0 0 0` with `:0`
-            '#:(0\s+0|0\s+0\s+0\s+0)(?=[;\}]|\!important)#i',
-            // Replace `background-position:0` with `background-position:0 0`
-            '#(background-position):0(?=[;\}])#si',
-            // Replace `0.6` with `.6`, but only when preceded by `:`, `-`, `,` or a white-space
-            '#(?<=[:\-,\s])0+\.(\d+)#s',
-            // Minify string value
-            '#(\/\*(?>.*?\*\/))|(?<!content\:)([\'"])([a-z_][a-z0-9\-_]*?)\2(?=[\s\{\}\];,])#si',
-            '#(\/\*(?>.*?\*\/))|(\burl\()([\'"])([^\s]+?)\3(\))#si',
-            // Minify HEX color code
-            '#(?<=[:\-,\s]\#)([a-f0-6]+)\1([a-f0-6]+)\2([a-f0-6]+)\3#i',
-            // Remove empty selectors
-            '#(\/\*(?>.*?\*\/))|(^|[\{\}])(?:[^\s\{\}]+)\{\}#s'
-                ), array(
+            array(
+                // Remove comments
+                '#("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\')|\/\*(?!\!)(?>.*?\*\/)#s',
+                // Remove unused white-spaces
+                '#("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\'|\/\*(?>.*?\*\/))|\s*+;\s*+(})\s*+|\s*+([*$~^|]?+=|[{};,>~+]|\s*+-(?![0-9\.])|!important\b)\s*+|([[(:])\s++|\s++([])])|\s++(:)\s*+(?!(?>[^{}"\']++|"(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\')*+{)|^\s++|\s++\z|(\s)\s+#si',
+                // Replace `0(cm|em|ex|in|mm|pc|pt|px|vh|vw|%)` with `0`
+                '#(?<=[:\s])(0)(cm|em|ex|in|mm|pc|pt|px|vh|vw|%)#si',
+                // Replace `:0 0 0 0` with `:0`
+                '#:(0\s+0|0\s+0\s+0\s+0)(?=[;\}]|\!important)#i',
+                // Replace `background-position:0` with `background-position:0 0`
+                '#(background-position):0(?=[;\}])#si',
+                // Replace `0.6` with `.6`, but only when preceded by `:`, `-`, `,` or a white-space
+                '#(?<=[:\-,\s])0+\.(\d+)#s',
+                // Minify string value
+                '#(\/\*(?>.*?\*\/))|(?<!content\:)([\'"])([a-z_][a-z0-9\-_]*?)\2(?=[\s\{\}\];,])#si',
+                '#(\/\*(?>.*?\*\/))|(\burl\()([\'"])([^\s]+?)\3(\))#si',
+                // Minify HEX color code
+                '#(?<=[:\-,\s]\#)([a-f0-6]+)\1([a-f0-6]+)\2([a-f0-6]+)\3#i',
+                // Remove empty selectors
+                '#(\/\*(?>.*?\*\/))|(^|[\{\}])(?:[^\s\{\}]+)\{\}#s'
+            ), array(
             '$1',
             '$1$2$3$4$5$6$7',
             '$1',
@@ -256,10 +267,112 @@ class TFCache {
             '$1$2$4$5',
             '$1$2$3',
             '$1$2'
-                ), trim($input));
+        ), trim($input));
     }
 
-    public static function get_current_id() {
+    /**
+     * Check if ajax request
+     *
+     * @param void
+     *
+     * return boolean
+     */
+    public static function is_ajax()
+    {
+        return defined('DOING_AJAX') || (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+    }
+
+    /**
+     * actions for change/print styles and javascript
+     *
+     * @param void
+     *
+     * return void
+     */
+    public static function wp_enque_scripts()
+    {
+        add_action('init', array(__CLASS__, 'gzip_buffer'));
+        add_filter('print_scripts_array', array(__CLASS__, 'scripts'), 9999, 1);
+        add_action('wp_head', array(__CLASS__, 'header_scripts'));
+        add_filter('print_styles_array', array(__CLASS__, 'styles'), 9999, 1);
+        add_filter('script_loader_tag', array(__CLASS__, 'script_loader_tag'), 10, 3);
+        add_filter('style_loader_tag', array(__CLASS__, 'style_loader_tag'), 10, 3);
+    }
+
+    public static function header_scripts()
+    {
+        self::$is_footer = 1;
+    }
+
+    public static function script_loader_tag($script_tag, $handler, $src)
+    {
+        if (self::$script_iscreated || self::$turnoff_cache) {
+            self::$script_iscreated = false;
+            return $script_tag;//remove async because in some themes there is a js in wp_footer which uses the function from this file
+        }
+        $dir = self::get_page_cache_dir();
+
+        if (!$dir) {
+            return $script_tag;
+        }
+        if (strpos($src, '//') === 0) {
+            $src = is_ssl() ? 'https:' . $src : 'http:' . $src;
+        }
+        $result = wp_remote_get($src, array('sslverify' => false));
+        if (is_array($result) && $result['response']['code'] == '200') {
+            $response = wp_remote_retrieve_body($result);
+            if ($response) {
+                global $wp_scripts;
+                $js = '';
+                if (isset($wp_scripts->registered[$handler]) && $wp_scripts->registered[$handler]->src) {
+                    if (isset($wp_scripts->registered[$handler]->extra['data'])) {
+                        $js = $wp_scripts->registered[$handler]->extra['data'] . PHP_EOL;
+                    }
+                }
+                $fname = self::$is_footer ? 'footer' : 'header';
+                $cache_dir = self::create_scripts_dir('scripts', $fname);
+                $file_path = self::get_cache_dir(false);
+                $file_path .= $dir . pathinfo($cache_dir, PATHINFO_BASENAME);
+                $js .= '/* ' . $src . ' */' . PHP_EOL;
+                $js .= $response;
+                $js .= "\n";
+                $wp_filesystem = Themify_Filesystem::get_instance();
+                $output = $wp_filesystem->execute->get_contents($cache_dir);
+                $output .= $js;
+                $wp_filesystem->execute->put_contents($cache_dir, $output);
+            }
+        }
+        return $script_tag;
+    }
+
+    /**
+     * return cached directory of page
+     *
+     * @param string
+     *
+     * return string|boolean
+     */
+    private static function get_page_cache_dir($type = 'scripts')
+    {
+        $dir = self::get_current_id();
+        if (!$dir) {
+            return false;
+        }
+        $cache_dir = $type . '/' . current($dir) . '/';
+        if (key($dir)) {
+            $cache_dir .= key($dir) . '/';
+        }
+        if (themify_is_touch()) {
+            $cache_dir .= 'mobile/';
+            if (!is_dir($cache_dir)) {
+                wp_mkdir_p($cache_dir);
+            }
+        }
+        return $cache_dir;
+    }
+
+    public static function get_current_id()
+    {
         if (self::$id) {
             return self::$id;
         }
@@ -279,77 +392,34 @@ class TFCache {
     }
 
     /**
-     * Check if ajax request
+     * check if cache directory doesn't exists, create it
      *
-     * @param void
+     * @param $type string
+     * @param $filename string
      *
-     * return boolean
+     * return string
      */
-    public static function is_ajax() {
-        return defined('DOING_AJAX') || (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
-    }
-
-    /**
-     * actions for change/print styles and javascript
-     *
-     * @param void
-     *
-     * return void
-     */
-    public static function wp_enque_scripts() {
-        add_action('init', array(__CLASS__, 'gzip_buffer'));
-        add_filter('print_scripts_array', array(__CLASS__, 'scripts'), 9999, 1);
-        add_action('wp_head', array(__CLASS__, 'header_scripts'));
-        add_filter('print_styles_array', array(__CLASS__, 'styles'), 9999, 1);
-        add_filter('script_loader_tag', array(__CLASS__, 'script_loader_tag'), 10, 3);
-        add_filter('style_loader_tag', array(__CLASS__, 'style_loader_tag'), 10, 3);
-    }
-
-    public static function header_scripts() {
-        self::$is_footer = 1;
-    }
-
-    public static function script_loader_tag($script_tag, $handler, $src) {
-        if (self::$script_iscreated || self::$turnoff_cache) {
-            self::$script_iscreated  = false;
-            return $script_tag;//remove async because in some themes there is a js in wp_footer which uses the function from this file
+    private static function create_scripts_dir($type = 'scripts', $filename = false)
+    {
+        $dir = self::get_page_cache_dir($type);
+        $cache_dir = self::get_cache_dir();
+        $cache_dir .= trim($dir, '/') . '/';
+        if (!is_dir($cache_dir)) {
+            wp_mkdir_p($cache_dir);
         }
-        $dir = self::get_page_cache_dir();
-
-        if (!$dir) {
-            return $script_tag;
-        }
-        if (strpos($src, '//') === 0) {
-            $src = is_ssl() ? 'https:' . $src : 'http:' . $src;
-        }
-        $result = wp_remote_get($src, array('sslverify' => false));
-        if(is_array($result) && $result['response']['code']=='200'){
-            $response = wp_remote_retrieve_body($result);
-            if ($response) {
-                global $wp_scripts;
-                $js = '';
-                if (isset($wp_scripts->registered[$handler]) && $wp_scripts->registered[$handler]->src) {
-                    if (isset($wp_scripts->registered[$handler]->extra['data'])) {
-                        $js = $wp_scripts->registered[$handler]->extra['data'] . PHP_EOL;
-                    }
-                }
-                $fname = self::$is_footer ? 'footer' : 'header';
-                $cache_dir = self::create_scripts_dir('scripts', $fname);
-                $file_path = self::get_cache_dir(false);
-                $file_path.= $dir . pathinfo($cache_dir, PATHINFO_BASENAME);
-                $js.='/* ' . $src . ' */' . PHP_EOL;
-                $js.=$response;
-                $js.="\n";
-                $wp_filesystem = Themify_Filesystem::get_instance();
-                $output = $wp_filesystem->execute->get_contents( $cache_dir );
-                $output .= $js;
-                $wp_filesystem->execute->put_contents( $cache_dir, $output );
+        if ($filename) {
+            if (!self::$role) {
+                $current_user = wp_get_current_user();
+                self::$role = ($current_user instanceof WP_User) ? sprintf("-%u", crc32(serialize(array_keys(array_change_key_case($current_user->roles, CASE_LOWER))))) : '';
             }
+            $ext = $type == 'scripts' ? 'js' : 'css';
+            $cache_dir .= $filename . self::$role . '.' . $ext;
         }
-        return $script_tag;
+        return $cache_dir;
     }
 
-    public static function style_loader_tag($style_tag, $handler, $href) {
+    public static function style_loader_tag($style_tag, $handler, $href)
+    {
         if (self::$style_iscreated || self::$turnoff_cache) {
             self::$style_iscreated = false;
             return $style_tag;
@@ -369,9 +439,9 @@ class TFCache {
             $href = is_ssl() ? 'https:' . $href : 'http:' . $href;
         }
         $result = wp_remote_get($href, array('sslverify' => false));
-        if(is_array($result) && $result['response']['code']=='200'){
+        if (is_array($result) && $result['response']['code'] == '200') {
             $response = wp_remote_retrieve_body($result);
-            if($response){
+            if ($response) {
                 $minifier = new CSS();
                 $path = pathinfo($href, PATHINFO_DIRNAME);
                 if (!self::is_remote($path)) {
@@ -382,27 +452,16 @@ class TFCache {
                 $fname = self::$is_footer ? 'footer' : 'header';
                 $cache_dir = self::create_scripts_dir('styles', $fname);
                 $css = '/* ' . $href . ' */' . PHP_EOL;
-                $css.=$minifier->minify();
-                $css.="\n";
+                $css .= $minifier->minify();
+                $css .= "\n";
                 $wp_filesystem = Themify_Filesystem::get_instance();
-                $output = $wp_filesystem->execute->get_contents( $cache_dir );
+                $output = $wp_filesystem->execute->get_contents($cache_dir);
                 $output .= $css;
-                $output = $minifier->moveImportsToTop( $output );
-                $wp_filesystem->execute->put_contents( $cache_dir, $output );
+                $output = $minifier->moveImportsToTop($output);
+                $wp_filesystem->execute->put_contents($cache_dir, $output);
             }
         }
         return $style_tag;
-    }
-
-    /**
-     * check if file is load from wp core or not
-     *
-     * @param string
-     *
-     * return boolean
-     */
-    public static function is_local($file) {
-        return strpos($file, 'http://') === 0 || strpos($file, 'https://') === 0 || strpos($file, '//') === 0;
     }
 
     /**
@@ -412,7 +471,8 @@ class TFCache {
      *
      * return boolean
      */
-    public static function is_remote($file) {
+    public static function is_remote($file)
+    {
         if (self::is_local($file)) {
             $url = parse_url($file);
             return $url['scheme'] . '://' . $url['host'] != get_site_url() && strpos($file, get_site_url()) !== 0;
@@ -422,13 +482,26 @@ class TFCache {
     }
 
     /**
+     * check if file is load from wp core or not
+     *
+     * @param string
+     *
+     * return boolean
+     */
+    public static function is_local($file)
+    {
+        return strpos($file, 'http://') === 0 || strpos($file, 'https://') === 0 || strpos($file, '//') === 0;
+    }
+
+    /**
      * get full path of file
      *
      * @param string
      *
      * return string
      */
-    public static function get_full_path($file) {
+    public static function get_full_path($file)
+    {
         if (self::is_local($file)) {
             $url = parse_url($file);
             $siteurl = get_site_url();
@@ -455,7 +528,8 @@ class TFCache {
      *
      * return array
      */
-    public static function scripts($todo) {
+    public static function scripts($todo)
+    {
         self::$turnoff_cache = self::disable_cache();
         if (!empty($todo) && !self::$turnoff_cache) {
             $dir = self::get_page_cache_dir();
@@ -466,16 +540,16 @@ class TFCache {
             $fname = self::$is_footer ? 'footer' : 'header';
             $cache_dir = self::create_scripts_dir('scripts', $fname);
             $file_path = self::get_cache_dir(true);
-            $file_path.= $dir . pathinfo($cache_dir, PATHINFO_BASENAME);
+            $file_path .= $dir . pathinfo($cache_dir, PATHINFO_BASENAME);
             if (is_file($cache_dir)) {
                 foreach ($todo as $handler) {
                     if (isset($wp_scripts->registered[$handler])) {
                         unset($wp_scripts->registered[$handler]);
-                         $wp_scripts->done[] = $handler;
+                        $wp_scripts->done[] = $handler;
                     }
                 }
                 $wp_scripts->groups['themify_cache_' . $fname] = self::$is_footer;
-                wp_enqueue_script('themify_cache_' . $fname, $file_path, array(),THEMIFY_VERSION, self::$is_footer);
+                wp_enqueue_script('themify_cache_' . $fname, $file_path, array(), THEMIFY_VERSION, self::$is_footer);
                 self::$script_iscreated = true;
                 return array('themify_cache_' . $fname);
             }
@@ -483,55 +557,17 @@ class TFCache {
         return $todo;
     }
 
-    /**
-     * check if cache directory doesn't exists, create it
-     *
-     * @param $type string
-     * @param $filename string
-     *
-     * return string
-     */
-    private static function create_scripts_dir($type = 'scripts', $filename = false) {
-        $dir = self::get_page_cache_dir($type);
-        $cache_dir = self::get_cache_dir();
-        $cache_dir.=trim($dir, '/') . '/';
-        if (!is_dir($cache_dir)) {
-            wp_mkdir_p($cache_dir);
+    public static function disable_cache()
+    {
+        self::$turnoff_cache = !self::$turnoff_cache && class_exists('WooCommerce') && (is_checkout() || is_order_received_page() || is_wc_endpoint_url() || is_checkout_pay_page());
+        if (self::$turnoff_cache) {
+            remove_filter('print_scripts_array', array(__CLASS__, 'scripts'), 9999);
+            remove_filter('wp_head', array(__CLASS__, 'header_scripts'));
+            remove_filter('print_styles_array', array(__CLASS__, 'styles'), 9999);
+            remove_filter('script_loader_tag', array(__CLASS__, 'script_loader_tag'), 10);
+            remove_filter('style_loader_tag', array(__CLASS__, 'style_loader_tag'), 10);
         }
-        if ($filename) {
-            if (!self::$role) {
-                $current_user = wp_get_current_user();
-                self::$role = ($current_user instanceof WP_User) ? sprintf("-%u", crc32(serialize(array_keys(array_change_key_case($current_user->roles, CASE_LOWER))))) : '';
-            }
-            $ext = $type == 'scripts' ? 'js' : 'css';
-            $cache_dir.=$filename . self::$role . '.' . $ext;
-        }
-        return $cache_dir;
-    }
-
-    /**
-     * return cached directory of page
-     *
-     * @param string
-     *
-     * return string|boolean
-     */
-    private static function get_page_cache_dir($type = 'scripts') {
-        $dir = self::get_current_id();
-        if (!$dir) {
-            return false;
-        }
-        $cache_dir = $type . '/' . current($dir) . '/';
-        if (key($dir)) {
-            $cache_dir.=key($dir) . '/';
-        }
-        if(themify_is_touch()){
-            $cache_dir.='mobile/';
-            if (!is_dir($cache_dir)) {
-                    wp_mkdir_p($cache_dir);
-            }
-        }
-        return $cache_dir;
+        return self::$turnoff_cache;
     }
 
     /**
@@ -541,7 +577,8 @@ class TFCache {
      *
      * return array
      */
-    public static function styles($todo) {
+    public static function styles($todo)
+    {
 
         self::$turnoff_cache = self::disable_cache();
         if (!empty($todo) && !self::$turnoff_cache) {
@@ -552,7 +589,7 @@ class TFCache {
             $fname = self::$is_footer ? 'footer' : 'header';
             $cache_dir = self::create_scripts_dir('styles', $fname);
             $file_path = self::get_cache_dir(true);
-            $file_path.= $dir . pathinfo($cache_dir, PATHINFO_BASENAME);
+            $file_path .= $dir . pathinfo($cache_dir, PATHINFO_BASENAME);
 
             if (is_file($cache_dir)) {
                 $enque_styles = array('themify_cache_' . $fname);
@@ -575,7 +612,8 @@ class TFCache {
         return $todo;
     }
 
-    public static function cache_update($post_id, $post, $update) {
+    public static function cache_update($post_id, $post, $update)
+    {
         if ($post->post_status != 'publish' || in_array($post->post_type, array('attachment', 'page', 'nav_menu_item', 'tbuilder_layout_part', 'tbuilder_layout')) || wp_is_post_revision($post) || wp_is_post_autosave($post)) {
             return;
         }
@@ -590,17 +628,46 @@ class TFCache {
         }
     }
 
-    public static function check_version() {
+    public static function check_version()
+    {
         return version_compare(PHP_VERSION, '5.4', '>=');
     }
 
-    public static function gzip_buffer() {
-        if (false !== strpos(strtolower($_SERVER['HTTP_ACCEPT_ENCODING']), 'gzip') && !ini_get('zlib.output_compression') && function_exists('ob_gzhandler')  && !in_array('ob_gzhandler', ob_list_handlers())) {
+    public static function gzip_buffer()
+    {
+        if (false !== strpos(strtolower($_SERVER['HTTP_ACCEPT_ENCODING']), 'gzip') && !ini_get('zlib.output_compression') && function_exists('ob_gzhandler') && !in_array('ob_gzhandler', ob_list_handlers())) {
             ob_start('ob_gzhandler');
         }
     }
 
-    public static function mod_rewrite($rules) {
+    public static function admin()
+    {
+        add_action('save_post', array('TFCache', 'cache_update'), 10, 3);
+        if (get_transient('themify_flush_htaccess') !== 1) {
+            set_transient('themify_flush_htaccess', 1, YEAR_IN_SECONDS);//temprorary code to set gzip in htaccess
+            self::rewrite_htaccess();
+        }
+    }
+
+    public static function rewrite_htaccess($remove = false)
+    {
+        $wp_filesystem = Themify_Filesystem::get_instance();
+        $htaccess_file = get_home_path() . '.htaccess';
+        if ($wp_filesystem->execute->exists($htaccess_file) && $wp_filesystem->execute->is_writable($htaccess_file)) {
+            $rules = $wp_filesystem->execute->get_contents($htaccess_file);
+            if (!$remove && strpos($rules, 'mod_deflate.c') === false && strpos($rules, 'mod_gzip.c') === false) {
+                $content = $rules;
+                $content .= TFCache::mod_rewrite('');
+                return $wp_filesystem->execute->put_contents($htaccess_file, $content);
+            } elseif ($remove) {
+                $rules = str_replace(TFCache::mod_rewrite(''), '', $rules);
+                return $wp_filesystem->execute->put_contents(trim($htaccess_file), trim($rules));
+            }
+        }
+    }
+
+    public static function mod_rewrite($rules)
+    {
 
         return PHP_EOL . '#BEGIN GZIP COMPRESSION BY THEMIFY BUILDER
                 <IfModule mod_deflate.c>
@@ -714,47 +781,11 @@ class TFCache {
                 ' . PHP_EOL . $rules;
     }
 
-    public static function admin() {
-        add_action('save_post', array('TFCache', 'cache_update'), 10, 3);
-        if (get_transient('themify_flush_htaccess') !== 1) {
-            set_transient('themify_flush_htaccess', 1, YEAR_IN_SECONDS);//temprorary code to set gzip in htaccess
-            self::rewrite_htaccess();
-        }
-    }
-
-    public static function rewrite_htaccess($remove = false) {
-        $wp_filesystem = Themify_Filesystem::get_instance();
-        $htaccess_file = get_home_path() . '.htaccess';
-        if ($wp_filesystem->execute->exists($htaccess_file) && $wp_filesystem->execute->is_writable($htaccess_file)) {
-            $rules = $wp_filesystem->execute->get_contents( $htaccess_file );
-            if (!$remove && strpos($rules, 'mod_deflate.c') === false && strpos($rules, 'mod_gzip.c') === false) {
-                $content = $rules;
-                $content .= TFCache::mod_rewrite('');
-                return $wp_filesystem->execute->put_contents( $htaccess_file, $content );
-            } elseif ($remove) {
-                $rules = str_replace(TFCache::mod_rewrite(''), '', $rules);
-                return $wp_filesystem->execute->put_contents( trim( $htaccess_file ), trim( $rules ) );
-            }
-        }
-    }
-
-    public static function disable_cache(){
-        self::$turnoff_cache = !self::$turnoff_cache && class_exists( 'WooCommerce' ) && (is_checkout() || is_order_received_page() || is_wc_endpoint_url() || is_checkout_pay_page());
-        if(self::$turnoff_cache){
-            remove_filter('print_scripts_array', array(__CLASS__, 'scripts'), 9999);
-            remove_filter('wp_head', array(__CLASS__, 'header_scripts'));
-            remove_filter('print_styles_array', array(__CLASS__, 'styles'), 9999);
-            remove_filter('script_loader_tag', array(__CLASS__, 'script_loader_tag'), 10);
-            remove_filter('style_loader_tag', array(__CLASS__, 'style_loader_tag'), 10);
-        }
-        return self::$turnoff_cache ;
-    }
-
 }
 
 if (TFCache::check_version()) {
     TFCache::$turnoff_cache = TFCache::is_cache_activate();
-    if(!TFCache::$turnoff_cache){
+    if (!TFCache::$turnoff_cache) {
         if (!is_admin() && !TFCache::is_ajax()) {
             $dirname = dirname(__FILE__);
             require_once $dirname . '/minify/minify.php';
@@ -762,12 +793,10 @@ if (TFCache::check_version()) {
             require_once $dirname . '/minify/html.php';
             require_once $dirname . '/minify/converter.php';
             TFCache::wp_enque_scripts();
-        }
-        elseif (is_admin()) {
+        } elseif (is_admin()) {
             TFCache::admin();
         }
     }
-}
-else {
+} else {
     TFCache::$turnoff_cache = true;
 }

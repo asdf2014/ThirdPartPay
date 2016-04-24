@@ -44,7 +44,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             this.moduleEvents();
 
             ThemifyBuilderCommon.Lightbox.setup();
-            ThemifyBuilderCommon.LiteLightbox.modal.on('attach', function(){
+            ThemifyBuilderCommon.LiteLightbox.modal.on('attach', function () {
                 this.$el.addClass('themify_builder_lite_lightbox_modal');
             });
 
@@ -59,27 +59,27 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
             /* rows */
             $body.on(this.eventHandler.click, '.toggle_row', this.toggleRow)
-                    .on(this.eventHandler.click, '.themify_builder_option_row', this.optionRow)
+                .on(this.eventHandler.click, '.themify_builder_option_row', this.optionRow)
 
-                    // used for both column and sub-column options
-                    .on(this.eventHandler.click, '.themify_builder_option_column', this.optionColumn)
-                    .on(this.eventHandler.click, '.themify_builder_delete_row', this.deleteRow)
-                    .on(this.eventHandler.click, '.themify_builder_duplicate_row', this.duplicateRow)
-                    .on(this.eventHandler.hover, '.themify_builder_row .row_menu', this.MenuHover)
-                    .on(this.eventHandler.click, '#tfb_row_settings .add_new a', this.rowOptAddRow);
+                // used for both column and sub-column options
+                .on(this.eventHandler.click, '.themify_builder_option_column', this.optionColumn)
+                .on(this.eventHandler.click, '.themify_builder_delete_row', this.deleteRow)
+                .on(this.eventHandler.click, '.themify_builder_duplicate_row', this.duplicateRow)
+                .on(this.eventHandler.hover, '.themify_builder_row .row_menu', this.MenuHover)
+                .on(this.eventHandler.click, '#tfb_row_settings .add_new a', this.rowOptAddRow);
             $('.themify_builder_row_panel').on(this.eventHandler.hover, '.module_menu', this.MenuHover);
 
             /* module */
             $body.on(this.eventHandler.click, '.themify_module_options', this.optionsModule)
-                    .on('dblclick', '.active_module', this.dblOptionModule)
-                    .on(this.eventHandler.click, '.themify_module_duplicate', this.duplicateModule)
-                    .on(this.eventHandler.click, '.themify_module_delete', this.deleteModule)
-                    .on(this.eventHandler.click, '.add_module', this.addModule)
+                .on('dblclick', '.active_module', this.dblOptionModule)
+                .on(this.eventHandler.click, '.themify_module_duplicate', this.duplicateModule)
+                .on(this.eventHandler.click, '.themify_module_delete', this.deleteModule)
+                .on(this.eventHandler.click, '.add_module', this.addModule)
 
-                    /* save module option */
-                    .on(this.eventHandler.click, '#themify_builder_main_save', this.mainSave)
-                    .on(this.eventHandler.click, '#tfb_module_settings .add_new a', this.moduleOptAddRow)
-                    .on(this.eventHandler.click, '#themify_builder_duplicate', this.duplicatePage);
+                /* save module option */
+                .on(this.eventHandler.click, '#themify_builder_main_save', this.mainSave)
+                .on(this.eventHandler.click, '#tfb_module_settings .add_new a', this.moduleOptAddRow)
+                .on(this.eventHandler.click, '#themify_builder_duplicate', this.duplicatePage);
 
             /* hook save to publish button */
             $('input#publish,input#save-post').on(this.eventHandler.click, function (e) {
@@ -126,34 +126,34 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             $('.themify_builder_load_layout').on(this.eventHandler.click, this.builderLoadLayout);
             $('.themify_builder_save_layout').on(this.eventHandler.click, this.builderSaveLayout);
             $body.on(this.eventHandler.click, '#builder_submit_import_form', this.builderImportSubmit)
-            /* Layout Action */
-            .on(this.eventHandler.click, '.layout_preview', this.templateSelected)
-            .on(this.eventHandler.click, '#builder_submit_layout_form', this.saveAsLayout);
+                /* Layout Action */
+                .on(this.eventHandler.click, '.layout_preview', this.templateSelected)
+                .on(this.eventHandler.click, '#builder_submit_layout_form', this.saveAsLayout);
 
             // switch frontend
             $('#themify_builder_switch_frontend').on(this.eventHandler.click, this.switchFrontEnd);
 
             // Grid Menu List
             $body
-                    .on(this.eventHandler.click, '.themify_builder_grid_list li a', this._gridMenuClicked)
-                    .on(this.eventHandler.hover, '.themify_builder_row .grid_menu', this._gridHover)
-                    .on('change', '.themify_builder_row .gutter_select', this._gutterChange)
-                    .on(this.eventHandler.click, '.themify_builder_sub_row .sub_row_delete', this._subRowDelete)
-                    .on(this.eventHandler.click, '.themify_builder_sub_row .sub_row_duplicate', this._subRowDuplicate)
-                    .on('change', '.themify_builder_equal_column_height_checkbox', this._equalColumnHeightChanged)
+                .on(this.eventHandler.click, '.themify_builder_grid_list li a', this._gridMenuClicked)
+                .on(this.eventHandler.hover, '.themify_builder_row .grid_menu', this._gridHover)
+                .on('change', '.themify_builder_row .gutter_select', this._gutterChange)
+                .on(this.eventHandler.click, '.themify_builder_sub_row .sub_row_delete', this._subRowDelete)
+                .on(this.eventHandler.click, '.themify_builder_sub_row .sub_row_duplicate', this._subRowDuplicate)
+                .on('change', '.themify_builder_equal_column_height_checkbox', this._equalColumnHeightChanged)
 
-                    // Undo / Redo buttons
-                    .on(this.eventHandler.click, '.js-themify-builder-undo-btn', this.actionUndo)
-                    .on(this.eventHandler.click, '.js-themify-builder-redo-btn', this.actionRedo)
+                // Undo / Redo buttons
+                .on(this.eventHandler.click, '.js-themify-builder-undo-btn', this.actionUndo)
+                .on(this.eventHandler.click, '.js-themify-builder-redo-btn', this.actionRedo)
 
-                    // Apply All checkbox
-                    .on(this.eventHandler.click, '.style_apply_all', this.applyAll_events);
+                // Apply All checkbox
+                .on(this.eventHandler.click, '.style_apply_all', this.applyAll_events);
 
             // Listen to any changes of undo/redo
-            if ( document.getElementsByClassName('themify_builder_undo_tools').length ) {
+            if (document.getElementsByClassName('themify_builder_undo_tools').length) {
                 ThemifyBuilderCommon.undoManager.instance.setCallback(this.undoManagerCallback);
                 this.updateUndoBtns();
-                ThemifyBuilderCommon.undoManager.events.on('change', function(event, startValue, newValue){
+                ThemifyBuilderCommon.undoManager.events.on('change', function (event, startValue, newValue) {
                     ThemifyBuilderCommon.undoManager.set(self.builderContainer, startValue, newValue);
                 });
             }
@@ -164,46 +164,46 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             self._selectedGridMenu();
 
             // Force sticky panel align after wordpress menu expand/collapse
-            jQuery('#collapse-menu').on('click', function(e) {
+            jQuery('#collapse-menu').on('click', function (e) {
                 jQuery(window).resize();
             });
         },
         // "Apply all" // apply all init
-        applyAll_init: function() {
-            $('.style_apply_all').each(function() {
+        applyAll_init: function () {
+            $('.style_apply_all').each(function () {
                 var $val = $(this).val(),
                     $fields = $(this).closest('.themify_builder_field').prevUntil('h4'),
                     $inputs = $fields.last().find('input'),
                     $selects = $fields.last().find('select'),
                     $fieldFilter = $val == 'border'
-                                    ? '[name="border_top_color"], [name="border_top_width"], [name="border_top_style"], [name="border_right_color"], [name="border_right_width"], [name="border_right_style"], [name="border_bottom_color"], [name="border_bottom_width"], [name="border_bottom_style"], [name="border_left_color"], [name="border_left_width"], [name="border_left_style"]'
-                                    : '[name="'+$val+'_top"], [name="'+$val+'_right"], [name="'+$val+'_bottom"], [name="'+$val+'_left"]',
+                        ? '[name="border_top_color"], [name="border_top_width"], [name="border_top_style"], [name="border_right_color"], [name="border_right_width"], [name="border_right_style"], [name="border_bottom_color"], [name="border_bottom_width"], [name="border_bottom_style"], [name="border_left_color"], [name="border_left_width"], [name="border_left_style"]'
+                        : '[name="' + $val + '_top"], [name="' + $val + '_right"], [name="' + $val + '_bottom"], [name="' + $val + '_left"]',
                     $preSelect = true,
-                
-                $callback = function() {
-                    var $rel = $(this).data('rel');
 
-                    if ($('.style_apply_all_'+ $rel).is(':checked')) {
-                        var $val = $(this).val(),
-                            $select = $(this).is('select');
-                        
-                        $('.style_'+ $rel).not(':first').closest('.themify_builder_field').each(function() {
-                            if ($select) {
-                                $(this).find('select option').prop('selected', false);
-                                $(this).find('select option[value="'+$val+'"]').prop('selected', true).trigger('change');
-                            }
-                            else {
-                                $(this).find('input[type="text"].tfb_lb_option').val($val).trigger('keyup');
-                            }
-                        });
-                    }
-                };
+                    $callback = function () {
+                        var $rel = $(this).data('rel');
+
+                        if ($('.style_apply_all_' + $rel).is(':checked')) {
+                            var $val = $(this).val(),
+                                $select = $(this).is('select');
+
+                            $('.style_' + $rel).not(':first').closest('.themify_builder_field').each(function () {
+                                if ($select) {
+                                    $(this).find('select option').prop('selected', false);
+                                    $(this).find('select option[value="' + $val + '"]').prop('selected', true).trigger('change');
+                                }
+                                else {
+                                    $(this).find('input[type="text"].tfb_lb_option').val($val).trigger('keyup');
+                                }
+                            });
+                        }
+                    };
 
                 if ($(this).is(':checked')) {
                     $fields.not(':last').slideUp();
                 } else {
                     // Pre-select
-                    $fields.find($fieldFilter).each(function(){
+                    $fields.find($fieldFilter).each(function () {
                         if ($(this).val() != '') {
                             $preSelect = false;
                             return false;
@@ -225,13 +225,13 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             });
         },
         // "Apply all" // apply all events
-        applyAll_events: function( $selector ) {
+        applyAll_events: function ($selector) {
             var $this = $(this),
                 $fields = $this.closest('.themify_builder_field').prevUntil('h4');
 
-            if ( $this.prop('checked') ) {
-                $fields.not(':last').slideUp(function(){
-                    $fields.last().find('input, select').each(function() {
+            if ($this.prop('checked')) {
+                $fields.not(':last').slideUp(function () {
+                    $fields.last().find('input, select').each(function () {
                         var ev = ($(this).prop('tagName') == 'SELECT') ? 'change' : 'keyup';
                         $(this).trigger(ev);
                     });
@@ -241,9 +241,9 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             }
         },
         // "Apply all" // apply all color change
-        applyAll_verifyBorderColor: function(element, hiddenInputValue, colorDisplayInputValue, minicolorsObjValue) {
+        applyAll_verifyBorderColor: function (element, hiddenInputValue, colorDisplayInputValue, minicolorsObjValue) {
             if (jQuery('.style_apply_all_border').is(':checked') && jQuery(element).filter('[name="border_top_color"]').length > 0) {
-                jQuery('[name="border_right_color"], [name="border_bottom_color"], [name="border_left_color"]').each(function() {
+                jQuery('[name="border_right_color"], [name="border_bottom_color"], [name="border_left_color"]').each(function () {
                     var minicolorsObj = jQuery(this).prevAll('.minicolors').find('.builderColorSelect');
                     minicolorsObj.parent().nextAll('.builderColorSelectInput').val(hiddenInputValue);
                     minicolorsObj.parent().nextAll('.colordisplay').val(colorDisplayInputValue);
@@ -257,13 +257,13 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
             $('.builderColorSelect', context).each(function () {
                 var $minicolors = $(this),
-                        // Hidden field used to save the value
-                        $input = $minicolors.parent().parent().find('.builderColorSelectInput'),
-                        // Visible field used to show the color only
-                        $colorDisplay = $minicolors.parent().parent().find('.colordisplay'),
-                        setColor = '',
-                        setOpacity = 1.0,
-                        sep = '_';
+                // Hidden field used to save the value
+                    $input = $minicolors.parent().parent().find('.builderColorSelectInput'),
+                // Visible field used to show the color only
+                    $colorDisplay = $minicolors.parent().parent().find('.colordisplay'),
+                    setColor = '',
+                    setOpacity = 1.0,
+                    sep = '_';
 
                 if ('' != $input.val()) {
                     // Get saved value from hidden field
@@ -309,9 +309,9 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
             $('body').on('blur', '.colordisplay', function () {
                 var $input = $(this),
-                        tempColor = '',
-                        $minicolors = $input.parent().find('.builderColorSelect'),
-                        $field = $input.parent().find('.builderColorSelectInput');
+                    tempColor = '',
+                    $minicolors = $input.parent().find('.builderColorSelect'),
+                    $field = $input.parent().find('.builderColorSelectInput');
                 if ('' != $input.val()) {
                     tempColor = $input.val();
                 }
@@ -323,9 +323,9 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                 self.applyAll_verifyBorderColor($field, $field.val(), $input.val(), tempColor);
             }).on('keyup', '.colordisplay', function () {
                 var $input = $(this),
-                        tempColor = '',
-                        $minicolors = $input.parent().find('.builderColorSelect'),
-                        $field = $input.parent().find('.builderColorSelectInput');
+                    tempColor = '',
+                    $minicolors = $input.parent().find('.builderColorSelect'),
+                    $field = $input.parent().find('.builderColorSelectInput');
                 if ('' != $input.val()) {
                     tempColor = $input.val();
                 }
@@ -356,7 +356,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                 connectToSortable: ".themify_module_holder"
             });
 
-            $('.themify_module_holder').each(function(){
+            $('.themify_module_holder').each(function () {
                 var startValue = self.builderContainer.innerHTML, newValue;
                 $(this).sortable({
                     placeholder: 'themify_builder_ui_state_highlight',
@@ -375,9 +375,9 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                     stop: function (event, ui) {
                         if (!ui.item.hasClass('active_module') && !ui.item.hasClass('themify_builder_sub_row')) {
                             var tmpl_params = {slug: ui.item.data('module-slug'), name: ui.item.data('module-name')},
-                            module_item_tmpl = wp.template('builder_module_item'),
-                                    module_item = module_item_tmpl(tmpl_params),
-                                    $newElems = $(module_item);
+                                module_item_tmpl = wp.template('builder_module_item'),
+                                module_item = module_item_tmpl(tmpl_params),
+                                $newElems = $(module_item);
 
                             $(this).parent().find(".empty_holder_text").hide();
                             ui.item.replaceWith($newElems);
@@ -395,7 +395,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                             self.moduleEvents();
 
                             newValue = self.builderContainer.innerHTML;
-                            if ( startValue !== newValue ) {
+                            if (startValue !== newValue) {
                                 ThemifyBuilderCommon.undoManager.events.trigger('change', [startValue, newValue]);
                             }
                         }
@@ -403,7 +403,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                     }
                 });
             });
-            
+
             var startValue = self.builderContainer.innerHTML;
             $("#themify_builder_row_wrapper").sortable({
                 items: '.themify_builder_row',
@@ -414,9 +414,9 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                     var placeholder_h = ui.item.height();
                     $('.themify_builder_row_panel .themify_builder_ui_state_highlight').height(placeholder_h);
                 },
-                stop: function(event, ui) {
+                stop: function (event, ui) {
                     var newValue = self.builderContainer.innerHTML;
-                    if ( startValue !== newValue ) {
+                    if (startValue !== newValue) {
                         ThemifyBuilderCommon.undoManager.events.trigger('change', [startValue, newValue]);
                     }
                     self.moduleEvents();
@@ -424,7 +424,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             });
 
             var grid_menu_tmpl = wp.template('builder_grid_menu'),
-                    grid_menu_render = grid_menu_tmpl({});
+                grid_menu_render = grid_menu_tmpl({});
             $('.themify_builder_row_content').each(function () {
                 $(this).children().each(function () {
                     var $holder = $(this).find('.themify_module_holder').first();
@@ -439,10 +439,10 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
         getDocHeight: function () {
             var D = document;
             return Math.max(
-                    Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
-                    Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
-                    Math.max(D.body.clientHeight, D.documentElement.clientHeight)
-                    );
+                Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
+                Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
+                Math.max(D.body.clientHeight, D.documentElement.clientHeight)
+            );
         },
         setupTooltips: function () {
             var setupBottomTooltips = function () {
@@ -484,7 +484,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             }
 
             var newValue = ThemifyPageBuilder.builderContainer.innerHTML;
-            if ( startValue !== newValue ) {
+            if (startValue !== newValue) {
                 ThemifyBuilderCommon.undoManager.events.trigger('change', [startValue, newValue]);
             }
         },
@@ -500,7 +500,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             // fix wpeditor empty textarea
             newElems.find('.tfb_lb_wp_editor.tfb_lb_option_child').each(function () {
                 var this_option_id = $(this).attr('id'),
-                        element_val;
+                    element_val;
 
                 if (typeof tinyMCE !== 'undefined') {
                     element_val = tinyMCE.get(this_option_id).hidden === false ? tinyMCE.get(this_option_id).getContent() : switchEditors.wpautop(tinymce.DOM.get(this_option_id).value);
@@ -533,14 +533,14 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                 $(this).addClass('plupload-clone');
             });
             newElems.find('select').each(function (i) {
-                var orival =  oriElems.find('select').eq(i).find('option:selected').val();
-                $(this).find('option[value="'+orival+'"]').prop('selected',true);
+                var orival = oriElems.find('select').eq(i).find('option:selected').val();
+                $(this).find('option[value="' + orival + '"]').prop('selected', true);
             });
             newElems.insertAfter(oriElems).find('.themify_builder_dropdown').hide();
 
             $('#tfb_module_settings').find('.tfb_lb_wp_editor.tfb_lb_option_child.clone').each(function (i) {
                 var element = $(this),
-                        parent_child = element.closest('.themify_builder_input');
+                    parent_child = element.closest('.themify_builder_input');
 
                 $(this).closest('.wp-editor-wrap').remove();
 
@@ -555,12 +555,12 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             self.addNewWPEditor();
             self.builderPlupload('new_elemn');
             self.moduleEvents();
-            if(newElems.find('.builderColorSelect').length>0){
+            if (newElems.find('.builderColorSelect').length > 0) {
                 newElems.find('.builderColorSelect').minicolors('destroy').removeAttr('maxlength');
                 self.setColorPicker(newElems);
             }
             var newValue = self.builderContainer.innerHTML;
-            if ( startValue !== newValue ) {
+            if (startValue !== newValue) {
                 ThemifyBuilderCommon.undoManager.events.trigger('change', [startValue, newValue]);
             }
         },
@@ -568,9 +568,9 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
         MenuHover: function (e) {
             if ('touchend' == e.type) {
                 var $row = $(this).closest('.themify_builder_row'),
-                        $col = $(this).closest('.themify_builder_col'),
-                        $mod = $(this).closest('.themify_builder_module'),
-                        index = 'row_' + $row.index();
+                    $col = $(this).closest('.themify_builder_col'),
+                    $mod = $(this).closest('.themify_builder_module'),
+                    index = 'row_' + $row.index();
                 if ($col.length > 0) {
                     index += '_col_' + $col.index();
                 }
@@ -604,11 +604,11 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             e.preventDefault();
             isNewModule = isNewModule || false; // assume that if isNewModule:true = Add module, otherwise Edit Module
             var self = ThemifyPageBuilder,
-                    $this = $(this),
-                    module_name = $this.data('module-name'),
-                    set_elems = $this.closest('.themify_builder_module').find('.themify_module_settings').find('script[type="text/json"]'),
-                    is_settings_exist = (set_elems.text().trim().length > 2 && set_elems.text().trim() != 'null') ? true : false,
-                    el_settings = (is_settings_exist) ? JSON.parse(set_elems.text().trim()) : '';
+                $this = $(this),
+                module_name = $this.data('module-name'),
+                set_elems = $this.closest('.themify_builder_module').find('.themify_module_settings').find('script[type="text/json"]'),
+                is_settings_exist = (set_elems.text().trim().length > 2 && set_elems.text().trim() != 'null') ? true : false,
+                el_settings = (is_settings_exist) ? JSON.parse(set_elems.text().trim()) : '';
 
             $('.module_menu .themify_builder_dropdown').hide();
 
@@ -616,7 +616,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
             var callback = function (response) {
                 var formEl = document.getElementById('tfb_module_settings');
-                if ( isNewModule ) {
+                if (isNewModule) {
                     response.setAttribute('data-form-state', 'new');
                 } else {
                     response.setAttribute('data-form-state', 'edit');
@@ -639,7 +639,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                             $this_option.val($found_element);
                         } else if ($this_option.hasClass('themify-builder-uploader-input')) {
                             var img_field = $found_element,
-                                    img_thumb = $('<img/>', {src: img_field, width: 50, height: 50});
+                                img_thumb = $('<img/>', {src: img_field, width: 50, height: 50});
 
                             if (img_field != '') {
                                 $this_option.val(img_field);
@@ -651,10 +651,10 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
                         } else if ($this_option.hasClass('themify-option-query-cat')) {
                             var parent = $this_option.parent(),
-                                    multiple_cat = parent.find('.query_category_multiple'),
-                                    elems = $found_element,
-                                    value = elems.split('|'),
-                                    cat_val = value[0];
+                                multiple_cat = parent.find('.query_category_multiple'),
+                                elems = $found_element,
+                                value = elems.split('|'),
+                                cat_val = value[0];
 
                             parent.find("option[value='" + cat_val + "']").attr('selected', 'selected');
                             multiple_cat.val(cat_val);
@@ -672,17 +672,17 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
                             $this_option.find('.themify_builder_row').each(function (r) {
                                 $(this).find('.tfb_lb_option_child').each(function (i) {
-                                        var $this_option_child = $(this),
-                                            this_option_id_real = $this_option_child.attr('id'),
-                                            this_option_id_child = $this_option_child.hasClass('tfb_lb_wp_editor') ? $this_option_child.attr('name') : $this_option_child.data('input-id');
-                                            if(!this_option_id_child){
-                                                this_option_id_child = this_option_id_real;
-                                            }
-                                            var $found_element_child = $found_element[r]['' + this_option_id_child + ''];
+                                    var $this_option_child = $(this),
+                                        this_option_id_real = $this_option_child.attr('id'),
+                                        this_option_id_child = $this_option_child.hasClass('tfb_lb_wp_editor') ? $this_option_child.attr('name') : $this_option_child.data('input-id');
+                                    if (!this_option_id_child) {
+                                        this_option_id_child = this_option_id_real;
+                                    }
+                                    var $found_element_child = $found_element[r]['' + this_option_id_child + ''];
 
                                     if ($this_option_child.hasClass('themify-builder-uploader-input')) {
                                         var img_field = $found_element_child,
-                                                img_thumb = $('<img/>', {src: img_field, width: 50, height: 50});
+                                            img_thumb = $('<img/>', {src: img_field, width: 50, height: 50});
 
                                         if (img_field != '' && img_field != undefined) {
                                             $this_option_child.val(img_field);
@@ -699,9 +699,9 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                                         $this_option_child.find('#' + $found_element_child).addClass('selected');
                                     }
                                     else if ($this_option_child.hasClass('themify-checkbox')) {
-                                        for(var $i in $found_element_child){
-                                           
-                                             $this_option_child.find("input[value='" + $found_element_child[$i] + "']").prop('checked', true);
+                                        for (var $i in $found_element_child) {
+
+                                            $this_option_child.find("input[value='" + $found_element_child[$i] + "']").prop('checked', true);
                                         }
                                     }
                                     else if ($this_option_child.is('input, textarea, select')) {
@@ -730,8 +730,8 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
                         } else if ($this_option.is('input[type!="checkbox"][type!="radio"], textarea')) {
                             $this_option.val($found_element);
-                            if(!isNewModule && $this_option.is('textarea') && $this_option.hasClass('tf-thumbs-preview')){
-                               self.getShortcodePreview($this_option,$found_element);
+                            if (!isNewModule && $this_option.is('textarea') && $this_option.hasClass('tf-thumbs-preview')) {
+                                self.getShortcodePreview($this_option, $found_element);
                             }
                         } else if ($this_option.hasClass('themify-checkbox')) {
                             var cselected = $found_element;
@@ -773,7 +773,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                             $this_option.find('.themify_builder_row').each(function (r) {
                                 $(this).find('.tfb_lb_option_child').each(function (i) {
                                     var $this_option_child = $(this),
-                                            this_option_id_real = $this_option_child.attr('id');
+                                        this_option_id_real = $this_option_child.attr('id');
 
                                     if ($this_option_child.hasClass('tfb_lb_wp_editor')) {
 
@@ -834,14 +834,17 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
             ThemifyBuilderCommon.highlightRow($(this).closest('.themify_builder_row'));
 
-            ThemifyBuilderCommon.Lightbox.open( { loadMethod: 'inline', templateID: 'builder_form_module_' + module_name }, callback);
+            ThemifyBuilderCommon.Lightbox.open({
+                loadMethod: 'inline',
+                templateID: 'builder_form_module_' + module_name
+            }, callback);
         },
         moduleOptionsBinding: function () {
             var form = $('#tfb_module_settings');
             $('input[data-binding], textarea[data-binding], select[data-binding]', form).change(function () {
                 var logic = false,
-                        binding = $(this).data('binding'),
-                        val = $(this).val();
+                    binding = $(this).data('binding'),
+                    val = $(this).val();
                 if (val == '' && binding['empty'] != undefined) {
                     logic = binding['empty'];
                 } else if (val != '' && binding[val] != undefined) {
@@ -878,7 +881,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             self.equalHeight();
 
             var newValue = self.builderContainer.innerHTML;
-            if ( startValue !== newValue ) {
+            if (startValue !== newValue) {
                 ThemifyBuilderCommon.undoManager.events.trigger('change', [startValue, newValue]);
             }
         },
@@ -895,7 +898,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                 self.moduleEvents();
 
                 var newValue = self.builderContainer.innerHTML;
-                if ( startValue !== newValue ) {
+                if (startValue !== newValue) {
                     ThemifyBuilderCommon.undoManager.events.trigger('change', [startValue, newValue]);
                 }
             }
@@ -903,12 +906,15 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
         addModule: function (e) {
             e.preventDefault();
             var self = ThemifyPageBuilder,
-                    tmpl_params = {slug: $(this).closest('.themify_builder_module').data('module-slug'), name: $(this).closest('.themify_builder_module').data('module-name')},
-            module_item_tmpl = wp.template('builder_module_item'),
-                    module_item = module_item_tmpl(tmpl_params),
-                    dest = $('.themify_builder_row_panel').find('.themify_builder_row:visible').first().find('.themify_module_holder').first(),
-                    $newElems = $(module_item),
-                    position = $newElems.appendTo(dest);
+                tmpl_params = {
+                    slug: $(this).closest('.themify_builder_module').data('module-slug'),
+                    name: $(this).closest('.themify_builder_module').data('module-name')
+                },
+                module_item_tmpl = wp.template('builder_module_item'),
+                module_item = module_item_tmpl(tmpl_params),
+                dest = $('.themify_builder_row_panel').find('.themify_builder_row:visible').first().find('.themify_module_holder').first(),
+                $newElems = $(module_item),
+                position = $newElems.appendTo(dest);
 
             $('html,body').animate({scrollTop: position.offset().top - 300}, 500);
             self.moduleEvents();
@@ -1013,19 +1019,18 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
         saveData: function (loader, callback, saveto) {
             saveto = saveto || 'main';
             var self = ThemifyPageBuilder,
-                    dataSend = self.retrieveData(),
-                    ids = [{id: $('input#post_ID').val(), data: dataSend}];
+                dataSend = self.retrieveData(),
+                ids = [{id: $('input#post_ID').val(), data: dataSend}];
 
             $.ajax({
                 type: "POST",
                 url: themifyBuilder.ajaxurl,
-                data:
-                        {
-                            action: 'tfb_save_data',
-                            tfb_load_nonce: themifyBuilder.tfb_load_nonce,
-                            ids: JSON.stringify(ids),
-                            tfb_saveto: saveto
-                        },
+                data: {
+                    action: 'tfb_save_data',
+                    tfb_load_nonce: themifyBuilder.tfb_load_nonce,
+                    ids: JSON.stringify(ids),
+                    tfb_saveto: saveto
+                },
                 cache: false,
                 beforeSend: function (xhr) {
                     if (loader) {
@@ -1057,7 +1062,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                 temp_appended_data = {},
                 form_state = document.getElementById('tfb_module_settings').getAttribute('data-form-state') || 'edit';
 
-            if ( 'edit' == form_state ) {
+            if ('edit' == form_state) {
                 var startValue = self.builderContainer.innerHTML;
             } else {
                 var $clonedStartValue = $(self.builderContainer).clone();
@@ -1067,7 +1072,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
             $('#tfb_module_settings .tfb_lb_option').each(function () {
                 var option_value, option_class,
-                        this_option_id = $(this).attr('id');
+                    this_option_id = $(this).attr('id');
 
                 option_class = this_option_id + ' tfb_module_setting';
 
@@ -1104,8 +1109,8 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                 }
                 else if ($(this).hasClass('themify-option-query-cat')) {
                     var parent = $(this).parent(),
-                            single_cat = parent.find('.query_category_single'),
-                            multiple_cat = parent.find('.query_category_multiple');
+                        single_cat = parent.find('.query_category_single'),
+                        multiple_cat = parent.find('.query_category_multiple');
 
                     if (multiple_cat.val() != '') {
                         option_value = multiple_cat.val() + '|multiple';
@@ -1119,15 +1124,15 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                         var temp_rows = {};
                         $(this).find('.tfb_lb_option_child').each(function () {
                             var option_value_child,
-                                    this_option_id_child = $(this).data('input-id');
-                                if(!this_option_id_child){
-                                    this_option_id_child = $(this).attr('id');
-                                }
-                                
+                                this_option_id_child = $(this).data('input-id');
+                            if (!this_option_id_child) {
+                                this_option_id_child = $(this).attr('id');
+                            }
+
                             if ($(this).hasClass('tf-radio-choice')) {
                                 option_value_child = ($(this).find(':checked').length > 0) ? $(this).find(':checked').val() : '';
                             } else if ($(this).hasClass('themify-layout-icon')) {
-                                if(!this_option_id_child){
+                                if (!this_option_id_child) {
                                     this_option_id_child = $(this).attr('id');
                                 }
                                 if ($(this).find('.selected').length > 0) {
@@ -1137,11 +1142,11 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                                     option_value_child = $(this).children().first().attr('id');
                                 }
                             }
-                            else if($(this).hasClass('themify-checkbox')){
-                                 option_value_child = [];
-                                 $(this).find(':checked').each(function(i){
-                                     option_value_child[i] = $(this).val();
-                                 });
+                            else if ($(this).hasClass('themify-checkbox')) {
+                                option_value_child = [];
+                                $(this).find(':checked').each(function (i) {
+                                    option_value_child[i] = $(this).val();
+                                });
                             }
                             else if ($(this).hasClass('tfb_lb_wp_editor')) {
                                 var text_id = $(this).attr('id');
@@ -1189,7 +1194,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             self.moduleEvents();
 
             var newValue = self.builderContainer.innerHTML;
-            ThemifyBuilderCommon.undoManager.events.trigger('change', [startValue, newValue ]);
+            ThemifyBuilderCommon.undoManager.events.trigger('change', [startValue, newValue]);
 
             e.preventDefault();
         },
@@ -1212,7 +1217,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
         switchFrontEnd: function (e) {
             if ($('#themify_builder_row_wrapper').is(':visible')) {
                 var self = ThemifyPageBuilder,
-                        targetLink = themifyBuilder.permalink;
+                    targetLink = themifyBuilder.permalink;
 
                 $('#themify_builder_alert').addClass('busy').show();
                 self.saveData(false, function () {
@@ -1234,25 +1239,25 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
         },
         retrieveData: function () {
             var self = ThemifyPageBuilder,
-                    option_data = {},
-                    cols = {},
-                    modules = {};
+                option_data = {},
+                cols = {},
+                modules = {};
 
             // rows
             $('#themify_builder_row_wrapper .themify_builder_row:visible').each(function (r) {
                 var row_order = r,
-                        cols = {};
+                    cols = {};
 
                 // cols
                 $(this).find('.themify_builder_row_content').children('.themify_builder_col').each(function (c) {
                     var grid_class = self.filterClass($(this).attr('class')),
-                            modules = {};
+                        modules = {};
                     // mods
                     $(this).find('.themify_module_holder').first().children().each(function (m) {
                         if ($(this).hasClass('themify_builder_module')) {
                             var mod_name = $(this).data('mod-name'),
-                                    mod_elems = $(this).find('.themify_module_settings'),
-                                    mod_settings = JSON.parse(mod_elems.find('script[type="text/json"]').text());
+                                mod_elems = $(this).find('.themify_module_settings'),
+                                mod_settings = JSON.parse(mod_elems.find('script[type="text/json"]').text());
                             modules[m] = {'mod_name': mod_name, 'mod_settings': mod_settings};
                         }
 
@@ -1261,16 +1266,16 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                             var sub_cols = {};
                             $(this).find('.themify_builder_col').each(function (sub_col) {
                                 var sub_grid_class = self.filterClass($(this).attr('class')),
-                                        sub_modules = {};
+                                    sub_modules = {};
 
                                 $(this).find('.active_module').each(function (sub_m) {
                                     var sub_mod_name = $(this).data('mod-name'),
-                                            sub_mod_elems = $(this).find('.themify_module_settings'),
-                                            sub_mod_settings = JSON.parse(sub_mod_elems.find('script[type="text/json"]').text());
+                                        sub_mod_elems = $(this).find('.themify_module_settings'),
+                                        sub_mod_settings = JSON.parse(sub_mod_elems.find('script[type="text/json"]').text());
                                     sub_modules[sub_m] = {'mod_name': sub_mod_name, 'mod_settings': sub_mod_settings};
                                 });
 
-                                sub_cols[ sub_col ] = {
+                                sub_cols[sub_col] = {
                                     'column_order': sub_col,
                                     grid_class: sub_grid_class,
                                     modules: sub_modules
@@ -1278,9 +1283,9 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
                                 // get sub-column styling
                                 if ($(this).children('.column-data-styling').length > 0) {
-                                    var $data_styling = $.parseJSON( $(this).children('.column-data-styling').attr('data-styling') );
+                                    var $data_styling = $.parseJSON($(this).children('.column-data-styling').attr('data-styling'));
                                     if ('object' === typeof $data_styling)
-                                        sub_cols[ sub_col ].styling = $data_styling;
+                                        sub_cols[sub_col].styling = $data_styling;
                                 }
                             });
 
@@ -1301,9 +1306,9 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
                     // get column styling
                     if ($(this).children('.column-data-styling').length > 0) {
-                        var $data_styling = $.parseJSON( $(this).children('.column-data-styling').attr('data-styling') );
+                        var $data_styling = $.parseJSON($(this).children('.column-data-styling').attr('data-styling'));
                         if ('object' === typeof $data_styling)
-                            cols[ c ].styling = $data_styling;
+                            cols[c].styling = $data_styling;
                     }
                 });
 
@@ -1316,7 +1321,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
                 // get row styling
                 if ($(this).find('.row-data-styling').length > 0) {
-                    var $data_styling = $.parseJSON( $(this).find('.row-data-styling').attr('data-styling') );
+                    var $data_styling = $.parseJSON($(this).find('.row-data-styling').attr('data-styling'));
                     if ('object' === typeof $data_styling)
                         option_data[r].styling = $data_styling;
                 }
@@ -1327,8 +1332,8 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
         },
         filterClass: function (str) {
             var grid = ThemifyPageBuilder.gridClass.concat(['first', 'last']),
-                    n = str.split(' '),
-                    new_arr = [];
+                n = str.split(' '),
+                new_arr = [];
 
             for (var i = 0; i < n.length; i++) {
                 if ($.inArray(n[i], grid) > -1) {
@@ -1351,10 +1356,10 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
             return new_str;
         },
-        stripHtml: function(html) {
-           var tmp = document.createElement("DIV");
-           tmp.innerHTML = html;
-           return tmp.textContent || tmp.innerText || "";
+        stripHtml: function (html) {
+            var tmp = document.createElement("DIV");
+            tmp.innerHTML = html;
+            return tmp.textContent || tmp.innerText || "";
         },
         mediaUploader: function () {
 
@@ -1382,14 +1387,18 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                 file_frame.on('insert select', function () {
                     // We set multiple to false so only get one image from the uploader
                     var attachment = file_frame.state().get('selection').first().toJSON(),
-                                     size = file_frame.$el.find('select.size').val(),
-                                     attachmentBySize = attachment.type=='image'?attachment.sizes[size].url:attachment.url;
+                        size = file_frame.$el.find('select.size').val(),
+                        attachmentBySize = attachment.type == 'image' ? attachment.sizes[size].url : attachment.url;
 
                     // Do something with attachment.id and/or attachment.url here
                     $el.closest('.themify_builder_input').find('.themify-builder-uploader-input').val(attachmentBySize).trigger('change')
-                            .parent().find('.img-placeholder').empty()
-                            .html($('<img/>', {src: attachment.type=='image'?attachment.sizes.thumbnail.url:attachment.icon, width: 50, height: 50}))
-                            .parent().show();
+                        .parent().find('.img-placeholder').empty()
+                        .html($('<img/>', {
+                            src: attachment.type == 'image' ? attachment.sizes.thumbnail.url : attachment.icon,
+                            width: 50,
+                            height: 50
+                        }))
+                        .parent().show();
                 });
 
                 // Hide frame menu
@@ -1417,7 +1426,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
         },
         builderPlupload: function (action_text) {
             var class_new = action_text == 'new_elemn' ? '.plupload-clone' : '',
-                    $builderPlupoadUpload = $(".themify-builder-plupload-upload-uic" + class_new);
+                $builderPlupoadUpload = $(".themify-builder-plupload-upload-uic" + class_new);
 
             if ($builderPlupoadUpload.length > 0) {
                 var pconfig = false;
@@ -1482,13 +1491,13 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                         }
 
                         var response_url = json.large_url ? json.large_url : json.url,
-                             response_id = json.id,
+                            response_id = json.id,
                             thumb_url = json.thumb;
-                             
+
                         $this.closest('.themify_builder_input').find('.themify-builder-uploader-input').val(response_url).trigger('change')
-                                .parent().find('.img-placeholder').empty()
-                                .html($('<img/>', {src: thumb_url, width: 50, height: 50}))
-                                .parent().show();
+                            .parent().find('.img-placeholder').empty()
+                            .html($('<img/>', {src: thumb_url, width: 50, height: 50}))
+                            .parent().show();
                         // Attach image id to the input
                         $this.closest('.themify_builder_input').find('.themify-builder-uploader-input-attach-id').val(response_id);
                     });
@@ -1509,7 +1518,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                     if (typeof tinyMCE !== 'undefined') {
                         $('#tfb_module_settings').find('.tfb_lb_wp_editor.tfb_lb_option_child').each(function () {
                             var id = $(this).attr('id'),
-                                    content = tinymce.get(id).getContent();
+                                content = tinymce.get(id).getContent();
                             $(this).data('content', content);
                             tinyMCE.execCommand('mceRemoveEditor', false, id);
                         });
@@ -1540,7 +1549,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                     if (typeof tinyMCE !== 'undefined') {
                         $('#tfb_row_settings').find('.tfb_lb_wp_editor.tfb_lb_option_child').each(function () {
                             var id = $(this).attr('id'),
-                                    content = tinymce.get(id).getContent();
+                                content = tinymce.get(id).getContent();
                             $(this).data('content', content);
                             tinyMCE.execCommand('mceRemoveEditor', false, id);
                         });
@@ -1563,10 +1572,10 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
         },
         moduleOptAddRow: function (e) {
             var self = ThemifyPageBuilder,
-                    parent = $(this).parent().prev(),
-                    template = parent.find('.themify_builder_row').first().clone(),
-                    row_count = $('.themify_builder_row_js_wrapper').find('.themify_builder_row:visible').length + 1,
-                    number = row_count + Math.floor(Math.random() * 9);
+                parent = $(this).parent().prev(),
+                template = parent.find('.themify_builder_row').first().clone(),
+                row_count = $('.themify_builder_row_js_wrapper').find('.themify_builder_row:visible').length + 1,
+                number = row_count + Math.floor(Math.random() * 9);
 
             // clear form data
             template.removeClass('collapsed').find('.themify_builder_row_content').show();
@@ -1597,8 +1606,8 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             // Fix color picker input
             template.find('.builderColorSelectInput').each(function () {
                 var thiz = $(this),
-                        input = thiz.clone().val(''),
-                        parent = thiz.closest('.themify_builder_field');
+                    input = thiz.clone().val(''),
+                    parent = thiz.closest('.themify_builder_field');
                 thiz.prev().minicolors('destroy').removeAttr('maxlength');
                 parent.find('.colordisplay').wrap('<div class="themify_builder_input" />').before('<span class="builderColorSelect"><span></span></span>').after(input);
                 self.setColorPicker(parent);
@@ -1608,7 +1617,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
             $('#tfb_module_settings').find('.tfb_lb_wp_editor.tfb_lb_option_child.clone').each(function (i) {
                 var element = $(this),
-                        parent_child = element.closest('.themify_builder_input');
+                    parent_child = element.closest('.themify_builder_input');
 
                 $(this).closest('.wp-editor-wrap').remove();
 
@@ -1629,10 +1638,10 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
         },
         rowOptAddRow: function (e) {
             var self = ThemifyPageBuilder,
-                    parent = $(this).parent().prev(),
-                    template = parent.find('.themify_builder_row').first().clone(),
-                    row_count = $('.themify_builder_row_js_wrapper').find('.themify_builder_row:visible').length + 1,
-                    number = row_count + Math.floor(Math.random() * 9);
+                parent = $(this).parent().prev(),
+                template = parent.find('.themify_builder_row').first().clone(),
+                row_count = $('.themify_builder_row_js_wrapper').find('.themify_builder_row:visible').length + 1,
+                number = row_count + Math.floor(Math.random() * 9);
 
             // clear form data
             template.removeClass('collapsed').find('.themify_builder_row_content').show();
@@ -1663,8 +1672,8 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             // Fix color picker input
             template.find('.builderColorSelectInput').each(function () {
                 var thiz = $(this),
-                        input = thiz.clone().val(''),
-                        parent = thiz.closest('.themify_builder_field');
+                    input = thiz.clone().val(''),
+                    parent = thiz.closest('.themify_builder_field');
                 thiz.prev().minicolors('destroy').removeAttr('maxlength');
                 parent.find('.colordisplay').wrap('<div class="themify_builder_input" />').before('<span class="builderColorSelect"><span></span></span>').after(input);
                 self.setColorPicker(parent);
@@ -1703,8 +1712,8 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
         openGallery: function () {
 
             var clone = wp.media.gallery.shortcode,
-                    $self = this,
-                    file_frame;
+                $self = this,
+                file_frame;
             $('body').on('click', '.tf-gallery-btn', function (event) {
                 var shortcode_val = $(this).closest('.themify_builder_input').find('.tf-shortcode-input');
 
@@ -1720,7 +1729,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
                 wp.media.gallery.shortcode = function (attachments) {
                     var props = attachments.props.toJSON(),
-                            attrs = _.pick(props, 'orderby', 'order');
+                        attrs = _.pick(props, 'orderby', 'order');
 
                     if (attachments.gallery)
                         _.extend(attrs, attachments.gallery.toJSON());
@@ -1743,8 +1752,8 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
                     // Remove default attributes from the shortcode.
                     _.each(wp.media.gallery.defaults, function (value, key) {
-                        if (value === attrs[ key ])
-                            delete attrs[ key ];
+                        if (value === attrs[key])
+                            delete attrs[key];
                     });
 
                     var shortcode = new wp.shortcode({
@@ -1762,19 +1771,18 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                 file_frame.on('update', function (selection) {
                     var shortcode = wp.media.gallery.shortcode(selection).string().slice(1, -1);
                     shortcode_val.val('[' + shortcode + ']');
-                    $self.setShortcodePreview(selection.models,shortcode_val);
+                    $self.setShortcodePreview(selection.models, shortcode_val);
                 });
 
                 if ($.trim(shortcode_val.val()).length > 0) {
-                    file_frame = wp.media.gallery.edit($.trim(shortcode_val.val())); 
+                    file_frame = wp.media.gallery.edit($.trim(shortcode_val.val()));
                     file_frame.state('gallery-edit').on('update', function (selection) {
                         var shortcode = wp.media.gallery.shortcode(selection).string().slice(1, -1);
                         shortcode_val.val('[' + shortcode + ']');
-                        $self.setShortcodePreview(selection.models,shortcode_val);
+                        $self.setShortcodePreview(selection.models, shortcode_val);
                     });
                 }
-                else
-                {
+                else {
                     file_frame.open();
                     $('.media-menu').find('.media-menu-item').last().trigger('click');
                 }
@@ -1782,33 +1790,32 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             });
 
         },
-        setShortcodePreview:function($images,$input){
+        setShortcodePreview: function ($images, $input) {
             var $preview = $input.next('.themify_builder_shortcode_preview'),
                 $html = '';
-            if($preview.length===0){
+            if ($preview.length === 0) {
                 $input.after('<div class="themify_builder_shortcode_preview"></div>');
                 $preview = $input.next('.themify_builder_shortcode_preview');
             }
-            for(var $i in $images){
+            for (var $i in $images) {
                 var attachment = $images[$i].attributes,
-                    $url = attachment.sizes.thumbnail? attachment.sizes.thumbnail.url: attachment.url;
-                $html+='<img src="'+$url+'" width="50" height="50" />';
+                    $url = attachment.sizes.thumbnail ? attachment.sizes.thumbnail.url : attachment.url;
+                $html += '<img src="' + $url + '" width="50" height="50" />';
             }
-            $preview.html($html);  
+            $preview.html($html);
         },
-        getShortcodePreview:function($input,$value){
+        getShortcodePreview: function ($input, $value) {
 
             $.ajax({
                 type: "POST",
                 url: themifyBuilder.ajaxurl,
-                data:
-                    {
-                        action: 'tfb_load_shortcode_preview',
-                        tfb_load_nonce: themifyBuilder.tfb_load_nonce,
-                        shortcode:$value
-                    },
+                data: {
+                    action: 'tfb_load_shortcode_preview',
+                    tfb_load_nonce: themifyBuilder.tfb_load_nonce,
+                    shortcode: $value
+                },
                 success: function (data) {
-                    if(data){
+                    if (data) {
                         $input.after(data);
                     }
                 }
@@ -1819,31 +1826,30 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
             $('#tfb_module_settings').find('.tfb_lb_wp_editor.clone').each(function (i) {
                 var element = $(this),
-                        element_val = element.val(),
-                        parent = element.closest('.themify_builder_input');
+                    element_val = element.val(),
+                    parent = element.closest('.themify_builder_input');
 
                 $(this).closest('.wp-editor-wrap').remove();
 
                 var oriname = element.attr('name'),
-                        this_option_id_temp = element.attr('id'),
-                        this_class = element.attr('class').replace('wp-editor-area', '').replace('clone', '');
+                    this_option_id_temp = element.attr('id'),
+                    this_class = element.attr('class').replace('wp-editor-area', '').replace('clone', '');
 
                 $.ajax({
                     type: "POST",
                     url: themifyBuilder.ajaxurl,
                     dataType: 'html',
-                    data:
-                            {
-                                action: 'tfb_add_wp_editor',
-                                tfb_load_nonce: themifyBuilder.tfb_load_nonce,
-                                txt_id: this_option_id_temp,
-                                txt_class: this_class,
-                                txt_name: oriname,
-                                txt_val: element_val
-                            },
+                    data: {
+                        action: 'tfb_add_wp_editor',
+                        tfb_load_nonce: themifyBuilder.tfb_load_nonce,
+                        txt_id: this_option_id_temp,
+                        txt_class: this_class,
+                        txt_name: oriname,
+                        txt_val: element_val
+                    },
                     success: function (data) {
                         var $newElems = $(data),
-                                this_option_id_clone = $newElems.find('.tfb_lb_wp_editor').attr('id');
+                            this_option_id_clone = $newElems.find('.tfb_lb_wp_editor').attr('id');
 
                         $newElems.appendTo(parent);
 
@@ -1861,19 +1867,18 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                 $self = ThemifyPageBuilder;
             $body.on('change', '.module-widget-select-field', function () {
                 var $seclass = $(this).val(),
-                        id_base = $(this).find(':selected').data('idbase');
+                    id_base = $(this).find(':selected').data('idbase');
 
                 $.ajax({
                     type: "POST",
                     url: themifyBuilder.ajaxurl,
                     dataType: 'html',
-                    data:
-                            {
-                                action: 'module_widget_get_form',
-                                tfb_load_nonce: themifyBuilder.tfb_load_nonce,
-                                load_class: $seclass,
-                                id_base: id_base
-                            },
+                    data: {
+                        action: 'module_widget_get_form',
+                        tfb_load_nonce: themifyBuilder.tfb_load_nonce,
+                        load_class: $seclass,
+                        id_base: id_base
+                    },
                     success: function (data) {
                         var $newElems = $(data);
 
@@ -1895,21 +1900,20 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                     return;
 
                 var $seclass = $field.val(),
-                        id_base = $field.find(':selected').data('idbase'),
-                        $instance = settings.instance_widget;
+                    id_base = $field.find(':selected').data('idbase'),
+                    $instance = settings.instance_widget;
 
                 $.ajax({
                     type: "POST",
                     url: themifyBuilder.ajaxurl,
                     dataType: 'html',
-                    data:
-                            {
-                                action: 'module_widget_get_form',
-                                tfb_load_nonce: themifyBuilder.tfb_load_nonce,
-                                load_class: $seclass,
-                                id_base: id_base,
-                                widget_instance: $instance
-                            },
+                    data: {
+                        action: 'module_widget_get_form',
+                        tfb_load_nonce: themifyBuilder.tfb_load_nonce,
+                        load_class: $seclass,
+                        id_base: id_base,
+                        widget_instance: $instance
+                    },
                     success: function (data) {
                         var $newElems = $(data);
                         $('.module-widget-form-placeholder').html($newElems);
@@ -1922,9 +1926,9 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
             $('.themify_builder_row_js_wrapper').each(function () {
                 var $container = $(this),
-                        $parent = $container.find('.themify_builder_row:visible'),
-                        tmpl = wp.template('builder_row'),
-                        $template = $(tmpl({}));
+                    $parent = $container.find('.themify_builder_row:visible'),
+                    tmpl = wp.template('builder_row'),
+                    $template = $(tmpl({}));
 
                 $parent.each(function () {
                     if ($(this).find('.themify_builder_module').length != 0) {
@@ -1941,14 +1945,14 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                             return;
                         }
 
-                        data_styling = $.parseJSON( $(this).attr('data-styling') );
+                        data_styling = $.parseJSON($(this).attr('data-styling'));
 
                         if ((typeof data_styling === 'array' && data_styling.length > 0) || !$.isEmptyObject(data_styling)) {
                             removeThis = false;
                         }
                     });
 
-                    data_styling = $.parseJSON( $(this).find('.row-data-styling').attr('data-styling') );
+                    data_styling = $.parseJSON($(this).find('.row-data-styling').attr('data-styling'));
 
                     if (removeThis && (typeof data_styling === 'string' || $.isEmptyObject(data_styling))) {
                         $(this).remove();
@@ -1977,7 +1981,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
         },
         duplicatePage: function (e) {
             var self = ThemifyPageBuilder,
-                    reply = confirm(themifyBuilder.confirm_on_duplicate_page);
+                reply = confirm(themifyBuilder.confirm_on_duplicate_page);
             if (reply) {
                 self.saveData(true, function () {
                     self.duplicatePageAjax();
@@ -1994,13 +1998,12 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                 type: "POST",
                 url: themifyBuilder.ajaxurl,
                 dataType: 'json',
-                data:
-                        {
-                            action: 'tfb_duplicate_page',
-                            tfb_load_nonce: themifyBuilder.tfb_load_nonce,
-                            tfb_post_id: $('input#post_ID').val(),
-                            tfb_is_admin: 1
-                        },
+                data: {
+                    action: 'tfb_duplicate_page',
+                    tfb_load_nonce: themifyBuilder.tfb_load_nonce,
+                    tfb_post_id: $('input#post_ID').val(),
+                    tfb_is_admin: 1
+                },
                 beforeSend: function (xhr) {
                     self.showLoader('show');
                 },
@@ -2015,13 +2018,13 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             e.preventDefault();
 
             var self = ThemifyPageBuilder,
-                    $this = $(this),
-                    $options = $.parseJSON( $this.closest('.themify_builder_row').find('.row-data-styling').attr('data-styling') );
+                $this = $(this),
+                $options = $.parseJSON($this.closest('.themify_builder_row').find('.row-data-styling').attr('data-styling'));
 
             var callback = function () {
                 if ('object' === typeof $options && $options != null) {
-                    if('undefined' !== typeof $options.background_slider){
-                        self.getShortcodePreview($('#background_slider'),$options.background_slider);
+                    if ('undefined' !== typeof $options.background_slider) {
+                        self.getShortcodePreview($('#background_slider'), $options.background_slider);
                     }
                     $.each($options, function (id, val) {
                         $('#tfb_row_settings').find('#' + id).val(val);
@@ -2040,7 +2043,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                 // image field
                 $('#tfb_row_settings').find('.themify-builder-uploader-input').each(function () {
                     var img_field = $(this).val(),
-                            img_thumb = $('<img/>', {src: img_field, width: 50, height: 50});
+                        img_thumb = $('<img/>', {src: img_field, width: 50, height: 50});
 
                     if (img_field != '') {
                         $(this).parent().find('.img-placeholder').empty().html(img_thumb);
@@ -2069,13 +2072,13 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
                         $this_option.find('.themify_builder_row').each(function (r) {
                             $(this).find('.tfb_lb_option_child').each(function (i) {
-                                    var $this_option_child = $(this),
-                                        this_option_id_real = $this_option_child.attr('id'),
-                                        this_option_id_child = $this_option_child.hasClass('tfb_lb_wp_editor') ? $this_option_child.attr('name') : $this_option_child.data('input-id');
-                                        if(!this_option_id_child){
-                                            this_option_id_child = this_option_id_real;
-                                        }
-                                        var $found_element_child = $found_element[r]['' + this_option_id_child + ''];
+                                var $this_option_child = $(this),
+                                    this_option_id_real = $this_option_child.attr('id'),
+                                    this_option_id_child = $this_option_child.hasClass('tfb_lb_wp_editor') ? $this_option_child.attr('name') : $this_option_child.data('input-id');
+                                if (!this_option_id_child) {
+                                    this_option_id_child = this_option_id_real;
+                                }
+                                var $found_element_child = $found_element[r]['' + this_option_id_child + ''];
 
                                 if ($this_option_child.hasClass('themify-builder-uploader-input')) {
                                     var img_field = $found_element_child,
@@ -2137,19 +2140,19 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
             ThemifyBuilderCommon.highlightRow($this.closest('.themify_builder_row'));
 
-            ThemifyBuilderCommon.Lightbox.open({ loadMethod: 'inline', templateID: 'builder_form_row' }, callback);
+            ThemifyBuilderCommon.Lightbox.open({loadMethod: 'inline', templateID: 'builder_form_row'}, callback);
         },
         optionColumn: function (e) {
             e.preventDefault();
 
             var self = ThemifyPageBuilder,
-                    $this = $(this),
-                    $options = $.parseJSON( $this.closest('.themify_builder_col').children('.column-data-styling').attr('data-styling') );
+                $this = $(this),
+                $options = $.parseJSON($this.closest('.themify_builder_col').children('.column-data-styling').attr('data-styling'));
 
             var callback = function () {
                 if ('object' === typeof $options && $options != null) {
-                    if('undefined' !== typeof $options.background_slider){
-                        self.getShortcodePreview($('#background_slider'),$options.background_slider);
+                    if ('undefined' !== typeof $options.background_slider) {
+                        self.getShortcodePreview($('#background_slider'), $options.background_slider);
                     }
                     $.each($options, function (id, val) {
                         $('#tfb_column_settings').find('#' + id).val(val);
@@ -2168,7 +2171,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                 // image field
                 $('#tfb_column_settings').find('.themify-builder-uploader-input').each(function () {
                     var img_field = $(this).val(),
-                            img_thumb = $('<img/>', {src: img_field, width: 50, height: 50});
+                        img_thumb = $('<img/>', {src: img_field, width: 50, height: 50});
 
                     if (img_field != '') {
                         $(this).parent().find('.img-placeholder').empty().html(img_thumb);
@@ -2216,7 +2219,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             ThemifyBuilderCommon.highlightColumn($this.closest('.themify_builder_col'));
             ThemifyBuilderCommon.highlightRow($this.closest('.themify_builder_row'));
 
-            ThemifyBuilderCommon.Lightbox.open({ loadMethod: 'inline', templateID: 'builder_form_column' }, callback);
+            ThemifyBuilderCommon.Lightbox.open({loadMethod: 'inline', templateID: 'builder_form_column'}, callback);
         },
         rowSaving: function (e) {
             e.preventDefault();
@@ -2228,17 +2231,17 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             $('#tfb_row_settings').find('.themify_builder_row_js_wrapper').each(function () {
                 var this_option_id = $(this).attr('id'),
                     row_items = [];
-                
+
                 $(this).find('.themify_builder_row').each(function () {
                     var temp_rows = {};
-                    
+
                     $(this).find('.tfb_lb_option_child').each(function () {
                         var option_value_child,
                             this_option_id_child = $(this).data('input-id');
-                            if(!this_option_id_child){
-                                this_option_id_child = $(this).attr('id');
-                            }
-                            
+                        if (!this_option_id_child) {
+                            this_option_id_child = $(this).attr('id');
+                        }
+
                         option_value_child = $(this).val();
 
                         if (option_value_child) {
@@ -2255,7 +2258,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             });
 
             console.log(temp_appended_data, 'temp_appended_data');
-            $active_row_settings.attr('data-styling', JSON.stringify( temp_appended_data ) );
+            $active_row_settings.attr('data-styling', JSON.stringify(temp_appended_data));
 
             // Save data
             self.saveData(true, function () {
@@ -2263,7 +2266,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
                 // logs action
                 var newValue = self.builderContainer.innerHTML;
-                if ( startValue !== newValue ) {
+                if (startValue !== newValue) {
                     ThemifyBuilderCommon.undoManager.events.trigger('change', [startValue, newValue]);
                 }
             }, 'cache');
@@ -2277,7 +2280,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                 temp_appended_data = $('#tfb_column_settings .tfb_lb_option').serializeObject(),
                 startValue = self.builderContainer.innerHTML;
 
-            $active_column_settings.attr('data-styling', JSON.stringify(temp_appended_data) );
+            $active_column_settings.attr('data-styling', JSON.stringify(temp_appended_data));
 
             // Save data
             self.saveData(true, function () {
@@ -2285,7 +2288,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
                 // logs action
                 var newValue = self.builderContainer.innerHTML;
-                if ( startValue !== newValue ) {
+                if (startValue !== newValue) {
                     ThemifyBuilderCommon.undoManager.events.trigger('change', [startValue, newValue]);
                 }
             }, 'cache');
@@ -2304,12 +2307,15 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
             switch (handle) {
                 case 'module':
                     var sub_row_tmpl = wp.template('builder_sub_row'),
-                            tmpl_sub_row = sub_row_tmpl({placeholder: themifyBuilder.dropPlaceHolder, newclass: 'col-full'}),
-                            $mod_clone = $(this).closest('.active_module').clone();
+                        tmpl_sub_row = sub_row_tmpl({
+                            placeholder: themifyBuilder.dropPlaceHolder,
+                            newclass: 'col-full'
+                        }),
+                        $mod_clone = $(this).closest('.active_module').clone();
                     $mod_clone.find('.grid_menu').remove();
 
                     $base = $(tmpl_sub_row).find('.themify_module_holder').append($mod_clone).end()
-                            .insertAfter($(this).closest('.active_module')).find('.themify_builder_sub_row_content');
+                        .insertAfter($(this).closest('.active_module')).find('.themify_builder_sub_row_content');
 
                     $(this).closest('.active_module').remove();
                     break;
@@ -2331,7 +2337,10 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                     $base.children('.themify_builder_col').eq(i).removeClass(ThemifyPageBuilder.clearClass).addClass('col' + v);
                 } else {
                     // Add column
-                    ThemifyPageBuilder._addNewColumn({placeholder: themifyBuilder.dropPlaceHolder, newclass: 'col' + v}, $base);
+                    ThemifyPageBuilder._addNewColumn({
+                        placeholder: themifyBuilder.dropPlaceHolder,
+                        newclass: 'col' + v
+                    }, $base);
                 }
             });
 
@@ -2362,13 +2371,13 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
 
             // Log the action
             var newValue = ThemifyPageBuilder.builderContainer.innerHTML;
-            if ( startValue !== newValue ) {
+            if (startValue !== newValue) {
                 ThemifyBuilderCommon.undoManager.events.trigger('change', [startValue, newValue]);
             }
         },
         _addNewColumn: function (params, $context) {
             var template_func = wp.template('builder_column'),
-                    template = template_func(params);
+                template = template_func(params);
             $context.append($(template));
         },
         _gridHover: function (event) {
@@ -2405,7 +2414,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
         _selectedGridMenu: function () {
             $('.grid_menu').each(function () {
                 var handle = $(this).data('handle'),
-                        grid_base = [], $base;
+                    grid_base = [], $base;
                 if (handle == 'module')
                     return;
                 switch (handle) {
@@ -2447,7 +2456,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
         },
         _getColClass: function (classes) {
             var matches = ThemifyPageBuilder.clearClass.split(' '),
-                    spanClass = null;
+                spanClass = null;
 
             for (var i = 0; i < classes.length; i++) {
                 if ($.inArray(classes[i], matches) > -1) {
@@ -2477,32 +2486,32 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
         // Undo/Redo Functionality
         btnUndo: document.querySelector('.js-themify-builder-undo-btn'),
         btnRedo: document.querySelector('.js-themify-builder-redo-btn'),
-        actionUndo: function( event ) {
+        actionUndo: function (event) {
             event.preventDefault();
             if (this.classList.contains('disabled')) return;
             ThemifyBuilderCommon.undoManager.instance.undo();
             ThemifyPageBuilder.updateUndoBtns();
         },
-        actionRedo: function( event ) {
+        actionRedo: function (event) {
             event.preventDefault();
             if (this.classList.contains('disabled')) return;
             ThemifyBuilderCommon.undoManager.instance.redo();
             ThemifyPageBuilder.updateUndoBtns();
         },
-        updateUndoBtns: function() {
-            if ( ThemifyBuilderCommon.undoManager.instance.hasUndo() ) {
+        updateUndoBtns: function () {
+            if (ThemifyBuilderCommon.undoManager.instance.hasUndo()) {
                 ThemifyPageBuilder.btnUndo.classList.remove('disabled');
             } else {
                 ThemifyPageBuilder.btnUndo.classList.add('disabled');
             }
 
-            if ( ThemifyBuilderCommon.undoManager.instance.hasRedo() ) {
+            if (ThemifyBuilderCommon.undoManager.instance.hasRedo()) {
                 ThemifyPageBuilder.btnRedo.classList.remove('disabled');
             } else {
                 ThemifyPageBuilder.btnRedo.classList.add('disabled');
             }
         },
-        undoManagerCallback: function(){
+        undoManagerCallback: function () {
             ThemifyPageBuilder.updateUndoBtns();
             ThemifyPageBuilder.moduleEvents();
             ThemifyPageBuilder.equalHeight();
@@ -2525,13 +2534,12 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                 type: "POST",
                 url: themifyBuilder.ajaxurl,
                 dataType: 'json',
-                data:
-                        {
-                            action: 'builder_import_submit',
-                            nonce: themifyBuilder.tfb_load_nonce,
-                            data: postData,
-                            importTo: $('input#post_ID').val()
-                        },
+                data: {
+                    action: 'builder_import_submit',
+                    nonce: themifyBuilder.tfb_load_nonce,
+                    data: postData,
+                    importTo: $('input#post_ID').val()
+                },
                 success: function (data) {
                     ThemifyBuilderCommon.Lightbox.close();
                     window.location.reload();
@@ -2551,15 +2559,15 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
         builderImportFile: function (e) {
             e.preventDefault();
             var self = ThemifyPageBuilder,
-                    options = {
-                        dataType: 'html',
-                        data: {
-                            action: 'builder_import_file'
-                        }
-                    },
-            callback = function () {
-                self.builderImportPlupload();
-            };
+                options = {
+                    dataType: 'html',
+                    data: {
+                        action: 'builder_import_file'
+                    }
+                },
+                callback = function () {
+                    self.builderImportPlupload();
+                };
 
             if (confirm(themifyBuilder.importFileConfirm)) {
                 ThemifyBuilderCommon.Lightbox.open(options, callback);
@@ -2572,8 +2580,8 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                 var pconfig = false;
                 $builderPluploadUpload.each(function () {
                     var $this = $(this),
-                            id1 = $this.attr("id"),
-                            imgId = id1.replace("themify-builder-plupload-upload-ui", "");
+                        id1 = $this.attr("id"),
+                        imgId = id1.replace("themify-builder-plupload-upload-ui", "");
 
                     pconfig = JSON.parse(JSON.stringify(themify_builder_plupload_init));
 
@@ -2654,22 +2662,22 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
         builderSaveLayout: function (event) {
             event.preventDefault();
             var options = {
-                data: {
-                    action: 'tfb_custom_layout_form',
-                    postid: $('input#post_ID').val()
-                }
-            },
-            callback = function () {
-                // plupload init
-                ThemifyPageBuilder.builderPlupload('normal');
-            };
+                    data: {
+                        action: 'tfb_custom_layout_form',
+                        postid: $('input#post_ID').val()
+                    }
+                },
+                callback = function () {
+                    // plupload init
+                    ThemifyPageBuilder.builderPlupload('normal');
+                };
             ThemifyBuilderCommon.Lightbox.open(options, callback);
         },
         templateSelected: function (event) {
             event.preventDefault();
 
             var self = ThemifyPageBuilder,
-                    $this = $(this);
+                $this = $(this);
             var options = {
                 buttons: {
                     no: {
@@ -2681,10 +2689,10 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                 }
             };
 
-            ThemifyBuilderCommon.LiteLightbox.confirm( themifyBuilder.confirm_template_selected, function( response ){
-                console.log( response, 'response');
+            ThemifyBuilderCommon.LiteLightbox.confirm(themifyBuilder.confirm_template_selected, function (response) {
+                console.log(response, 'response');
                 var action = '';
-                if ( 'no' == response ) {
+                if ('no' == response) {
                     action = 'tfb_set_layout';
                 } else {
                     action = 'tfb_append_layout';
@@ -2709,7 +2717,7 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                         }
                     }
                 });
-            }, options );
+            }, options);
         },
         saveAsLayout: function (event) {
             event.preventDefault();
@@ -2765,16 +2773,16 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                 });
             };
         }
-		
+
         // fixed builder module panel while scrolling
         $(window).load(function () {
 
             var $panel = $('#page-builder .themify_builder_module_panel'),
-                    $top = 0,
-                    $scrollTimer = null,
-                    $panel_top = 0,
-                    $wpadminbar = $('#wpadminbar'),
-                    $wpadminbarHeight = $wpadminbar.outerHeight(true);
+                $top = 0,
+                $scrollTimer = null,
+                $panel_top = 0,
+                $wpadminbar = $('#wpadminbar'),
+                $wpadminbarHeight = $wpadminbar.outerHeight(true);
             if ($panel.length > 0) {
                 if ($panel.is(':visible')) {
                     themify_sticky_pos();
@@ -2820,6 +2828,6 @@ var ThemifyPageBuilder, ThemifyBuilderCommon;
                 }
             }
         });
-       
+
     });
 }(jQuery, window, document));

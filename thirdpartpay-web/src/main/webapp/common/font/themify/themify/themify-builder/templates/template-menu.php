@@ -3,12 +3,12 @@ if (!defined('ABSPATH'))
     exit; // Exit if accessed directly
 /**
  * Template Menu
- * 
+ *
  * Access original fields: $mod_settings
  * @author Themify
  */
 if (TFCache::start_cache('menu', self::$post_id, array('ID' => $module_ID))):
-    
+
     $fields_default = array(
         'mod_title_menu' => '',
         'layout_menu' => '',
@@ -27,8 +27,8 @@ if (TFCache::start_cache('menu', self::$post_id, array('ID' => $module_ID))):
     $animation_effect = $this->parse_animation_effect($animation_effect, $fields_args);
 
     $container_class = implode(' ', apply_filters('themify_builder_module_classes', array(
-        'module', 'module-' . $mod_name, $module_ID, $css_menu, $animation_effect
-                    ), $mod_name, $module_ID, $fields_args)
+            'module', 'module-' . $mod_name, $module_ID, $css_menu, $animation_effect
+        ), $mod_name, $module_ID, $fields_args)
     );
     ?>
 

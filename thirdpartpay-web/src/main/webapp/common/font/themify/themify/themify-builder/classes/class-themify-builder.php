@@ -6,7 +6,7 @@ if (!class_exists('Themify_Builder')) {
 
     /**
      * Main Themify Builder class
-     * 
+     *
      * @package default
      */
     class Themify_Builder {
@@ -4374,4 +4374,4 @@ if (!class_exists('Themify_Builder')) {
 
                 }
 
-            } // class_exists check
+} // class_exists check

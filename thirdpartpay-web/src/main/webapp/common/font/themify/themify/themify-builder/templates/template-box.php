@@ -3,7 +3,7 @@ if (!defined('ABSPATH'))
     exit; // Exit if accessed directly
 /**
  * Template Box
- * 
+ *
  * Access original fields: $mod_settings
  * @author Themify
  */
@@ -27,12 +27,12 @@ if (TFCache::start_cache('box', self::$post_id, array('ID' => $module_ID))):
     $animation_effect = $this->parse_animation_effect($animation_effect, $fields_args);
 
     $container_class = implode(' ', apply_filters('themify_builder_module_classes', array(
-        'module', 'module-' . $mod_name, $module_ID, $animation_effect
-                    ), $mod_name, $module_ID, $fields_args)
+            'module', 'module-' . $mod_name, $module_ID, $animation_effect
+        ), $mod_name, $module_ID, $fields_args)
     );
     $inner_container_classes = implode(' ', apply_filters('themify_builder_module_inner_classes', array(
-        'module-' . $mod_name . '-content', 'ui', $appearance_box, $color_box, $add_css_box, $background_repeat
-            ))
+            'module-' . $mod_name . '-content', 'ui', $appearance_box, $color_box, $add_css_box, $background_repeat
+        ))
     );
     ?>
     <!-- module box -->

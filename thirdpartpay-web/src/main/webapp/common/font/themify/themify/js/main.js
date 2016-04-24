@@ -62,39 +62,39 @@ var Themify, ThemifyGallery;
             $('.slides[data-slider]').each(function () {
                 $(this).find("> br, > p").remove();
                 var $this = $(this),
-                        $data = JSON.parse(window.atob($(this).data('slider'))),
-                        height = (typeof $data.height === 'undefined') ? 'auto' : $data.height,
-                        $numsldr = $data.numsldr,
-                        $slideContainer = 'undefined' !== typeof $data.custom_numsldr ? '#' + $data.custom_numsldr : '#slider-' + $numsldr,
-                        $args = {
-                            responsive: true,
-                            swipe: true,
-                            circular: $data.wrapvar,
-                            infinite: $data.wrapvar,
-                            auto: {
-                                play: $data.play,
-                                timeoutDuration: $data.auto,
-                                duration: $data.speed,
-                                pauseOnHover: $data.pause_hover
+                    $data = JSON.parse(window.atob($(this).data('slider'))),
+                    height = (typeof $data.height === 'undefined') ? 'auto' : $data.height,
+                    $numsldr = $data.numsldr,
+                    $slideContainer = 'undefined' !== typeof $data.custom_numsldr ? '#' + $data.custom_numsldr : '#slider-' + $numsldr,
+                    $args = {
+                        responsive: true,
+                        swipe: true,
+                        circular: $data.wrapvar,
+                        infinite: $data.wrapvar,
+                        auto: {
+                            play: $data.play,
+                            timeoutDuration: $data.auto,
+                            duration: $data.speed,
+                            pauseOnHover: $data.pause_hover
+                        },
+                        scroll: {
+                            items: parseInt($data.scroll),
+                            duration: $data.speed,
+                            fx: $data.effect
+                        },
+                        items: {
+                            visible: {
+                                min: 1,
+                                max: parseInt($data.visible)
                             },
-                            scroll: {
-                                items: parseInt($data.scroll),
-                                duration: $data.speed,
-                                fx: $data.effect
-                            },
-                            items: {
-                                visible: {
-                                    min: 1,
-                                    max: parseInt($data.visible)
-                                },
-                                width: 120,
-                                height: height
-                            },
-                            onCreate: function (items) {
-                                $($slideContainer).css({'visibility': 'visible', 'height': 'auto'});
-                                $this.trigger('updateSizes');
-                            }
-                        };
+                            width: 120,
+                            height: height
+                        },
+                        onCreate: function (items) {
+                            $($slideContainer).css({'visibility': 'visible', 'height': 'auto'});
+                            $this.trigger('updateSizes');
+                        }
+                    };
                 if ($data.slider_nav) {
                     $args.prev = $slideContainer + ' .carousel-prev';
                     $args.next = $slideContainer + ' .carousel-next';
@@ -106,7 +106,6 @@ var Themify, ThemifyGallery;
             });
 
 
-
             var tscpsDidResize = false;
             $(window).on("resize", function () {
                 tscpsDidResize = true;
@@ -116,8 +115,8 @@ var Themify, ThemifyGallery;
                     tscpsDidResize = false;
                     $(".slides[data-slider]").each(function () {
                         var heights = [],
-                                newHeight,
-                                $self = $(this);
+                            newHeight,
+                            $self = $(this);
                         $self.find("li").each(function () {
                             heights.push($(this).outerHeight());
                         });
@@ -144,23 +143,23 @@ var Themify, ThemifyGallery;
             var $maps = $('.themify_map');
             $maps.each(function ($i) {
                 var $data = JSON.parse(window.atob($(this).data('map'))),
-                        address = $data.address,
-                        zoom = parseInt($data.zoom),
-                        type = $data.type,
-                        scroll = $data.scroll,
-                        drag = $data.drag,
-                        node = this;
+                    address = $data.address,
+                    zoom = parseInt($data.zoom),
+                    type = $data.type,
+                    scroll = $data.scroll,
+                    drag = $data.drag,
+                    node = this;
                 var delay = $i * 1000;
                 setTimeout(function () {
                     var geo = new google.maps.Geocoder(),
-                            latlng = new google.maps.LatLng(-34.397, 150.644),
-                            mapOptions = {
-                                zoom: zoom,
-                                center: latlng,
-                                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                                scrollwheel: scroll,
-                                draggable: drag
-                            };
+                        latlng = new google.maps.LatLng(-34.397, 150.644),
+                        mapOptions = {
+                            zoom: zoom,
+                            center: latlng,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP,
+                            scrollwheel: scroll,
+                            draggable: drag
+                        };
                     switch (type.toUpperCase()) {
                         case 'ROADMAP':
                             mapOptions.mapTypeId = google.maps.MapTypeId.ROADMAP;
@@ -177,17 +176,17 @@ var Themify, ThemifyGallery;
                     }
 
                     var map = new google.maps.Map(node, mapOptions),
-                            revGeocoding = $(node).data('reverse-geocoding') ? true : false;
+                        revGeocoding = $(node).data('reverse-geocoding') ? true : false;
 
                     /* store a copy of the map object in the dom node, for future reference */
                     $(node).data('gmap_object', map);
 
                     if (revGeocoding) {
                         var latlngStr = address.split(',', 2),
-                                lat = parseFloat(latlngStr[0]),
-                                lng = parseFloat(latlngStr[1]),
-                                geolatlng = new google.maps.LatLng(lat, lng),
-                                geoParams = {'latLng': geolatlng};
+                            lat = parseFloat(latlngStr[0]),
+                            lng = parseFloat(latlngStr[1]),
+                            geolatlng = new google.maps.LatLng(lat, lng),
+                            geoParams = {'latLng': geolatlng};
                     } else {
                         var geoParams = {'address': address};
                     }
@@ -197,15 +196,15 @@ var Themify, ThemifyGallery;
                             var position = revGeocoding ? geolatlng : results[0].geometry.location;
                             map.setCenter(position);
                             var marker = new google.maps.Marker({
-                                map: map,
-                                position: position
-                            }),
-                                    info = $(node).data('info-window');
+                                    map: map,
+                                    position: position
+                                }),
+                                info = $(node).data('info-window');
                             if (undefined !== info) {
                                 var contentString = '<div class="themify_builder_map_info_window">' + info + '</div>',
-                                        infowindow = new google.maps.InfoWindow({
-                                            content: contentString
-                                        });
+                                    infowindow = new google.maps.InfoWindow({
+                                        content: contentString
+                                    });
 
                                 google.maps.event.addListener(marker, 'click', function () {
                                     infowindow.open(map, marker);
@@ -266,7 +265,7 @@ var Themify, ThemifyGallery;
         },
         LoadAsync: function (src, callback, version, defer, test) {
             var id = src.split("/").pop().replace(/\./g, '_'), // Make script filename as ID
-                    existElemens = document.getElementById(id);
+                existElemens = document.getElementById(id);
 
             if (existElemens) {
                 if (callback) {
@@ -302,8 +301,7 @@ var Themify, ThemifyGallery;
                 s.defer = true;
             }
             s.onload = s.onreadystatechange = function () {
-                if (!r && (!this.readyState || this.readyState === 'complete'))
-                {
+                if (!r && (!this.readyState || this.readyState === 'complete')) {
                     r = true;
                     if (callback) {
                         callback();
@@ -325,8 +323,8 @@ var Themify, ThemifyGallery;
                 ref = before;
             }
             else {
-                var refs = (doc.body || doc.getElementsByTagName("head")[ 0 ]).childNodes;
-                ref = refs[ refs.length - 1];
+                var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+                ref = refs[refs.length - 1];
             }
 
             var sheets = doc.styleSheets;
@@ -344,7 +342,7 @@ var Themify, ThemifyGallery;
                 var resolvedHref = ss.href;
                 var i = sheets.length;
                 while (i--) {
-                    if (sheets[ i ].href === resolvedHref) {
+                    if (sheets[i].href === resolvedHref) {
                         return cb();
                     }
                 }
@@ -373,11 +371,11 @@ var Themify, ThemifyGallery;
         videoCalback: function () {
             $('.themify_video_desktop a').each(function () {
                 flowplayer(
-                        $(this).attr('id'),
-                        themify_vars.url + "/js/flowplayer-3.2.5.swf",
-                        {
-                            clip: {autoPlay: false}
-                        }
+                    $(this).attr('id'),
+                    themify_vars.url + "/js/flowplayer-3.2.5.swf",
+                    {
+                        clip: {autoPlay: false}
+                    }
                 );
             });
         },

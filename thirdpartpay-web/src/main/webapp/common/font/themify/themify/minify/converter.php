@@ -1,7 +1,6 @@
 <?php
 
 
-
 /**
  * Convert paths relative from 1 file to another.
  *
@@ -17,7 +16,8 @@
  * @copyright Copyright (c) 2015, Matthias Mullie. All rights reserved.
  * @license MIT License
  */
-class Converter {
+class Converter
+{
 
     /**
      * @var string
@@ -31,10 +31,11 @@ class Converter {
 
     /**
      * @param string $from The original base path (directory, not file!)
-     * @param string $to   The new base path (directory, not file!)
+     * @param string $to The new base path (directory, not file!)
      */
-    public function __construct($from, $to) {
-        $this->from  = $this->normalize($from);
+    public function __construct($from, $to)
+    {
+        $this->from = $this->normalize($from);
         $this->to = $this->normalize($to);
     }
 
@@ -44,9 +45,10 @@ class Converter {
      * @param  string $path
      * @return string
      */
-    protected function normalize($path) {
+    protected function normalize($path)
+    {
         // attempt to resolve path, or assume path is fine if it doesn't exist
-        $path = realpath($path) ? : $path;
+        $path = realpath($path) ?: $path;
 
         // deal with different operating systems' directory structure
         $path = rtrim(str_replace(DIRECTORY_SEPARATOR, '/', $path), '/');
@@ -65,6 +67,45 @@ class Converter {
     }
 
     /**
+     * Convert paths relative from 1 file to another.
+     *
+     * E.g.
+     *     ../images/img.gif relative to /home/forkcms/frontend/core/layout/css
+     * should become:
+     *     ../../core/layout/images/img.gif relative to
+     *     /home/forkcms/frontend/cache/minified_css
+     *
+     * @param  string $path The relative path that needs to be converted.
+     * @return string The new relative path.
+     */
+    public function convert($path)
+    {
+
+
+        $path = $this->normalize($path);
+        // if we're not dealing with a relative path, just return absolute
+        if (strpos($path, '/') === 0) {
+            return $path;
+        }
+
+        // normalize paths
+        return $this->normalize(trim($this->from, '/') . '/' . $path);
+        /*
+          $to = $this->normalize($this->to);
+
+          // strip shared ancestor paths
+          $shared = $this->shared($path, $to);
+          $path = substr($path, strlen($shared));
+          $to = substr($to, strlen($shared));
+
+          // add .. for every directory that needs to be traversed to new path
+          $to = str_repeat('../', substr_count($to, '/'));
+
+          return $to.ltrim($path, '/');
+        */
+    }
+
+    /**
      * Figure out the shared path of 2 locations.
      *
      * Example:
@@ -78,7 +119,8 @@ class Converter {
      * @param  string $path2
      * @return string
      */
-    protected function shared($path1, $path2) {
+    protected function shared($path1, $path2)
+    {
         // $path could theoretically be empty (e.g. no path is given), in which
         // case it shouldn't expand to array(''), which would compare to one's
         // root /
@@ -97,45 +139,6 @@ class Converter {
         }
 
         return implode('/', $shared);
-    }
-
-    /**
-     * Convert paths relative from 1 file to another.
-     *
-     * E.g.
-     *     ../images/img.gif relative to /home/forkcms/frontend/core/layout/css
-     * should become:
-     *     ../../core/layout/images/img.gif relative to
-     *     /home/forkcms/frontend/cache/minified_css
-     *
-     * @param  string $path The relative path that needs to be converted.
-     * @return string The new relative path.
-     */
-    public function convert($path) {
-       
-        
-
-        $path = $this->normalize($path);
-        // if we're not dealing with a relative path, just return absolute
-        if (strpos($path, '/') === 0) {
-            return $path;
-        }
-
-        // normalize paths
-        return $this->normalize(trim($this->from,'/') . '/' . $path);
-        /*
-          $to = $this->normalize($this->to);
-
-          // strip shared ancestor paths
-          $shared = $this->shared($path, $to);
-          $path = substr($path, strlen($shared));
-          $to = substr($to, strlen($shared));
-
-          // add .. for every directory that needs to be traversed to new path
-          $to = str_repeat('../', substr_count($to, '/'));
-
-          return $to.ltrim($path, '/');
-        */
     }
 
 

@@ -3,7 +3,7 @@ if (!defined('ABSPATH'))
     exit; // Exit if accessed directly
 /**
  * Template Testimonial
- * 
+ *
  * Access original fields: $mod_settings
  * @author Themify
  */
@@ -40,8 +40,8 @@ extract($fields_args, EXTR_SKIP);
 $animation_effect = $this->parse_animation_effect($animation_effect, $fields_args);
 
 $container_class = implode(' ', apply_filters('themify_builder_module_classes', array(
-    'module', 'module-' . $mod_name, $module_ID, $css_testimonial, $animation_effect
-                ), $mod_name, $module_ID, $fields_args)
+        'module', 'module-' . $mod_name, $module_ID, $css_testimonial, $animation_effect
+    ), $mod_name, $module_ID, $fields_args)
 );
 $this->in_the_loop = true;
 global $paged;
@@ -72,7 +72,7 @@ $paged = $this->get_paged_query();
                 array_push($new_terms, trim($t));
             }
         }
-        $tax_field = ( $is_string ) ? 'slug' : 'id';
+        $tax_field = ($is_string) ? 'slug' : 'id';
 
         $args = array(
             'post_type' => 'testimonial',
@@ -103,7 +103,7 @@ $paged = $this->get_paged_query();
             if (empty($limit))
                 $limit = get_option('posts_per_page');
 
-            $args['offset'] = ( ( $paged - 1 ) * $limit ) + $offset_testimonial;
+            $args['offset'] = (($paged - 1) * $limit) + $offset_testimonial;
         }
 
         $the_query = new WP_Query();
@@ -156,7 +156,8 @@ $paged = $this->get_paged_query();
 
                     <?php themify_post_before(); // hook  ?>
 
-                    <article id="post-<?php echo esc_attr($post->ID); ?>" <?php post_class("post testimonial-post clearfix"); ?>>
+                    <article
+                        id="post-<?php echo esc_attr($post->ID); ?>" <?php post_class("post testimonial-post clearfix"); ?>>
 
                         <?php themify_post_start(); // hook  ?>
 
@@ -185,8 +186,8 @@ $paged = $this->get_paged_query();
                             <?php if ($hide_post_title_testimonial != 'yes'): ?>
                                 <?php themify_before_post_title(); // Hook ?>
                                 <h1 class="post-title"><?php the_title(); ?></h1>
-                                <?php themify_after_post_title(); // Hook   ?> 
-                            <?php endif; //post title ?>    
+                                <?php themify_after_post_title(); // Hook   ?>
+                            <?php endif; //post title ?>
 
                             <?php
                             // fix the issue more link doesn't output
@@ -230,7 +231,7 @@ $paged = $this->get_paged_query();
         </div><!-- .builder-posts-wrap -->
         <?php if ('yes' != $hide_page_nav_testimonial): ?>
             <?php echo $this->get_pagenav('', '', $the_query) ?>
-        <?php endif; ?>     
+        <?php endif; ?>
         <?php
         do_action('themify_builder_after_template_content_render');
         $this->remove_post_class($animation_effect);

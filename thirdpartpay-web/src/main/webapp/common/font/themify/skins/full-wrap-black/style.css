@@ -5,72 +5,78 @@ Description: Skin for Basic
 */
 
 body {
-	color: #888;
-	background-color: #333;
+    color: #888;
+    background-color: #333;
 }
 
 a {
-	color: #fff;
+    color: #fff;
 }
 
 h1, h2, h3, h4, h5, h6 {
-	color: #fff;
+    color: #fff;
 }
 
 /* form input */
 input[type=text], input[type=password], textarea, input[type=search] {
-	background-color: #101010;
-	border-color: #000;
-	color: #ccc;
+    background-color: #101010;
+    border-color: #000;
+    color: #ccc;
 }
 
 /* form input:focus */
 textarea:focus, input[type=password]:focus, input[type=text]:focus, input[type=search]:focus {
-	background-color: #222;
+    background-color: #222;
 }
 
 /* form button */
 input[type=reset], input[type=submit] {
-	background-color: #000;
-	color: #fff;
+    background-color: #000;
+    color: #fff;
 }
 
 /************************************************************************************
 HEADER
 *************************************************************************************/
 #headerwrap {
-	background-color: #000;
+    background-color: #000;
 }
+
 #header {
-	border: none;
+    border: none;
 }
+
 #site-logo a {
-	color: #fff;
+    color: #fff;
 }
+
 #site-description {
-	color: #666;
+    color: #666;
 }
 
 /************************************************************************************
 MAIN NAVIGATION
 *************************************************************************************/
 #main-nav a {
-	color: #ccc;
+    color: #ccc;
 }
+
 /* main level link :hover */
 #main-nav a:hover, #main-nav li:hover > a {
-	border-color: #fff;
-	color: #fff;
+    border-color: #fff;
+    color: #fff;
 }
+
 /* current link */
 #main-nav .current_page_item a, #main-nav .current-menu-item a {
-	border-color: #ccc;
-	color: #fff;
+    border-color: #ccc;
+    color: #fff;
 }
+
 /* current link :hover */
 #main-nav .current_page_item a:hover, #main-nav .current-menu-item a:hover {
-	color: #fff;
-	border-color: #fff;
+    color: #fff;
+    border-color: #fff;
 }
 
 /************************************************************************************
@@ -78,7 +84,7 @@ POST
 *************************************************************************************/
 /* post title */
 .post-title, .post-title a {
-	color: #fff;
+    color: #fff;
 }
 
 /************************************************************************************
@@ -86,7 +92,7 @@ COMMENTS
 *************************************************************************************/
 .commentlist,
 .commentlist .commententry {
-	border-color: #292929;
+    border-color: #292929;
 }
 
 /************************************************************************************
@@ -94,15 +100,16 @@ SIDEBAR
 *************************************************************************************/
 /* widget */
 .widget li {
-	border-color: #292929;
+    border-color: #292929;
 }
 
 /************************************************************************************
 FOOTER
 *************************************************************************************/
 #footerwrap {
-	background-color: #000;
+    background-color: #000;
 }
+
 #footer {
-	border: none;
+    border: none;
 }

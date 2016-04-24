@@ -29,6 +29,17 @@ public class MultiDao {
     private List<Double> data;
     private String colorNest;
 
+    public MultiDao() {
+    }
+
+    public MultiDao(Double y, String name, List<String> categories, List<Double> data, String colorNest) {
+        this.y = y;
+        this.name = name;
+        this.categories = categories;
+        this.data = data;
+        this.colorNest = colorNest;
+    }
+
     public static String getJsonString(List<MultiDao> multiDaoList) {
         List<Map<String, Object>> result = getMaps(multiDaoList);
         return JSON.toJSONString(result);
@@ -52,17 +63,6 @@ public class MultiDao {
             result.add(params);
         }
         return result;
-    }
-
-    public MultiDao() {
-    }
-
-    public MultiDao(Double y, String name, List<String> categories, List<Double> data, String colorNest) {
-        this.y = y;
-        this.name = name;
-        this.categories = categories;
-        this.data = data;
-        this.colorNest = colorNest;
     }
 
     public Double getY() {

@@ -16,7 +16,7 @@
         factory(Highcharts);
     }
 }(function (Highcharts) {
-var arrayMin = Highcharts.arrayMin,
+    var arrayMin = Highcharts.arrayMin,
         arrayMax = Highcharts.arrayMax,
         each = Highcharts.each,
         extend = Highcharts.extend,
@@ -42,8 +42,11 @@ var arrayMin = Highcharts.arrayMin,
         mathFloor = math.floor,
         mathMax = math.max,
         Color = Highcharts.Color,
-        noop = function () {},
-        UNDEFINED;/**
+        noop = function () {
+        },
+        UNDEFINED;
+
+    /**
      * The Pane object allows options that are common to a set of X and Y axes.
      *
      * In the future, this can be extended to basic Highcharts and Highstock.
@@ -66,7 +69,7 @@ var arrayMin = Highcharts.arrayMin,
             pane.chart = chart;
 
             // Set options. Angular charts have a default background (#3318)
-            pane.options = options = merge(defaultOptions, chart.angular ? { background: {} } : undefined, options);
+            pane.options = options = merge(defaultOptions, chart.angular ? {background: {}} : undefined, options);
 
             backgroundOption = options.background;
 
@@ -109,7 +112,7 @@ var arrayMin = Highcharts.arrayMin,
             borderWidth: 1,
             borderColor: 'silver',
             backgroundColor: {
-                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                linearGradient: {x1: 0, y1: 0, x2: 0, y2: 1},
                 stops: [
                     [0, '#FFF'],
                     [1, '#DDD']
@@ -374,7 +377,7 @@ var arrayMin = Highcharts.arrayMin,
             if (this.options.gridLineInterpolation === 'polygon') {
                 ret = this.getPlotLinePath(from).concat(this.getPlotLinePath(to, true));
 
-            // Circular grid bands
+                // Circular grid bands
             } else {
 
                 // Keep within bounds
@@ -440,13 +443,13 @@ var arrayMin = Highcharts.arrayMin,
             if (axis.isCircular) {
                 ret = ['M', center[0] + chart.plotLeft, center[1] + chart.plotTop, 'L', end.x, end.y];
 
-            // Concentric circles
+                // Concentric circles
             } else if (axis.options.gridLineInterpolation === 'circle') {
                 value = axis.translate(value);
                 if (value) { // a value of 0 is in the center
                     ret = axis.getLinePath(0, value);
                 }
-            // Concentric polygons
+                // Concentric polygons
             } else {
                 // Find the X axis in the same pane
                 each(chart.xAxis, function (a) {
@@ -484,8 +487,8 @@ var arrayMin = Highcharts.arrayMin,
 
             return {
                 x: chart.plotLeft + center[0] + (titleOptions.x || 0),
-                y: chart.plotTop + center[1] - ({ high: 0.5, middle: 0.25, low: 0 }[titleOptions.align] *
-                    center[2]) + (titleOptions.y || 0)
+                y: chart.plotTop + center[1] - ({high: 0.5, middle: 0.25, low: 0}[titleOptions.align] *
+                center[2]) + (titleOptions.y || 0)
             };
         }
 
@@ -512,7 +515,7 @@ var arrayMin = Highcharts.arrayMin,
         // Before prototype.init
         if (angular) {
             extend(this, isHidden ? hiddenAxisMixin : radialAxisMixin);
-            isCircular =  !isX;
+            isCircular = !isX;
             if (isCircular) {
                 this.defaultRadialOptions = this.defaultRadialGaugeOptions;
             }
@@ -536,10 +539,10 @@ var arrayMin = Highcharts.arrayMin,
                 chart.panes = [];
             }
             this.pane = pane = chart.panes[paneIndex] = chart.panes[paneIndex] || new Pane(
-                splat(chartOptions.pane)[paneIndex],
-                chart,
-                axis
-            );
+                    splat(chartOptions.pane)[paneIndex],
+                    chart,
+                    axis
+                );
             paneOptions = pane.options;
 
 
@@ -551,7 +554,7 @@ var arrayMin = Highcharts.arrayMin,
             // given in degrees relative to top, while internal computations are
             // in radians relative to right (like SVG).
             this.startAngleRad = startAngleRad = (paneOptions.startAngle - 90) * Math.PI / 180;
-            this.endAngleRad = endAngleRad = (pick(paneOptions.endAngle, paneOptions.startAngle + 360)  - 90) * Math.PI / 180;
+            this.endAngleRad = endAngleRad = (pick(paneOptions.endAngle, paneOptions.startAngle + 360) - 90) * Math.PI / 180;
             this.offset = options.offset || 0;
 
             this.isCircular = isCircular;
@@ -607,7 +610,7 @@ var arrayMin = Highcharts.arrayMin,
                     rotation: angle
                 });
 
-            // Vertically centered
+                // Vertically centered
             } else if (optionsY === null) {
                 optionsY = axis.chart.renderer.fontMetrics(label.styles.fontSize).b - label.getBBox().height / 2;
             }
@@ -664,7 +667,8 @@ var arrayMin = Highcharts.arrayMin,
             ret = proceed.call(this, x, y, tickLength, tickWidth, horiz, renderer);
         }
         return ret;
-    });/*
+    });
+    /*
      * The AreaRangeSeries class
      *
      */
@@ -758,7 +762,7 @@ var arrayMin = Highcharts.arrayMin,
          * path to both lower and higher values of the range
          */
         getGraphPath: function () {
-        
+
             var points = this.points,
                 highPoints = [],
                 highAreaPoints = [],
@@ -779,7 +783,7 @@ var arrayMin = Highcharts.arrayMin,
             i = points.length;
             while (i--) {
                 point = points[i];
-        
+
                 if (!point.isNull && (!points[i + 1] || points[i + 1].isNull)) {
                     highAreaPoints.push({
                         plotX: point.plotX,
@@ -807,7 +811,7 @@ var arrayMin = Highcharts.arrayMin,
                 if (step === true) {
                     step = 'left';
                 }
-                options.step = { left: 'right', center: 'center', right: 'left' }[step]; // swap for reading in getGraphPath
+                options.step = {left: 'right', center: 'center', right: 'left'}[step]; // swap for reading in getGraphPath
             }
             higherPath = getGraphPath.call(this, highPoints);
             higherAreaPath = getGraphPath.call(this, highAreaPoints);
@@ -908,7 +912,7 @@ var arrayMin = Highcharts.arrayMin,
                             if (!verticalAlign) {
                                 dataLabelOptions.verticalAlign = up ? 'bottom' : 'top';
                             }
-                        
+
                         }
 
                         dataLabelOptions.x = dataLabelOptions.xLow;
@@ -1001,7 +1005,7 @@ var arrayMin = Highcharts.arrayMin,
                         height += heightDifference;
                         y -= heightDifference / 2;
 
-                    // Adjust for negative ranges or reversed Y axis (#1457)
+                        // Adjust for negative ranges or reversed Y axis (#1457)
                     } else if (height < 0) {
                         height *= -1;
                         y -= height;
@@ -1018,16 +1022,16 @@ var arrayMin = Highcharts.arrayMin,
                         shapeArgs.height = height;
                         shapeArgs.y = y;
 
-                        point.tooltipPos = chart.inverted ? 
-                            [ 
-                                yAxis.len + yAxis.pos - chart.plotLeft - y - height / 2, 
-                                xAxis.len + xAxis.pos - chart.plotTop - shapeArgs.x - shapeArgs.width / 2, 
+                        point.tooltipPos = chart.inverted ?
+                            [
+                                yAxis.len + yAxis.pos - chart.plotLeft - y - height / 2,
+                                xAxis.len + xAxis.pos - chart.plotTop - shapeArgs.x - shapeArgs.width / 2,
                                 height
                             ] : [
-                                xAxis.left - chart.plotLeft + shapeArgs.x + shapeArgs.width / 2, 
-                                yAxis.pos - chart.plotTop + y + height / 2, 
-                                height
-                            ]; // don't inherit from column tooltip position - #3372
+                            xAxis.left - chart.plotLeft + shapeArgs.x + shapeArgs.width / 2,
+                            yAxis.pos - chart.plotTop + y + height / 2,
+                            height
+                        ]; // don't inherit from column tooltip position - #3372
                     }
                 });
             },
@@ -1051,7 +1055,6 @@ var arrayMin = Highcharts.arrayMin,
     /*
      * The GaugeSeries class
      */
-
 
 
     /**
@@ -1313,11 +1316,11 @@ var arrayMin = Highcharts.arrayMin,
         threshold: null,
         tooltip: {
             pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {series.name}</b><br/>' +
-                'Maximum: {point.high}<br/>' +
-                'Upper quartile: {point.q3}<br/>' +
-                'Median: {point.median}<br/>' +
-                'Lower quartile: {point.q1}<br/>' +
-                'Minimum: {point.low}<br/>'
+            'Maximum: {point.high}<br/>' +
+            'Upper quartile: {point.q3}<br/>' +
+            'Median: {point.median}<br/>' +
+            'Lower quartile: {point.q1}<br/>' +
+            'Minimum: {point.low}<br/>'
 
         },
         //whiskerColor: null,
@@ -1521,14 +1524,14 @@ var arrayMin = Highcharts.arrayMin,
                     // Create or update the graphics
                     if (graphic) { // update
 
-                        point.stem.animate({ d: stemPath });
+                        point.stem.animate({d: stemPath});
                         if (whiskerLength) {
-                            point.whiskers.animate({ d: whiskersPath });
+                            point.whiskers.animate({d: whiskersPath});
                         }
                         if (doQuartiles) {
-                            point.box.animate({ d: boxPath });
+                            point.box.animate({d: boxPath});
                         }
-                        point.medianShape.animate({ d: medianPath });
+                        point.medianShape.animate({d: medianPath});
 
                     } else { // create new
                         point.graphic = graphic = renderer.g()
@@ -1696,13 +1699,13 @@ var arrayMin = Highcharts.arrayMin,
                     shapeArgs.height = Math.min(yAxis.translate(previousIntermediate, 0, 1), yAxis.len) - shapeArgs.y + series.minPointLengthOffset;
                     previousIntermediate = range[1];
 
-                // If it's not the sum point, update previous stack end position and get
-                // shape height (#3886)
+                    // If it's not the sum point, update previous stack end position and get
+                    // shape height (#3886)
                 } else {
                     if (previousY !== 0) { // Not the first point
                         shapeArgs.height = yValue > 0 ?
-                            yAxis.translate(previousY, 0, 1) - shapeArgs.y :
-                            yAxis.translate(previousY, 0, 1) - yAxis.translate(previousY - yValue, 0, 1);
+                        yAxis.translate(previousY, 0, 1) - shapeArgs.y :
+                        yAxis.translate(previousY, 0, 1) - yAxis.translate(previousY - yValue, 0, 1);
                     }
                     previousY += yValue;
                 }
@@ -1815,7 +1818,7 @@ var arrayMin = Highcharts.arrayMin,
                         point.pointAttr = seriesDownPointAttr;
                         point.color = upColor;
 
-                    // Down color (#3710, update to negative)
+                        // Down color (#3710, update to negative)
                     } else {
                         point.pointAttr = series.pointAttr;
                     }
@@ -2020,7 +2023,7 @@ var arrayMin = Highcharts.arrayMin,
 
                 if (value === null) {
                     radius = null;
-                // Issue #4419 - if value is less than zMin, push a radius that's always smaller than the minimum size
+                    // Issue #4419 - if value is less than zMin, push a radius that's always smaller than the minimum size
                 } else if (value < zMin) {
                     radius = minSize / 2 - 1;
                 } else {
@@ -2178,7 +2181,7 @@ var arrayMin = Highcharts.arrayMin,
 
                         length = pInt(length);
                         extremes[prop] = isPercent ?
-                            smallestSize * length / 100 :
+                        smallestSize * length / 100 :
                             length;
 
                     });
@@ -2455,11 +2458,11 @@ var arrayMin = Highcharts.arrayMin,
          */
         wrap(seriesProto, 'getGraphPath', function (proceed, points) {
             var series = this;
-        
+
             // Connect the path
             if (this.chart.polar) {
                 points = points || this.points;
-    
+
                 if (this.options.connectEnds !== false && points[0].y !== null) {
                     this.connectEnds = true; // re-used in splines
                     points.splice(points.length, 0, points[0]);
@@ -2475,7 +2478,7 @@ var arrayMin = Highcharts.arrayMin,
 
             // Run uber method
             return proceed.apply(this, [].slice.call(arguments, 1));
-    
+
         });
 
 
@@ -2517,7 +2520,7 @@ var arrayMin = Highcharts.arrayMin,
                             markerGroup.attr(attribs);
                         }
 
-                    // Run the animation
+                        // Run the animation
                     } else {
                         attribs = {
                             translateX: plotLeft,
@@ -2535,7 +2538,7 @@ var arrayMin = Highcharts.arrayMin,
                     }
                 }
 
-            // For non-polar charts, revert to the basic animation
+                // For non-polar charts, revert to the basic animation
             } else {
                 proceed.call(this, init);
             }
@@ -2552,7 +2555,7 @@ var arrayMin = Highcharts.arrayMin,
             colProto.polarArc = function (low, high, start, end) {
                 var center = this.xAxis.center,
                     len = this.yAxis.len;
-                
+
                 return this.chart.renderer.symbols.arc(
                     center[0],
                     center[1],
@@ -2567,8 +2570,8 @@ var arrayMin = Highcharts.arrayMin,
             };
 
             /**
-            * Define the animate method for columnseries
-            */
+             * Define the animate method for columnseries
+             */
             wrap(colProto, 'animate', polarAnimate);
 
 
@@ -2669,7 +2672,7 @@ var arrayMin = Highcharts.arrayMin,
                         axis: axis,
                         value: axis.translate(
                             isXAxis ?
-                                Math.PI - Math.atan2(x, y) : // angle
+                            Math.PI - Math.atan2(x, y) : // angle
                                 Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)), // distance from center
                             true
                         )

@@ -3,7 +3,7 @@ if (!defined('ABSPATH'))
     exit; // Exit if accessed directly
 /**
  * Template Divider
- * 
+ *
  * Access original fields: $mod_settings
  * @author Themify
  */
@@ -36,12 +36,13 @@ if (TFCache::start_cache('divider', self::$post_id, array('ID' => $module_ID))):
 
     $style = $stroke_w_divider . $color_divider . $top_margin_divider . $bottom_margin_divider;
     $container_class = implode(' ', apply_filters('themify_builder_module_classes', array(
-        'module', 'module-' . $mod_name, $module_ID, $style_divider, $css_divider
-                    ), $mod_name, $module_ID, $fields_args)
+            'module', 'module-' . $mod_name, $module_ID, $style_divider, $css_divider
+        ), $mod_name, $module_ID, $fields_args)
     );
     ?>
     <!-- module divider -->
-    <div id="<?php echo esc_attr($module_ID); ?>" class="<?php echo esc_attr($container_class); ?>" style="<?php echo esc_attr($style); ?>">
+    <div id="<?php echo esc_attr($module_ID); ?>" class="<?php echo esc_attr($container_class); ?>"
+         style="<?php echo esc_attr($style); ?>">
         <?php if ($mod_title_divider != ''): ?>
             <?php echo $mod_settings['before_title'] . wp_kses_post(apply_filters('themify_builder_module_title', $mod_title_divider, $fields_args)) . $mod_settings['after_title']; ?>
         <?php endif; ?>

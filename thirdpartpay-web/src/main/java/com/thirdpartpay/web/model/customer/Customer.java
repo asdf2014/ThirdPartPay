@@ -62,7 +62,6 @@ public class Customer {
      * This method returns the value of the database column Customer.customer_id
      *
      * @return the value of Customer.customer_id
-     *
      * @mbggenerated
      */
     public Integer getCustomerId() {
@@ -74,7 +73,6 @@ public class Customer {
      * This method sets the value of the database column Customer.customer_id
      *
      * @param customerId the value for Customer.customer_id
-     *
      * @mbggenerated
      */
     public void setCustomerId(Integer customerId) {
@@ -86,7 +84,6 @@ public class Customer {
      * This method returns the value of the database column Customer.customer_name
      *
      * @return the value of Customer.customer_name
-     *
      * @mbggenerated
      */
     public String getCustomerName() {
@@ -98,7 +95,6 @@ public class Customer {
      * This method sets the value of the database column Customer.customer_name
      *
      * @param customerName the value for Customer.customer_name
-     *
      * @mbggenerated
      */
     public void setCustomerName(String customerName) {
@@ -110,7 +106,6 @@ public class Customer {
      * This method returns the value of the database column Customer.customer_password
      *
      * @return the value of Customer.customer_password
-     *
      * @mbggenerated
      */
     public String getCustomerPassword() {
@@ -122,7 +117,6 @@ public class Customer {
      * This method sets the value of the database column Customer.customer_password
      *
      * @param customerPassword the value for Customer.customer_password
-     *
      * @mbggenerated
      */
     public void setCustomerPassword(String customerPassword) {
@@ -134,7 +128,6 @@ public class Customer {
      * This method returns the value of the database column Customer.sex
      *
      * @return the value of Customer.sex
-     *
      * @mbggenerated
      */
     public Integer getSex() {
@@ -146,7 +139,6 @@ public class Customer {
      * This method sets the value of the database column Customer.sex
      *
      * @param sex the value for Customer.sex
-     *
      * @mbggenerated
      */
     public void setSex(Integer sex) {
@@ -158,7 +150,6 @@ public class Customer {
      * This method returns the value of the database column Customer.email
      *
      * @return the value of Customer.email
-     *
      * @mbggenerated
      */
     public String getEmail() {
@@ -170,7 +161,6 @@ public class Customer {
      * This method sets the value of the database column Customer.email
      *
      * @param email the value for Customer.email
-     *
      * @mbggenerated
      */
     public void setEmail(String email) {
@@ -182,7 +172,6 @@ public class Customer {
      * This method returns the value of the database column Customer.country
      *
      * @return the value of Customer.country
-     *
      * @mbggenerated
      */
     public String getCountry() {
@@ -194,7 +183,6 @@ public class Customer {
      * This method sets the value of the database column Customer.country
      *
      * @param country the value for Customer.country
-     *
      * @mbggenerated
      */
     public void setCountry(String country) {
@@ -206,7 +194,6 @@ public class Customer {
      * This method returns the value of the database column Customer.city
      *
      * @return the value of Customer.city
-     *
      * @mbggenerated
      */
     public String getCity() {
@@ -218,7 +205,6 @@ public class Customer {
      * This method sets the value of the database column Customer.city
      *
      * @param city the value for Customer.city
-     *
      * @mbggenerated
      */
     public void setCity(String city) {

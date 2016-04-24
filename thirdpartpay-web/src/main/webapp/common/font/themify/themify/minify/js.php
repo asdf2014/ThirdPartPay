@@ -105,21 +105,21 @@ class JS extends Minify
     {
         call_user_func_array(array('parent', '__construct'), func_get_args());
 
-        $dataDir = __DIR__.'/data/js/';
+        $dataDir = __DIR__ . '/data/js/';
         $options = FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES;
 
-        $this->keywordsReserved = file($dataDir.'keywords_reserved.txt', $options);
-        $this->keywordsBefore = file($dataDir.'keywords_before.txt', $options);
-        $this->keywordsAfter = file($dataDir.'keywords_after.txt', $options);
-        $this->operatorsBefore = file($dataDir.'operators_before.txt', $options);
-        $this->operatorsAfter = file($dataDir.'operators_after.txt', $options);
+        $this->keywordsReserved = file($dataDir . 'keywords_reserved.txt', $options);
+        $this->keywordsBefore = file($dataDir . 'keywords_before.txt', $options);
+        $this->keywordsAfter = file($dataDir . 'keywords_after.txt', $options);
+        $this->operatorsBefore = file($dataDir . 'operators_before.txt', $options);
+        $this->operatorsAfter = file($dataDir . 'operators_after.txt', $options);
     }
 
     /**
      * Minify the data.
      * Perform JS optimizations.
      *
-     * @param string[optional] $path Path to write the data to.
+     * @param string [optional] $path Path to write the data to.
      *
      * @return string The minified data.
      */
@@ -137,7 +137,7 @@ class JS extends Minify
              * singe-line comment on the last line (in which case it would also
              * be seen as part of that comment)
              */
-            $content .= $js."\n;";
+            $content .= $js . "\n;";
         }
 
         /*
@@ -204,7 +204,7 @@ class JS extends Minify
         $minifier = $this;
         $callback = function ($match) use ($minifier) {
             $count = count($minifier->extracted);
-            $placeholder = '/'.$count.'/';
+            $placeholder = '/' . $count . '/';
             $minifier->extracted[$placeholder] = $match[1];
 
             return $placeholder;
@@ -219,11 +219,67 @@ class JS extends Minify
         // it's going to be division
         // checking for that is complex, so we'll do inverse:
         // * at the beginning of the file, it's not division, but regex
-        $this->registerPattern('/^\s*\K'.$pattern.'/', $callback);
+        $this->registerPattern('/^\s*\K' . $pattern . '/', $callback);
         // * following another operator, it's not division, but regex
         $operators = $this->getOperatorsForRegex($this->operatorsBefore, '/');
         $operators += $this->getKeywordsForRegex($this->keywordsReserved, '/');
-        $this->registerPattern('/(?:'.implode('|', $operators).')\s*\K'.$pattern.'/', $callback);
+        $this->registerPattern('/(?:' . implode('|', $operators) . ')\s*\K' . $pattern . '/', $callback);
+    }
+
+    /**
+     * We'll strip whitespace around certain operators with regular expressions.
+     * This will prepare the given array by escaping all characters.
+     *
+     * @param string[] $operators
+     * @param string $delimiter
+     *
+     * @return string[]
+     */
+    protected function getOperatorsForRegex(array $operators, $delimiter = '/')
+    {
+        // escape operators for use in regex
+        $delimiter = array_fill(0, count($operators), $delimiter);
+        $escaped = array_map('preg_quote', $operators, $delimiter);
+
+        $operators = array_combine($operators, $escaped);
+
+        // ignore + & - for now, they'll get special treatment
+        unset($operators['+'], $operators['-']);
+
+        // dot can not just immediately follow a number; it can be confused for
+        // decimal point, or calling a method on it, e.g. 42 .toString()
+        $operators['.'] = '(?<![0-9]\s)\.';
+
+        // don't confuse = with other assignment shortcuts (e.g. +=)
+        $chars = preg_quote('+-*\=<>%&|');
+        $operators['='] = '(?<![' . $chars . '])\=';
+
+        return $operators;
+    }
+
+    /**
+     * We'll strip whitespace around certain keywords with regular expressions.
+     * This will prepare the given array by escaping all characters.
+     *
+     * @param string[] $keywords
+     * @param string $delimiter
+     *
+     * @return string[]
+     */
+    protected function getKeywordsForRegex(array $keywords, $delimiter = '/')
+    {
+        // escape keywords for use in regex
+        $delimiter = array_fill(0, count($keywords), $delimiter);
+        $escaped = array_map('preg_quote', $keywords, $delimiter);
+
+        // add word boundaries
+        array_walk($keywords, function ($value) {
+            return '\b' . $value . '\b';
+        });
+
+        $keywords = array_combine($keywords, $escaped);
+
+        return $keywords;
     }
 
     /**
@@ -263,8 +319,8 @@ class JS extends Minify
         // strip whitespace that ends in (or next line begin with) an operator
         // that allows statements to be broken up over multiple lines
         unset($before['+'], $before['-'], $after['+'], $after['-']);
-        $content = preg_replace('/('.implode('|', $before).')\s+/', '\\1', $content);
-        $content = preg_replace('/\s+('.implode('|', $after).')/', '\\1', $content);
+        $content = preg_replace('/(' . implode('|', $before) . ')\s+/', '\\1', $content);
+        $content = preg_replace('/\s+(' . implode('|', $after) . ')/', '\\1', $content);
 
         // make sure + and - can't be mistaken for, or joined into ++ and --
         $content = preg_replace('/(?<![\+\-])\s*([\+\-])(?![\+\-])/', '\\1', $content);
@@ -276,13 +332,13 @@ class JS extends Minify
          * strip the newlines. However, we can safely strip any non-line feed
          * whitespace that follows them.
          */
-        $content = preg_replace('/([\}\)\]])[^\S\n]+(?!'.implode('|', $operators).')/', '\\1', $content);
+        $content = preg_replace('/([\}\)\]])[^\S\n]+(?!' . implode('|', $operators) . ')/', '\\1', $content);
 
         // collapse whitespace around reserved words into single space
         $before = $this->getKeywordsForRegex($this->keywordsBefore, '/');
         $after = $this->getKeywordsForRegex($this->keywordsAfter, '/');
-        $content = preg_replace('/(^|[;\}\s])\K('.implode('|', $before).')\s+/', '\\2 ', $content);
-        $content = preg_replace('/\s+('.implode('|', $after).')(?=([;\{\s]|$))/', ' \\1', $content);
+        $content = preg_replace('/(^|[;\}\s])\K(' . implode('|', $before) . ')\s+/', '\\2 ', $content);
+        $content = preg_replace('/\s+(' . implode('|', $after) . ')(?=([;\{\s]|$))/', ' \\1', $content);
 
         // get rid of double semicolons, except where they can be used like:
         // "for(v=1,_=b;;)" or "for(v=1;;v++)"
@@ -315,62 +371,6 @@ class JS extends Minify
     }
 
     /**
-     * We'll strip whitespace around certain operators with regular expressions.
-     * This will prepare the given array by escaping all characters.
-     *
-     * @param string[] $operators
-     * @param string   $delimiter
-     *
-     * @return string[]
-     */
-    protected function getOperatorsForRegex(array $operators, $delimiter = '/')
-    {
-        // escape operators for use in regex
-        $delimiter = array_fill(0, count($operators), $delimiter);
-        $escaped = array_map('preg_quote', $operators, $delimiter);
-
-        $operators = array_combine($operators, $escaped);
-
-        // ignore + & - for now, they'll get special treatment
-        unset($operators['+'], $operators['-']);
-
-        // dot can not just immediately follow a number; it can be confused for
-        // decimal point, or calling a method on it, e.g. 42 .toString()
-        $operators['.'] = '(?<![0-9]\s)\.';
-
-        // don't confuse = with other assignment shortcuts (e.g. +=)
-        $chars = preg_quote('+-*\=<>%&|');
-        $operators['='] = '(?<!['.$chars.'])\=';
-
-        return $operators;
-    }
-
-    /**
-     * We'll strip whitespace around certain keywords with regular expressions.
-     * This will prepare the given array by escaping all characters.
-     *
-     * @param string[] $keywords
-     * @param string   $delimiter
-     *
-     * @return string[]
-     */
-    protected function getKeywordsForRegex(array $keywords, $delimiter = '/')
-    {
-        // escape keywords for use in regex
-        $delimiter = array_fill(0, count($keywords), $delimiter);
-        $escaped = array_map('preg_quote', $keywords, $delimiter);
-
-        // add word boundaries
-        array_walk($keywords, function ($value) {
-            return '\b'.$value.'\b';
-        });
-
-        $keywords = array_combine($keywords, $escaped);
-
-        return $keywords;
-    }
-
-    /**
      * Replaces all occurrences of array['key'] by array.key.
      *
      * @param string $content
@@ -399,11 +399,11 @@ class JS extends Minify
              * array['key-here'] can't be replaced by array.key-here since '-'
              * is not a valid character there.
              */
-            if (!preg_match('/^'.$minifier::REGEX_VARIABLE.'$/u', $property)) {
+            if (!preg_match('/^' . $minifier::REGEX_VARIABLE . '$/u', $property)) {
                 return $match[0];
             }
 
-            return '.'.$property;
+            return '.' . $property;
         };
 
         /*
@@ -424,9 +424,9 @@ class JS extends Minify
          * separate lookbehind assertions, one for each keyword.
          */
         $keywords = $this->getKeywordsForRegex($keywords);
-        $keywords = '(?<!'.implode(')(?<!', $keywords).')';
+        $keywords = '(?<!' . implode(')(?<!', $keywords) . ')';
 
-        return preg_replace_callback('/(?<='.$previousChar.'|\])'.$keywords.'\[(([\'"])[0-9]+\\2)\]/u', $callback, $content);
+        return preg_replace_callback('/(?<=' . $previousChar . '|\])' . $keywords . '\[(([\'"])[0-9]+\\2)\]/u', $callback, $content);
     }
 
     /**

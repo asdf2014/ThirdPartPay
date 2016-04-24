@@ -32,9 +32,8 @@
         pick = Highcharts.pick,
         seriesTypes = Highcharts.seriesTypes,
         wrap = Highcharts.wrap,
-        noop = function () {};
-
-    
+        noop = function () {
+        };
 
 
     /**
@@ -116,7 +115,7 @@
             if (!to.rgba.length || !from.rgba.length) {
                 ret = to.input || 'none';
 
-            // Interpolate
+                // Interpolate
             } else {
                 from = from.rgba;
                 to = to.rgba;
@@ -166,9 +165,9 @@
 
         initStops: function (userOptions) {
             this.stops = userOptions.stops || [
-                [0, this.options.minColor],
-                [1, this.options.maxColor]
-            ];
+                    [0, this.options.minColor],
+                    [1, this.options.maxColor]
+                ];
             each(this.stops, function (stop) {
                 stop.color = Color(stop[1]);
             });
@@ -302,7 +301,7 @@
 
             grad = horiz ? [one, 0, zero, 0] : [0, zero, 0, one]; // #3190
             this.legendColor = {
-                linearGradient: { x1: grad[0], y1: grad[1], x2: grad[2], y2: grad[3] },
+                linearGradient: {x1: grad[0], y1: grad[1], x2: grad[2], y2: grad[3]},
                 stops: options.stops || [
                     [0, options.minColor],
                     [1, options.maxColor]
@@ -385,8 +384,8 @@
         getPlotLinePath: function (a, b, c, d, pos) {
             return typeof pos === 'number' ? // crosshairs only // #3969 pos can be 0 !!
                 (this.horiz ?
-                    ['M', pos - 4, this.top - 6, 'L', pos + 4, this.top - 6, pos, this.top, 'Z'] :
-                    ['M', this.left, pos, 'L', this.left - 6, pos + 6, this.left - 6, pos - 6, 'Z']
+                        ['M', pos - 4, this.top - 6, 'L', pos + 4, this.top - 6, pos, this.top, 'Z'] :
+                        ['M', this.left, pos, 'L', this.left - 6, pos + 6, this.left - 6, pos - 6, 'Z']
                 ) :
                 Axis.prototype.getPlotLinePath.call(this, a, b, c, d);
         },
@@ -523,7 +522,7 @@
             // Data classes
             if (colorAxis.options.dataClasses) {
                 allItems = allItems.concat(colorAxis.getDataClassLegendSymbols());
-            // Gradient legend
+                // Gradient legend
             } else {
                 // Add this axis on top
                 allItems.push(colorAxis);

@@ -41,34 +41,34 @@
     // This is the default calendar template. This can be overridden.
     var clndrTemplate =
         "<div class='clndr-controls'>" +
-            "<div class='clndr-control-button'>" +
-                "<span class='clndr-previous-button'>previous</span>" +
-            "</div>" +
-            "<div class='month'><%= month %> <%= year %></div>" +
-            "<div class='clndr-control-button rightalign'>" +
-                "<span class='clndr-next-button'>next</span>" +
-            "</div>" +
+        "<div class='clndr-control-button'>" +
+        "<span class='clndr-previous-button'>previous</span>" +
+        "</div>" +
+        "<div class='month'><%= month %> <%= year %></div>" +
+        "<div class='clndr-control-button rightalign'>" +
+        "<span class='clndr-next-button'>next</span>" +
+        "</div>" +
         "</div>" +
         "<table class='clndr-table' border='0' cellspacing='0' cellpadding='0'>" +
-            "<thead>" +
-                "<tr class='header-days'>" +
-                "<% for(var i = 0; i < daysOfTheWeek.length; i++) { %>" +
-                    "<td class='header-day'><%= daysOfTheWeek[i] %></td>" +
-                "<% } %>" +
-                "</tr>" +
-            "</thead>" +
-            "<tbody>" +
-            "<% for(var i = 0; i < numberOfRows; i++){ %>" +
-                "<tr>" +
-                "<% for(var j = 0; j < 7; j++){ %>" +
-                "<% var d = j + i * 7; %>" +
-                    "<td class='<%= days[d].classes %>'>" +
-                        "<div class='day-contents'><%= days[d].day %></div>" +
-                    "</td>" +
-                "<% } %>" +
-                "</tr>" +
-            "<% } %>" +
-            "</tbody>" +
+        "<thead>" +
+        "<tr class='header-days'>" +
+        "<% for(var i = 0; i < daysOfTheWeek.length; i++) { %>" +
+        "<td class='header-day'><%= daysOfTheWeek[i] %></td>" +
+        "<% } %>" +
+        "</tr>" +
+        "</thead>" +
+        "<tbody>" +
+        "<% for(var i = 0; i < numberOfRows; i++){ %>" +
+        "<tr>" +
+        "<% for(var j = 0; j < 7; j++){ %>" +
+        "<% var d = j + i * 7; %>" +
+        "<td class='<%= days[d].classes %>'>" +
+        "<div class='day-contents'><%= days[d].day %></div>" +
+        "</td>" +
+        "<% } %>" +
+        "</tr>" +
+        "<% } %>" +
+        "</tbody>" +
         "</table>";
 
     // Defaults used throughout the application, see docs.
@@ -214,8 +214,8 @@
                     .endOf('day');
                 this.month = this.intervalStart.clone();
             }
-        // No length of time specified so we're going to default into using the
-        // current month as the time period.
+            // No length of time specified so we're going to default into using the
+            // current month as the time period.
         } else {
             this.month = moment().startOf('month');
             this.intervalStart = moment(this.month);
@@ -445,7 +445,7 @@
                     daysArray.push(
                         this.calendarDay({
                             classes: this.options.targets.empty +
-                                " " + this.options.classes.lastMonth
+                            " " + this.options.classes.lastMonth
                         }));
                 }
             }
@@ -478,7 +478,7 @@
                     daysArray.push(
                         this.calendarDay({
                             classes: this.options.targets.empty + " " +
-                                this.options.classes.nextMonth
+                            this.options.classes.nextMonth
                         }));
                 }
                 dateIterator.add(1, 'days');
@@ -501,8 +501,8 @@
                     daysArray.push(
                         this.calendarDay({
                             classes: this.options.targets.empty + " " +
-                                this.options.classes.nextMonth
-                    }));
+                            this.options.classes.nextMonth
+                        }));
                 }
             }
         }
@@ -537,10 +537,9 @@
             // If today is the same day as start or is after the start, and
             // if today is the same day as the end or before the end ...
             // woohoo semantics!
-            if ( (day.isSame(start, 'day') || day.isAfter(start, 'day'))
-                && (day.isSame(end, 'day') || day.isBefore(end, 'day')) )
-            {
-                eventsToday.push( monthEvents[j] );
+            if ((day.isSame(start, 'day') || day.isAfter(start, 'day'))
+                && (day.isSame(end, 'day') || day.isBefore(end, 'day'))) {
+                eventsToday.push(monthEvents[j]);
             }
         }
 
@@ -730,7 +729,7 @@
 
         // Render the calendar with the data above & bind events to its
         // elements
-        if ( !this.options.render) {
+        if (!this.options.render) {
             this.calendarContainer.html(
                 this.compiledClndrTemplate(data));
         } else {
@@ -769,8 +768,7 @@
             // Deal with the month controls first. Do we have room to go back?
             if (start
                 && (start.isAfter(this.intervalStart)
-                    || start.isSame(this.intervalStart, 'day')))
-            {
+                || start.isSame(this.intervalStart, 'day'))) {
                 this.element.find('.' + this.options.targets.previousButton)
                     .toggleClass(this.options.classes.inactive, true);
                 this.constraints.previous = !this.constraints.previous;
@@ -779,8 +777,7 @@
             // Do we have room to go forward?
             if (end
                 && (end.isBefore(this.intervalEnd)
-                    || end.isSame(this.intervalEnd, 'day')))
-            {
+                || end.isSame(this.intervalEnd, 'day'))) {
                 this.element.find('.' + this.options.targets.nextButton)
                     .toggleClass(this.options.classes.inactive, true);
                 this.constraints.next = !this.constraints.next;
@@ -802,9 +799,8 @@
 
             // Today? We could put this in init(), but we want to support the
             // user changing the constraints on a living instance.
-            if ( (start && start.isAfter( moment(), 'month' ))
-                || (end && end.isBefore( moment(), 'month' )) )
-            {
+            if ((start && start.isAfter(moment(), 'month'))
+                || (end && end.isBefore(moment(), 'month'))) {
                 this.element.find('.' + this.options.targets.today)
                     .toggleClass(this.options.classes.inactive, true);
                 this.constraints.today = !this.constraints.today;
@@ -860,8 +856,7 @@
             // if trackSelectedDate is on, we need to handle click on a new day
             if (self.options.trackSelectedDate) {
                 if (self.options.ignoreInactiveDaysInSelection
-                    && $currentTarget.hasClass(classes.inactive))
-                {
+                    && $currentTarget.hasClass(classes.inactive)) {
                     return;
                 }
 
@@ -1014,12 +1009,12 @@
 
         // We want to determine if any of the change conditions have been
         // hit and then trigger our events based off that.
-        nextMonth = newInt.start.isAfter( orig.start )
+        nextMonth = newInt.start.isAfter(orig.start)
             && (Math.abs(newInt.start.month() - orig.start.month()) == 1
-                || orig.start.month() === 11 && newInt.start.month() === 0);
-        prevMonth = newInt.start.isBefore( orig.start )
+            || orig.start.month() === 11 && newInt.start.month() === 0);
+        prevMonth = newInt.start.isBefore(orig.start)
             && (Math.abs(orig.start.month() - newInt.start.month()) == 1
-                || orig.start.month() === 0 && newInt.start.month() === 11);
+            || orig.start.month() === 0 && newInt.start.month() === 11);
         monthChanged = newInt.start.month() !== orig.start.month()
             || newInt.start.year() !== orig.start.year();
         nextYear = newInt.start.year() - orig.start.year() === 1
@@ -1082,7 +1077,7 @@
     Clndr.prototype.back = function (options /*, ctx */) {
         var yearChanged = null,
             ctx = ( arguments.length > 1 )
-                ? arguments[ 1 ]
+                ? arguments[1]
                 : this,
             timeOpt = ctx.options.lengthOfTime,
             defaults = {
@@ -1156,7 +1151,7 @@
      */
     Clndr.prototype.forward = function (options /*, ctx */) {
         var ctx = ( arguments.length > 1 )
-                ? arguments[ 1 ]
+                ? arguments[1]
                 : this,
             timeOpt = ctx.options.lengthOfTime,
             defaults = {
@@ -1228,7 +1223,7 @@
      */
     Clndr.prototype.previousYear = function (options /*, ctx */) {
         var ctx = ( arguments.length > 1 )
-                ? arguments[ 1 ]
+                ? arguments[1]
                 : this,
             defaults = {
                 withCallbacks: false
@@ -1270,7 +1265,7 @@
      */
     Clndr.prototype.nextYear = function (options /*, ctx */) {
         var ctx = ( arguments.length > 1 )
-                ? arguments[ 1 ]
+                ? arguments[1]
                 : this,
             defaults = {
                 withCallbacks: false
@@ -1309,7 +1304,7 @@
 
     Clndr.prototype.today = function (options /*, ctx */) {
         var ctx = ( arguments.length > 1 )
-                ? arguments[ 1 ]
+                ? arguments[1]
                 : this,
             timeOpt = ctx.options.lengthOfTime,
             defaults = {
@@ -1349,11 +1344,10 @@
                 .subtract(1, 'days')
                 .endOf('month');
         }
-        
+
         // No need to re-render if we didn't change months.
         if (!ctx.intervalStart.isSame(orig.start)
-            || !ctx.intervalEnd.isSame(orig.end))
-        {
+            || !ctx.intervalEnd.isSame(orig.end)) {
             ctx.render();
         }
 

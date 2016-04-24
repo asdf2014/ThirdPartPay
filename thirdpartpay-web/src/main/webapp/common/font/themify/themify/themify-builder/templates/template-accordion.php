@@ -3,7 +3,7 @@ if (!defined('ABSPATH'))
     exit; // Exit if accessed directly
 /**
  * Template Accordion
- * 
+ *
  * Access original fields: $mod_settings
  * @author Themify
  */
@@ -29,13 +29,14 @@ if (TFCache::start_cache('accordion', self::$post_id, array('ID' => $module_ID))
     $animation_effect = $this->parse_animation_effect($animation_effect, $fields_args);
 
     $container_class = implode(' ', apply_filters('themify_builder_module_classes', array(
-        'module', 'module-' . $mod_name, $module_ID, $css_accordion, $animation_effect
-                    ), $mod_name, $module_ID, $fields_args)
+            'module', 'module-' . $mod_name, $module_ID, $css_accordion, $animation_effect
+        ), $mod_name, $module_ID, $fields_args)
     );
     $ui_class = implode(' ', array('ui', 'module-' . $mod_name, $layout_accordion, $accordion_appearance_accordion, $color_accordion));
     ?>
     <!-- module accordion -->
-    <div id="<?php echo esc_attr($module_ID); ?>" class="<?php echo esc_attr($container_class); ?>" data-behavior="<?php echo esc_attr($expand_collapse_accordion); ?>">
+    <div id="<?php echo esc_attr($module_ID); ?>" class="<?php echo esc_attr($container_class); ?>"
+         data-behavior="<?php echo esc_attr($expand_collapse_accordion); ?>">
 
         <?php if ($mod_title_accordion != ''): ?>
             <?php echo $mod_settings['before_title'] . wp_kses_post(apply_filters('themify_builder_module_title', $mod_title_accordion, $fields_args)) . $mod_settings['after_title']; ?>
@@ -53,8 +54,10 @@ if (TFCache::start_cache('accordion', self::$post_id, array('ID' => $module_ID))
                 ));
                 ?>
                 <li <?php if ($content['default_accordion'] == 'open') echo 'class="builder-accordion-active"'; ?>>
-                    <div class="accordion-title"><a href="#"><?php echo wp_kses_post($content['title_accordion']); ?></a></div>
-                    <div class="accordion-content <?php if ($content['default_accordion'] != 'open') echo 'default-closed'; ?> clearfix">
+                    <div class="accordion-title"><a
+                            href="#"><?php echo wp_kses_post($content['title_accordion']); ?></a></div>
+                    <div
+                        class="accordion-content <?php if ($content['default_accordion'] != 'open') echo 'default-closed'; ?> clearfix">
                         <?php
                         if (!empty($content['text_accordion'])) {
                             echo apply_filters('themify_builder_module_content', $content['text_accordion']);

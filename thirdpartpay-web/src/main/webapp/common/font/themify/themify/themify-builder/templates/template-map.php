@@ -3,7 +3,7 @@ if (!defined('ABSPATH'))
     exit; // Exit if accessed directly
 /**
  * Template Map
- * 
+ *
  * Access original fields: $mod_settings
  * @author Themify
  */
@@ -45,17 +45,17 @@ if (TFCache::start_cache('map', self::$post_id, array('ID' => $module_ID))):
         $draggable_map = 'disable';
 
     $container_class = implode(' ', apply_filters('themify_builder_module_classes', array(
-        'module', 'module-' . $mod_name, $module_ID, $css_map, $animation_effect
-                    ), $mod_name, $module_ID, $fields_args)
+            'module', 'module-' . $mod_name, $module_ID, $css_map, $animation_effect
+        ), $mod_name, $module_ID, $fields_args)
     );
     $style = '';
 
 // specify border
     if (isset($mod_settings['b_width_map'])) {
         $style .= 'border: ';
-        $style .= ( isset($mod_settings['b_style_map']) ) ? $mod_settings['b_style_map'] : '';
-        $style .= ( isset($mod_settings['b_width_map']) ) ? ' ' . $mod_settings['b_width_map'] . 'px' : '';
-        $style .= ( isset($mod_settings['b_color_map']) ) ? ' ' . $this->get_rgba_color($mod_settings['b_color_map']) : '';
+        $style .= (isset($mod_settings['b_style_map'])) ? $mod_settings['b_style_map'] : '';
+        $style .= (isset($mod_settings['b_width_map'])) ? ' ' . $mod_settings['b_width_map'] . 'px' : '';
+        $style .= (isset($mod_settings['b_color_map'])) ? ' ' . $this->get_rgba_color($mod_settings['b_color_map']) : '';
         $style .= ';';
     }
     ?>
@@ -78,15 +78,16 @@ if (TFCache::start_cache('map', self::$post_id, array('ID' => $module_ID))):
             $args .= '&maptype=' . strtolower($type_map);
             $args .= '&size=' . preg_replace("/[^0-9]/", "", $w_map_static) . 'x' . preg_replace("/[^0-9]/", "", $h_map);
             ?>
-            <img style="<?php echo esc_attr($style); ?>" src="//maps.googleapis.com/maps/api/staticmap?<?php echo $args; ?>" />
+            <img style="<?php echo esc_attr($style); ?>"
+                 src="//maps.googleapis.com/maps/api/staticmap?<?php echo $args; ?>"/>
 
         <?php else : ?>
             <?php
             $style .= 'width:';
-            $style .= ( isset($mod_settings['w_map']) ) ? $mod_settings['w_map'] . $mod_settings['unit_w'] : '100%';
+            $style .= (isset($mod_settings['w_map'])) ? $mod_settings['w_map'] . $mod_settings['unit_w'] : '100%';
             $style .= ';';
             $style .= 'height:';
-            $style .= ( isset($mod_settings['h_map']) ) ? $mod_settings['h_map'] . $mod_settings['unit_h'] : '300px';
+            $style .= (isset($mod_settings['h_map'])) ? $mod_settings['h_map'] . $mod_settings['unit_h'] : '300px';
             $style .= ';';
 
             if (!empty($address_map) || !empty($latlong_map)) {
@@ -99,7 +100,10 @@ if (TFCache::start_cache('map', self::$post_id, array('ID' => $module_ID))):
                 $data['scroll'] = $scrollwheel_map == 'enable';
                 $data['drag'] = 'enable' == $draggable_map;
                 ?>
-                <div data-map="<?php esc_attr_e(base64_encode(json_encode($data))) ?>" class="themify_map map-container"  style="<?php echo esc_attr($style); ?>"  data-info-window="<?php echo esc_attr($info_window_map); ?>" data-reverse-geocoding="<?php echo ( empty($address_map) && !empty($latlong_map) ) ? true : false; ?>"></div>
+                <div data-map="<?php esc_attr_e(base64_encode(json_encode($data))) ?>" class="themify_map map-container"
+                     style="<?php echo esc_attr($style); ?>"
+                     data-info-window="<?php echo esc_attr($info_window_map); ?>"
+                     data-reverse-geocoding="<?php echo (empty($address_map) && !empty($latlong_map)) ? true : false; ?>"></div>
             <?php } ?>
         <?php endif; ?>
 

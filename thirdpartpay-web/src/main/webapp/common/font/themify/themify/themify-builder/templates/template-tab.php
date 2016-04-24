@@ -3,7 +3,7 @@ if (!defined('ABSPATH'))
     exit; // Exit if accessed directly
 /**
  * Template Tab
- * 
+ *
  * Access original fields: $mod_settings
  * @author Themify
  */
@@ -27,8 +27,8 @@ if (TFCache::start_cache('tab', self::$post_id, array('ID' => $module_ID))):
 
     $tab_id = $module_ID . '-' . $builder_id;
     $container_class = implode(' ', apply_filters('themify_builder_module_classes', array(
-        'module', 'module-' . $mod_name, $module_ID, 'ui', $layout_tab, $tab_appearance_tab, $color_tab, $css_tab, $animation_effect
-                    ), $mod_name, $module_ID, $fields_args)
+            'module', 'module-' . $mod_name, $module_ID, 'ui', $layout_tab, $tab_appearance_tab, $color_tab, $css_tab, $animation_effect
+        ), $mod_name, $module_ID, $fields_args)
     );
     ?>
 
@@ -43,12 +43,15 @@ if (TFCache::start_cache('tab', self::$post_id, array('ID' => $module_ID))):
         <div class="builder-tabs-wrap">
             <ul class="tab-nav">
                 <?php foreach ($tab_content_tab as $k => $tab): ?>
-                    <li <?php echo 0 == $k ? 'aria-expanded="true"' : 'aria-expanded="false"'; ?>><a href="#tab-<?php echo esc_attr($tab_id . '-' . $k); ?>"><?php echo isset($tab['title_tab']) ? $tab['title_tab'] : ''; ?></a></li>
+                    <li <?php echo 0 == $k ? 'aria-expanded="true"' : 'aria-expanded="false"'; ?>><a
+                            href="#tab-<?php echo esc_attr($tab_id . '-' . $k); ?>"><?php echo isset($tab['title_tab']) ? $tab['title_tab'] : ''; ?></a>
+                    </li>
                 <?php endforeach; ?>
             </ul>
 
             <?php foreach ($tab_content_tab as $k => $tab): ?>
-                <div id="tab-<?php echo esc_attr($tab_id . '-' . $k); ?>" class="tab-content" <?php echo $k == 0 ? 'aria-hidden="false"' : 'aria-hidden="true"' ?>>
+                <div id="tab-<?php echo esc_attr($tab_id . '-' . $k); ?>"
+                     class="tab-content" <?php echo $k == 0 ? 'aria-hidden="false"' : 'aria-hidden="true"' ?>>
                     <?php
                     if (isset($tab['text_tab'])) {
                         echo apply_filters('themify_builder_module_content', $tab['text_tab']);

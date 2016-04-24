@@ -1,4 +1,4 @@
-AmCharts.translations[ "export" ][ "fr" ] = {
+AmCharts.translations["export"]["fr"] = {
     "fallback.save.text": "CTRL + C pour copier dans le presse-papier.",
     "fallback.save.image": "Clic-droit -> Enregistrer sous... pour sauvegarder l'image.",
 

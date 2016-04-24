@@ -53,7 +53,7 @@
                         $respTabs.addClass('resp-vtabs').addClass(options.tabidentify);
                     }
                     if (jfit == true) {
-                        $respTabs.css({ width: '100%', margin: '0px' });
+                        $respTabs.css({width: '100%', margin: '0px'});
                     }
                     if (jtype == accord) {
                         $respTabs.addClass('resp-easy-accordion').addClass(options.tabidentify);
@@ -135,7 +135,7 @@
                 }
                 //assign proper classes for when tabs mode is activated before making a selection in accordion mode
                 else {
-                   // $($respTabs.find('.resp-tab-content.' + options.tabidentify)[tabNum]).addClass('resp-accordion-closed'); //removed resp-tab-content-active
+                    // $($respTabs.find('.resp-tab-content.' + options.tabidentify)[tabNum]).addClass('resp-accordion-closed'); //removed resp-tab-content-active
                 }
 
                 //Tab Click action function
@@ -170,7 +170,7 @@
 
                             $respTabs.find('.resp-tab-content[aria-labelledby = ' + $tabAria + '].' + options.tabidentify).slideDown().addClass('resp-tab-content-active');
                         } else {
-                        
+
                             $respTabs.find('.resp-tab-active.' + options.tabidentify).removeClass('resp-tab-active').css({
                                 'background-color': options.inactive_bg,
                                 'border-color': 'none'

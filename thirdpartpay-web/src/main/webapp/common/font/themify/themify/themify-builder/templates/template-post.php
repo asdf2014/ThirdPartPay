@@ -3,7 +3,7 @@ if (!defined('ABSPATH'))
     exit; // Exit if accessed directly
 /**
  * Template Post
- * 
+ *
  * Access original fields: $mod_settings
  * @author Themify
  */
@@ -41,8 +41,8 @@ extract($fields_args, EXTR_SKIP);
 $animation_effect = $this->parse_animation_effect($animation_effect, $fields_args);
 
 $container_class = implode(' ', apply_filters('themify_builder_module_classes', array(
-    'module', 'module-' . $mod_name, $module_ID, $css_post
-                ), $mod_name, $module_ID, $fields_args)
+        'module', 'module-' . $mod_name, $module_ID, $css_post
+    ), $mod_name, $module_ID, $fields_args)
 );
 
 $this->add_post_class($animation_effect);
@@ -69,7 +69,7 @@ $paged = $this->get_paged_query();
         $terms = preg_replace('/\|[multiple|single]*$/', '', $terms);
 
         $temp_terms = explode(',', $terms);
-        $exclude = ( '-' == substr($terms, 0, 1) );
+        $exclude = ('-' == substr($terms, 0, 1));
         $new_terms = array();
         $is_string = false;
         foreach ($temp_terms as $t) {
@@ -79,7 +79,7 @@ $paged = $this->get_paged_query();
                 $new_terms[] = $is_string ? trim($t) : ($exclude ? abs($t) : intval($t));
             }
         }
-        $tax_field = ( $is_string ) ? 'slug' : 'id';
+        $tax_field = ($is_string) ? 'slug' : 'id';
 
         $args = array(
             'post_status' => 'publish',
@@ -111,7 +111,7 @@ $paged = $this->get_paged_query();
             if (empty($limit))
                 $limit = get_option('posts_per_page');
 
-            $args['offset'] = ( ( $paged - 1 ) * $limit ) + $offset_post;
+            $args['offset'] = (($paged - 1) * $limit) + $offset_post;
         }
 
         $the_query = new WP_Query();
@@ -152,7 +152,7 @@ $paged = $this->get_paged_query();
 
                 // revert to original $themify state
                 $themify = clone $themify_save;
-                echo!empty($out) ? $out : '';
+                echo !empty($out) ? $out : '';
             } else {
                 // use builder template
                 global $post;
@@ -205,7 +205,8 @@ $paged = $this->get_paged_query();
                         <div class="post-content">
 
                             <?php if ($hide_post_date_post != 'yes'): ?>
-                                <time datetime="<?php the_time('o-m-d') ?>" class="post-date" pubdate><?php the_date(apply_filters('themify_loop_date', '')) ?></time>
+                                <time datetime="<?php the_time('o-m-d') ?>" class="post-date"
+                                      pubdate><?php the_date(apply_filters('themify_loop_date', '')) ?></time>
                             <?php endif; //post date   ?>
 
                             <?php if ($hide_post_title_post != 'yes'): ?>
@@ -213,21 +214,24 @@ $paged = $this->get_paged_query();
                                 <?php if ($unlink_post_title_post == 'yes'): ?>
                                     <h1 class="post-title"><?php the_title(); ?></h1>
                                 <?php else: ?>
-                                    <h1 class="post-title"><a href="<?php echo themify_get_featured_image_link(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h1>
+                                    <h1 class="post-title"><a href="<?php echo themify_get_featured_image_link(); ?>"
+                                                              title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+                                    </h1>
                                 <?php endif; //unlink post title    ?>
-                                <?php themify_after_post_title(); // Hook ?> 
-                            <?php endif; //post title  ?>    
+                                <?php themify_after_post_title(); // Hook ?>
+                            <?php endif; //post title  ?>
 
                             <?php if ($hide_post_meta_post != 'yes'): ?>
-                                <p class="post-meta"> 
+                                <p class="post-meta">
                                     <span class="post-author"><?php the_author_posts_link() ?></span>
                                     <span class="post-category"><?php the_category(', ') ?></span>
                                     <?php the_tags(' <span class="post-tag">', ', ', '</span>'); ?>
                                     <?php if (!themify_get('setting-comments_posts') && comments_open()) : ?>
-                                        <span class="post-comment"><?php comments_popup_link(__('0 Comments', 'themify'), __('1 Comment', 'themify'), __('% Comments', 'themify')); ?></span>
+                                        <span
+                                            class="post-comment"><?php comments_popup_link(__('0 Comments', 'themify'), __('1 Comment', 'themify'), __('% Comments', 'themify')); ?></span>
                                     <?php endif; //post comment    ?>
                                 </p>
-                            <?php endif; //post meta   ?>    
+                            <?php endif; //post meta   ?>
 
                             <?php
                             // fix the issue more link doesn't output
@@ -258,7 +262,7 @@ $paged = $this->get_paged_query();
             ?>
         </div><!-- .builder-posts-wrap -->
         <?php if ('yes' != $hide_page_nav_post): ?>
-           <?php echo $this->get_pagenav('', '', $the_query) ?>
+            <?php echo $this->get_pagenav('', '', $the_query) ?>
         <?php endif; ?>
         <?php
         do_action('themify_builder_after_template_content_render');
