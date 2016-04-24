@@ -1,0 +1,215 @@
+.scombobox {
+    position: relative;
+    height: 100%;
+}
+.scombobox select {
+    display: none;
+}
+
+.themify_combobox input.scombobox-display {
+    width: 100%;
+    height: 100%;
+    padding:0;
+    border: none;
+    border-radius: 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    position: relative;
+    z-index: 2;
+    outline: none;
+    box-shadow: none;
+    padding-left: 9px;
+    font-size: 14px;
+}
+
+.scombobox-display:disabled {
+    background: #F0F0F0;
+}
+.scombobox-display.scombobox-invalid {
+    background: #FFCCD4;
+}
+.scombobox-display-div {
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.scombobox-display-div-holder {
+    padding: 2px;
+}
+.scombobox-display-div-item {
+    border: 1px solid #CCC;
+    margin: 2px;
+    border-radius: 4px;
+    float: left;
+    height: 100%;
+    max-width: 150px;
+    padding: 4px 18px 4px 8px;
+    position: relative;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: default;
+    background: #F8F8F8;
+    display: none;
+}
+.scombobox-display-div-item-text {
+    max-width: 140px;
+    overflow: hidden;
+}
+.scombobox-display-div-item-remove {
+    position: absolute;
+    right: 2px; top: 2px;
+    background: #A0A0A0;
+    border-radius: 100px;
+    color: white;
+    cursor: pointer;
+    line-height: 90%;
+    padding: 1px 3px 0px;
+}
+.scombobox-display-div-item-remove:hover {
+    background: #408CBE;
+}
+.scombobox-display-div-item-remove:active {
+    background: #3075A3;
+}
+
+.scombobox-list {
+    display: none;
+    position: absolute;
+    max-height: 400px;
+    min-width: 100%;
+    max-width: 300%;
+    white-space: nowrap;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #CCC;
+    border-top: none; /* instead of margin-top: -1px */
+    z-index: 3;
+    margin-top: 1px;
+    color: #32373c;
+}
+.themify_combobox.font-family-select .scombobox-list{
+    margin-left: -84px;
+    min-width: 250px;
+}
+.themify_combobox.custom-select{
+	overflow: visible;;
+}
+.scombobox-list p {
+    cursor: pointer;
+    margin: 0;
+    padding: 5px;
+}
+.scombobox-list p input[type="checkbox"] {
+    margin-right: 8px;
+	vertical-align: middle;
+}
+.scombobox-list p:hover, .scombobox-list p.scombobox-hovered {
+    background-color: #E9EFFC;
+}
+.scombobox-list p.scombobox-separator {
+    height: 2px; 
+    padding: 0;
+	cursor: default;
+	background: #EEE;
+}
+.scombobox-list p.scombobox-header {
+    cursor: default;
+    background: #EEE;
+    color: #000;
+    font-weight: bold;
+    padding: 10px 5px;
+    font-size: 14px;
+}
+
+.scombobox-dropdown-arrow:before {
+    content: '\e64b';
+    position: absolute;
+    top: 10px;
+    right: 7px;
+    color: #aaa;
+    height: 10px;
+    width: 10px;
+    display: block;
+    z-index: 3;
+    font: normal 17px/1 'themify';
+    speak: none;
+    cursor: pointer;
+    font-size: 12px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.scombobox-dropdown-arrow:hover:before{
+    color: #000;
+}
+.scombobox-dropdown-background-invalid {
+    border-left: 1px solid #CCC;
+}
+
+.scombobox-marker {
+    background: #958FFF;
+    color: white;
+    border-radius: 2px;
+    padding: 0 2px;
+    margin: 0 2px;
+}
+
+.scombobox input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.scombobox-disabled .scombobox-dropdown-background,
+    .scombobox-disabled .scombobox-dropdown-arrow {
+    display: none;
+}
+.scombobox-disabled .scombobox-display-div {
+    background: #F8F8F8;
+    cursor: default;
+}
+#themify_font_preview{
+    position: absolute;
+    z-index: 99999999;
+    display: none;
+    color: #000;
+    background: #fff;
+    padding: 21px;
+    font-size: 18px;
+	border: 1px solid #c0c0c0;
+}
+#themify_font_preview:after,#themify_font_preview:before{
+	right: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+#themify_font_preview:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-right-color: #fff;
+	border-width: 30px;
+	margin-top: -30px;
+}
+#themify_font_preview:before {
+	border-color: rgba(153, 153, 153, 0);
+	border-right-color: #999;
+	border-width: 31px;
+	margin-top: -31px;
+}
+.themify_font_wait{
+    display: none;
+}
+.themify_show_wait .themify_font_wait{
+    background: url('../../img/ajax-loader.gif') no-repeat;
+    width: 100%;
+    height: 32px;
+    display: block;
+    position: absolute;
+    top: 9px;
+    background-color: #fff;
+    left: 0;
+}

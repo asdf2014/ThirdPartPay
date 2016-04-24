@@ -1,0 +1,422 @@
+/*  
+Skin Name: Flat
+Version: 1.0
+Description: Skin for Basic
+*/
+
+/************************************************************************************
+GENERAL STYLING
+*************************************************************************************/
+
+/* Google Web Fonts */
+@import url(http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,300&subset=latin,latin-ext);
+
+body {
+	font: normal .87em/1.7em 'Open Sans', sans-serif;
+	color: #959595;
+}
+
+p {
+	margin: 0 0 1.5em;
+}
+
+a {
+	color: #000;
+}
+
+/* HEADINGS
+================================================ */
+h1, h2, h3, h4, h5, h6 {
+	font-family: Montserrat, sans-serif;
+	font-weight: normal;
+	color: #000;
+}
+h1 {
+	font-size: 2.14em;
+	margin: 0 0 .8em;
+}
+h2 {
+	font-size: 1.85em;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+	margin: 0 0 .8em;
+}
+h3 {
+	font: bold 1.28em/1.4em Montserrat, sans-serif;
+	text-transform: uppercase;
+}
+h4 {
+	font-family: inherit;
+	color: inherit;
+	font-size: 1.2em;
+	line-height: 1.8em;
+	margin: 0 0 .8em;
+}
+
+
+/************************************************************************************
+HEADER
+*************************************************************************************/
+#header {
+	padding-bottom: 20px;
+}
+/* 
+SITE LOGO
+================================================ */
+#site-logo {
+	font: bold 3.42em/1em Montserrat, sans-serif;
+	text-transform: uppercase;
+}
+
+/* 
+SITE DESCRIPTION
+================================================ */
+#site-description {
+	font: lighter 1.12em/1em 'Open Sans', sans-serif;
+	margin: 0 0 20px;
+	color: #959595;
+	color: rgba(0,0,0,.5);
+}
+
+/* 
+MAIN NAVIGATION
+================================================ */
+#main-nav {
+	bottom: 0;
+}
+#main-nav li {
+	float: none;
+	display: inline-block;
+	padding-bottom: 16px;
+}
+
+/* main nav links */
+#main-nav a {
+	color: #959595;
+	font: normal 1em/1em Montserrat, sans-serif;
+	text-transform: uppercase;
+}
+#main-nav a:hover, 
+#main-nav .current_page_item a,
+#main-nav .current-menu-item a,
+#main-nav .current_page_item a:hover,
+#main-nav .current-menu-item a:hover {
+	color: #000;
+	background: none;
+}
+
+/* dropdown ul */
+#main-nav ul {
+	border-radius: 0;
+	left: 50%;
+	top: 35px;
+	width: 200px;
+	margin-left: -100px;
+}
+#main-nav ul:before {
+	position: absolute;
+	display: block;
+	content: ' ';
+	width: 0;
+	height: 0;
+	top: -8px;
+	left: 50%;
+	margin-left: -8px;
+	border-bottom: 8px solid #ccc;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	z-index: -1;
+}
+#main-nav ul li {
+	width: 100%;
+}
+
+/* sub-levels link */
+#main-nav ul a,
+#main-nav .current_page_item ul a,
+#main-nav ul .current_page_item a,
+#main-nav .current-menu-item ul a,
+#main-nav ul .current-menu-item a {
+	width: 92%;
+	text-align: center;
+	padding: 6px 4%;
+	font-family: inherit;
+}
+
+/* sub-levels dropdown */
+#main-nav ul ul {
+	left: 300px;
+	top: -6px;
+}
+#main-nav ul ul:before {
+	top: 13px;
+	left: -17px;
+	margin-left: 0;
+	border-right: 8px solid #ccc;
+	border-top: 8px solid transparent;
+	border-bottom: 8px solid transparent;
+}
+
+
+/************************************************************************************
+PAGE
+*************************************************************************************/
+/* page title */
+.page-title {
+	margin: 0 0 40px;
+	padding: 0;
+	font-size: 2.6em;
+	line-height: 1.2em;
+	letter-spacing: -1px;
+}
+
+/************************************************************************************
+POST
+*************************************************************************************/
+/* post image */
+.post-image {
+	margin-bottom: 10px;
+}
+.post-image img {
+	border-radius: 5px;
+}
+.list-post .post-image {
+	margin-bottom: 15px;
+}
+
+/* post title */
+.post-title {
+	font-family: 'Open Sans';
+	font-weight: lighter;
+	margin-bottom: 10px;
+	line-height: 1.3em;
+	text-transform: none;
+}
+
+/* post date */
+.post-date {
+	font: normal 1em/1em Montserrat;
+	color: rgba(0,0,0,.4);
+	text-transform: uppercase;
+	display: inline-block;
+	margin-bottom: 5px;
+}
+
+/* post meta */
+.post-meta {
+	font-size: .92em;
+	margin-bottom: 12px;
+}
+.post-meta a {
+	color: rgba(0,0,0,.4);
+}
+.post-meta .post-author,
+.post-meta .post-category,
+.post-meta .post-tag,
+.post-meta .post-comment a {
+	background: none;
+	padding: 0;
+	margin-right: 8px;
+}
+
+/* grid4 */
+.grid4 .post {
+	margin-bottom: 20px;
+}
+.grid4 .post-title {
+	font-size: 1.4em;
+}
+
+/* grid3 */
+.grid3 .post {
+	margin-bottom: 20px;
+}
+.grid3 .post-title {
+	font-size: 1.6em;
+	margin-bottom: 10px;
+}
+
+/* grid2 */
+.grid2 .post {
+	margin-bottom: 30px;
+}
+
+
+/* list thumb post */
+.list-thumb-image .post {
+	margin-bottom: 20px;
+}
+.list-thumb-image .post-title {
+	font-size: 1.5em;
+	margin: 0 0 8px 0;
+}
+.list-thumb-image .post-meta {
+	margin: 0 0 5px 0;
+}
+.list-thumb-image .post-image {
+	float: left;
+	margin: 0 20px 15px 0;
+}
+
+/* list large image */
+.list-large-image .post-image {
+	float: left;
+	margin: 0 20px 15px 0;
+}
+
+/* 
+SINGLE POST
+================================================ */
+/* post title */
+.single.list-post .post-title {
+	font-size: 2.71em;
+}
+
+/************************************************************************************
+POST NAVIGATION
+*************************************************************************************/
+/* post nav arrow */
+.post-nav .arrow {
+	margin-top: -6px;
+}
+
+/************************************************************************************
+COMMENTS
+*************************************************************************************/
+#commentform label {
+	font-weight: normal;
+}
+
+/************************************************************************************
+SIDEBAR
+*************************************************************************************/
+.widget li {
+	border: none;
+	padding: 6px 0 10px;
+}
+
+/************************************************************************************
+FOOTER
+*************************************************************************************/
+/* back-top */
+.back-top {
+	float: none;
+	text-align: center;
+}
+.back-top a {
+	display: inline-block;
+}
+
+/* footer text */
+.footer-text {
+	text-align: center;
+}
+
+/* footer nav */
+.footer-nav {
+	margin-top: 2px;
+	display: block;
+	text-align: center;
+}
+.footer-text a {
+	color: inherit;
+}
+
+/************************************************************************************
+IMAGE STYLES
+*************************************************************************************/
+img.alignleft, img.aligncenter, img.alignright, img.alignnone, .wp-caption img,
+.widget .feature-posts-list .post-img,
+.widget .flickr_badge_image img,
+.commentlist .avatar,
+.recent-comments-list .avatar,
+#body .gallery img,
+.attachment img,
+.post-image img,
+.feature-img,
+.post-img,
+.image-wrap img,
+.slide-image img {
+	border-radius: 5px;
+}
+
+/************************************************************************************
+BUILDER STYLES
+*************************************************************************************/
+/* module heading */
+.slide-title,
+.image-title,
+.video-title {
+	font-family: 'Open Sans';
+	font-weight: lighter;
+	font-size: 1.3em;
+	text-transform: none;
+}
+
+/************************************************************************************
+MEDIA QUERIES
+*************************************************************************************/
+@media screen and (max-width: 760px) {
+	
+	/************************************************************************************
+	HEADER
+	*************************************************************************************/
+	/* site description */
+	#site-description {
+		margin-bottom: 20px !important;
+	}
+	
+	/* main navigation */
+	#main-nav {
+		margin-bottom: 0 !important;
+	}
+	#main-nav li {
+		padding-bottom: 5px;
+	}
+	#main-nav ul {
+		top: 28px;
+	}
+}
+@media screen and (max-width: 480px) {
+	
+	/************************************************************************************
+	MAIN NAV
+	*************************************************************************************/
+	#main-nav {
+		top: 146px !important;
+		width: 200px !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		border-color: #ccc !important;
+	}
+	#main-nav:before {
+		position: absolute;
+		display: block;
+		content: ' ';
+		width: 0;
+		height: 0;
+		top: -8px;
+		right: 9px;
+		border-bottom: 8px solid #999;
+		border-left: 8px solid transparent;
+		border-right: 8px solid transparent;
+		z-index: -1;
+	}
+	#main-nav ul,
+	#main-nav ul li {
+		width: auto;
+	}
+	#main-nav ul:before,
+	#main-nav ul ul:before {
+		display: none;
+	}
+	.mobile-button {
+		margin-top: 12px;
+	}
+	.mobile-button:after {
+		background: none !important;
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+	}
+}

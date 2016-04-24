@@ -1,0 +1,123 @@
+#themify,
+#themify .label,
+.upload-image,
+.colorSelect,
+#themify .biggest-transfer-btn em,
+#themify .biggest-transfer-btn a,
+.themify_field,
+.themify_field_title,
+.themify-tabs-heading li,
+#themify .biggest-transfer-btn .plupload-import,
+.dropdownbutton-list,
+#themify .social-link-item .label {
+	float: right;
+}
+
+.themify_field_row {
+	padding: 5px 0 10px 5px;
+}
+
+#themify .pushlabel {
+	margin-right: 200px;
+	margin-left: 0;
+	padding-left: 0;
+}
+#themify label, #themify-meta-boxes label {
+	margin-left: 7px;
+}
+#themify .upload-file, #themify .colorSelectInput {
+	margin-left: 5px;
+	margin-right: 0;
+}
+#themify .indent {
+	padding-left: 0;
+	padding-right: 3%;
+}
+object {
+	float: right !important;
+}
+#themify .preset {
+	padding: 10px 0 10px 10px;
+}
+#themify .preset a span{
+	right: -2px;
+	left: auto;
+}
+.colorSelect{
+	margin: 4px 0 0 6px;
+}
+#themify #bottomtab .reset{
+	background-position: left 0;
+}
+#themify .biggest-transfer-btn a {
+	padding: 15px 40px 0 0;
+	width: 130px;
+}
+.themify-tabs-heading li{
+	margin: 0 0 0 2px;
+}
+#poststuff .inside .themify_write_panel{
+	border-radius: 5px 0 5px 5px;
+}
+#themify .biggest-transfer-btn .plupload-import{
+	padding: 3px 22px 10px 36px;
+}
+#themify .social-link-item {
+	margin-left: 10px;
+	margin-right: 0;
+}
+#themify .social-link-item .remove-item {
+	left: -7px;
+	right: auto;
+}
+#themify .social-link-item .icon-preview {
+	left: 25px;
+	right: auto;
+}
+#themify .clearColor, .themify_field_row .clearColor{
+	margin-right: -4px;
+	border-radius: 3px;
+	border-bottom-right-radius: 0;
+	border-top-right-radius: 0;
+}
+#themify .themify_input_field.colorSelectInput, .themify_field_row .themify_input_field.colorSelectInput {
+	margin-left: 0;
+	margin-right: 1px;
+	border-radius: 3px;
+	border-bottom-left-radius: 0;
+	border-top-left-radius: 0;
+}
+.dropdownbutton-list {
+	margin-right: 0;
+	margin-left: 10px;
+}
+#themify .disable-autoinfinite {
+	margin-left: 0;
+	margin-right: 15px;
+}
+.minicolors-hidden {
+	left: 9999em !important;
+}
+.themify_upload_preview {
+	margin-left: 10px;
+}
+
+/**
+ * FontAwesome-lightbox specifics */
+#themify_lightbox_fa .lightbox_container a {
+	float: left;
+	padding-left: 0;
+	padding-right: 12px;
+	margin-right: auto;
+	margin-left: 10px;
+}
+#themify_lightbox_fa .lightbox_container a i {
+	margin-right: auto;
+	margin-left: 1em;
+}
+@media (min-width: 1200px) {
+	#themify_lightbox_fa {
+		margin-left: auto;
+		margin-right: -475px;
+	}
+}

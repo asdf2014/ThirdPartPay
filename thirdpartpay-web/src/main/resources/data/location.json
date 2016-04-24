@@ -1,0 +1,42 @@
+[
+  {
+    "drilldown": {
+      "name": "USA",
+      "data": [
+        17.0,
+        17.0
+      ],
+      "categories": [
+        "Washington",
+        "Hollywood"
+      ]
+    },
+    "y": 33.0
+  },
+  {
+    "drilldown": {
+      "name": "UK",
+      "data": [
+        17.0
+      ],
+      "categories": [
+        "London"
+      ]
+    },
+    "y": 17.0
+  },
+  {
+    "drilldown": {
+      "name": "CN",
+      "data": [
+        33.0,
+        17.0
+      ],
+      "categories": [
+        "Shanxi",
+        "Jiangsu"
+      ]
+    },
+    "y": 50.0
+  }
+]

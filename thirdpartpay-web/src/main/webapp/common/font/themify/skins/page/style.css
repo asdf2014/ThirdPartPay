@@ -1,0 +1,50 @@
+/*  
+Skin Name: Page
+Version: 1.0
+Description: Skin for Basic
+*/
+
+body {
+	background-color: #f9f9f9;
+}
+
+/************************************************************************************
+STRUCTURE
+*************************************************************************************/
+#pagewrap {
+	border: solid 1px #c4c9ca;
+	width: 1048px;
+	max-width: 98%;
+	margin: 20px auto 40px;
+}
+
+#body {
+	padding: 0 3%;
+	background-color: #fff;
+}
+
+/************************************************************************************
+HEADER
+*************************************************************************************/
+#headerwrap {
+	background-color: #e8eef0;
+	border-bottom: solid 1px #d2dadd;
+	padding-left: 3%;
+	padding-right: 3%;
+}
+#header {
+	border: none;
+}
+
+/************************************************************************************
+FOOTER
+*************************************************************************************/
+#footerwrap {
+	background-color: #e8eef0;
+	border-top: solid 1px #d2dadd;
+	padding-left: 3%;
+	padding-right: 3%;
+}
+#footer {
+	border: none;
+}

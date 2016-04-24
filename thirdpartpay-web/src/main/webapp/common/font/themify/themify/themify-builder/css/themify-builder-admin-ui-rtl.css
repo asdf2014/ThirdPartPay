@@ -1,0 +1,152 @@
+.themify_builder_module {
+	padding: 2px 30px 2px 5px;
+	float: right;
+	text-align: right;
+}
+.themify_builder_module .add_module {
+	right: auto;
+	left: -10px;
+	text-indent: 99999em;
+	overflow: hidden;
+}
+.themify_builder_module:before {
+	left: auto;
+	right: 7px;
+}
+.themify_builder_save {
+	text-align: left;
+}
+.themify_builder_switch_frontend {
+	margin-left: 10px;
+}
+.themify_builder_icon.add {
+	margin-left: 5px;
+}
+.themify_builder_row .toggle_row {
+	left: 5px;
+	right: auto;
+}
+.themify_builder_active .themify_builder_content .themify_builder_row_top {
+	text-align: right;
+}
+.themify_builder_active .themify_builder_content .row_menu {
+    margin-left: 0;
+    margin-right: 10px;
+}
+.themify_builder_row_top .themify_builder_dropdown {
+	left: auto;
+	right: 0;
+}
+.themify_builder_dropdown_front {
+	left: 0;
+	right: auto;
+}
+.themify_builder_label {
+	float: right;
+	text-align: right;
+	margin: 0 0 0 1%;
+}
+.themify_builder_input {
+    float: right;
+    text-align: right;
+}
+.themify_builder_field input[type=text] {
+    margin-right: 0;
+    margin-left: 5px;
+}
+.module_menu, .themify_builder_module .module_menu {
+	left: auto;
+	right: 10px;
+}
+.themify_builder_module .module_name {
+	margin-right: auto;
+	margin-left: 10px;
+}
+.themify_builder_module.active_module {
+	padding-left: 0;
+	padding-right: 38px;
+}
+.themify_builder_dropdown {
+	left: auto;
+	right: 0;
+}
+#themify_builder_duplicate:before {
+	margin: -2px 0 0 .5em;
+}
+.themify_builder_admin .active_module .grid_menu {
+    left: auto;
+    right: 36px;
+}
+.themify_builder_admin .active_module .module_label {
+    padding-left: 0;
+    padding-right: 20px;
+}
+.themify_builder_admin .themify_builder_sub_row .active_module .module_label {
+    padding-right: 0;
+}
+.themify_builder_grid_list_wrapper {
+	left: auto;
+    right: -10px;
+}
+.themify_builder.builder-lightbox .themify_builder_options_tab li {
+    float: right;
+}
+.themify_builder.builder-lightbox .themify_builder_lightbox_title {
+    text-align: right;
+}
+.themify_builder.builder-lightbox .close_lightbox {
+	right: auto;
+	left: 15px;
+}
+p.themify_builder_save {
+	text-align: left;
+}
+.themify_builder.builder-lightbox .themify_builder_save .builder_cancel_lightbox .ti-close {
+    position: absolute;
+    left: -10px;
+    top: 19px;
+}
+.themify_builder_admin h1, .themify_builder_admin h2, .themify_builder_admin h3, .themify_builder_admin h4, .themify_builder_admin h5, .themify_builder_admin h6 {
+    text-align: right;
+}
+.themify_builder_field input[name^=border], .themify_builder_field .colordisplay, .themify_builder_field .minicolors, .themify_builder_field input[name^=border] + small, .themify_builder_field input[name^=border] + small + .selectwrapper {
+    display: inline-block;
+    float: none;
+}
+.themify_builder_field .selectwrapper {
+	margin: 5px 0 5px 5px;
+}
+.themify_builder_input .minicolors-swatch {
+    margin: 0  0 0 -4px;
+}
+.themify_builder_admin input[type="checkbox"]:checked:before {
+	margin: -3px 0 0 1px;
+}
+.themify_builder.builder-lightbox .themify_builder_row_top {
+	text-align: right;
+}
+.themify_builder_admin input[type="radio"], .themify_builder_admin input[type="checkbox"] {
+	margin: 0 0 0 4px;
+}
+.builder_save_front_panel .themify-builder-front-close:after {
+	margin: -.15em .5em 0 0;
+}
+/**
+ * FontAwesome-lightbox specifics */
+#themify_lightbox_fa .lightbox_container a {
+	float: left;
+	padding-left: 0;
+	padding-right: 12px;
+	margin-right: auto;
+	margin-left: 10px;
+}
+#themify_lightbox_fa .lightbox_container a i {
+	margin-right: auto;
+	margin-left: 1em;
+}
+@media (min-width: 1200px) {
+	#themify_lightbox_fa {
+		margin-left: auto;
+		margin-right: -475px;
+	}
+}
