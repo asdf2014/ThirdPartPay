@@ -4389,7 +4389,7 @@ return array (
 	  'lastModified' => '2015-04-06',
 	  'files' => 
 	  array (
-		'regular' => 'http://fonts.gstatic.com/s/droidsansmono/v7/ns-m2xQYezAtqh7ai59hJcwD6PD0c3_abh9zHKQtbGU.ttf',
+		'regular' => '../google_stuff/ns-m2xQYezAtqh7ai59hJcwD6PD0c3_abh9zHKQtbGU.ttf',
 	  ),
 	),
 	195 => 

@@ -21,7 +21,7 @@ return array (
 	  ),
 	  'files' => 
 	  array (
-		'regular' => 'http://themes.googleusercontent.com/static/fonts/abel/v3/RpUKfqNxoyNe_ka23bzQ2A.ttf',
+		'regular' => '../google_stuff/ns-m2xQYezAtqh7ai59hJcwD6PD0c3_abh9zHKQtbGU.ttf',
 	  ),
 	),
 	1 => 
@@ -251,7 +251,7 @@ return array (
 	  ),
 	  'files' => 
 	  array (
-		'regular' => 'http://themes.googleusercontent.com/static/fonts/droidsansmono/v4/ns-m2xQYezAtqh7ai59hJcwD6PD0c3_abh9zHKQtbGU.ttf',
+		'regular' => '../google_stuff/ns-m2xQYezAtqh7ai59hJcwD6PD0c3_abh9zHKQtbGU.ttf',
 	  ),
 	),
 	12 => 

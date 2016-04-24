@@ -1,115 +1,130 @@
 <!DOCTYPE html>
 <head>
-	<title>Create Account</title>
-	<meta name="keywords" content="" />
-	<meta name="description" content="" />
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
-	<link href="../less/bootstrap.min.css" rel="stylesheet" type="text/css">
-	<link href="../../../common/lib/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
-	<link href="../less/templatemo_style.css" rel="stylesheet" type="text/css">
+    <title>Create Account</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<script type="text/javascript" src="../js/jsAddress.js"></script>
+    <link href="../less/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../common/lib/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+    <link href="../less/templatemo_style.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="../js/jsAddress.js"></script>
 </head>
 <body class="templatemo-bg-gray">
-	<h1 class="margin-bottom-15">Create Account</h1>
-	<div class="container">
-		<div class="col-md-12">			
-			<form class="form-horizontal templatemo-create-account templatemo-container" role="form" action="#" method="post">
-				<fieldset>
-				  <div class="form-group">
-					<label for="inputUserName" class="col-lg-2 control-label">UserName</label>
-					<div class="col-lg-10">
-						<input class="form-control" id="inputUserName" placeholder="UserName" type="text">
-				    </div>
-				  </div>
-				  <div class="form-group">
-					<label for="inputEmail" class="col-lg-2 control-label">Email</label>
-					<div class="col-lg-10">
-						<input class="form-control" id="inputEmail" placeholder="Email" type="email">
-				    </div>
-				  </div>
-				  <div class="form-group">
-					<label for="inputPassword" class="col-lg-2 control-label">Password</label>
-					<div class="col-lg-10">
-						<input class="form-control" id="inputPassword" placeholder="Password" type="password">
-				    </div>
-				  </div>
-				  <div class="form-group">
-					<label for="CheckPassword" class="col-lg-2 control-label">Check Again</label>
-					<div class="col-lg-10">
-						<input class="form-control" id="CheckPassword" placeholder="Check Your Password" type="password">
-				    </div>
-				  </div>
-				 <div class="form-group">
-					<label class="col-lg-2 control-label">gender</label>
-					<div class="col-lg-10">
-					<div class="radio">
-					  <label>
-						<input name="optionsRadios" id="optionsRadios1" value="option1" checked="" type="radio">
-								    I'm female
-					  </label>
-					</div>
-						<div class="radio">
-							<label>
-								<input name="optionsRadios" id="optionsRadios2" value="option2" type="radio">
-									I'm male
-							</label>
-						</div>
-					</div>
-				 </div>
-				
-				<div class="form-group">
-				  <label for="select" class="col-lg-2 control-label">Country</label>
-				  <div class="col-lg-10">
-					<select class="form-control" id="select1"></select>
-					<br>
-					<select class="form-control" id="select2"></select>
-					<br>
-					<select class="form-control" id="select3"></select>
-					<script type="text/javascript">
-	                 addressInit('select1', 'select2', 'select3');
-                    </script>
-				  </div>
-				</div>
-				<div class="form-group">
-					<div class="col-lg-10 col-lg-offset-2">
-						<span class="help-block">The infromation above must be true.</span>
-						<label><input type="checkbox">I agree to the <a href="javascript:;" data-toggle="modal" data-target="#templatemo_modal">Terms of Service</a> and Privacy Policy.</label>
-					</div>
-				</div>
-				<div class="form-group">
-				  <div class="col-lg-10 col-lg-offset-2">
-					<input type="submit" value="Create account" class="btn btn-info">
-					<button type="reset" class="btn btn-default">Cancel</button>
-					<a href="./login.html" class="pull-right">Login</a>
-				  </div>
-				</div>
-			  </fieldset>
-						  </form>		      
-					</div>
-				</div>
-	<!-- Modal -->
-	<div class="modal fade" id="templatemo_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	        <h4 class="modal-title" id="myModalLabel">Terms of Service</h4>
-	      </div>
-	      <div class="modal-body">
-	      	<p>This form is provided by <a rel="nofollow" href="http://www.cssmoban.com/page/1">Free HTML5 Templates</a> that can be used for your websites. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-	        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-	        <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<script type="text/javascript" src="../../../common/lib/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="../../../common/lib/bootstrap/js/bootstrap.min.js"></script>
+<h1 class="margin-bottom-15">Create Account</h1>
+<div class="container">
+    <div class="col-md-12">
+        <form class="form-horizontal templatemo-create-account templatemo-container" role="form" action="#"
+              method="post">
+            <fieldset>
+                <div class="form-group">
+                    <label for="inputUserName" class="col-lg-2 control-label">UserName</label>
+                    <div class="col-lg-10">
+                        <input class="form-control" id="inputUserName" placeholder="UserName" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+                    <div class="col-lg-10">
+                        <input class="form-control" id="inputEmail" placeholder="Email" type="email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+                    <div class="col-lg-10">
+                        <input class="form-control" id="inputPassword" placeholder="Password" type="password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="CheckPassword" class="col-lg-2 control-label">Check Again</label>
+                    <div class="col-lg-10">
+                        <input class="form-control" id="CheckPassword" placeholder="Check Your Password"
+                               type="password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">gender</label>
+                    <div class="col-lg-10">
+                        <div class="radio">
+                            <label>
+                                <input name="optionsRadios" id="optionsRadios1" value="option1" checked="" type="radio">
+                                I'm female
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input name="optionsRadios" id="optionsRadios2" value="option2" type="radio">
+                                I'm male
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="select1" class="col-lg-2 control-label">Country</label>
+                    <div class="col-lg-10">
+                        <select class="form-control" id="select1"></select>
+                        <br>
+                        <select class="form-control" id="select2"></select>
+                        <br>
+                        <select class="form-control" id="select3"></select>
+                        <script type="text/javascript">
+                            addressInit('select1', 'select2', 'select3');
+                        </script>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <span class="help-block">The infromation above must be true.</span>
+                        <label><input type="checkbox">I agree to the <a href="javascript:;" data-toggle="modal"
+                                                                        data-target="#templatemo_modal">Terms of
+                            Service</a> and Privacy Policy.</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <input type="submit" value="Create account" class="btn btn-info">
+                        <button type="reset" class="btn btn-default">Cancel</button>
+                        <a href="./login.html" class="pull-right">Login</a>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="templatemo_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Terms of Service</h4>
+            </div>
+            <div class="modal-body">
+                <p>This form is provided by <a rel="nofollow" href="https://github.com/GraceKoopage/1">Free HTML5
+                    Templates</a> that can be used for your websites. Cras mattis consectetur purus sit amet fermentum.
+                    Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
+                    ac, vestibulum at eros.</p>
+                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue
+                    laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur. Praesent
+                    commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper
+                    nulla non metus auctor fringilla. Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+                    dapibus ac facilisis in, egestas eget quam.</p>
+                <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel
+                    scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
+                    auctor.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../../common/lib/jquery/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../../common/lib/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
