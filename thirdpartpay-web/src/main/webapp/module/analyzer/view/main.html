@@ -117,14 +117,14 @@
                 <div class="scrollbar scrollbar1">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="../../../index.html" class="active"><i class="fa fa-home nav_icon"></i>Home</a>
+                            <a href="main.html" class="active"><i class="fa fa-home nav_icon"></i>Home</a>
                         </li>
                         <li>
-                            <a href="widgets.html"><i class="fa fa-th-large nav_icon"></i>Widgets</a>
+                            <a href="widgets.html"><i class="fa fa-th-large nav_icon"></i>Profile</a>
                         </li>
 
                         <li>
-                            <a href="#"><i class="fa fa-check-square-o nav_icon"></i>Forms<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-check-square-o nav_icon"></i>DBControl<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse">
                                 <li>
                                     <a href="inputs.html">Inputs</a>
@@ -172,7 +172,7 @@
         <div class="header-left">
             <!--logo -->
             <div class="logo">
-                <a href="../../../index.html"><h1>Ultra Modern</h1></a>
+                <a href="../../../index.html"><h1>Slant Pay</h1></a>
             </div>
             <!--//logo-->
             <div class="user-right">
@@ -189,7 +189,7 @@
                                 </a>
                                 <ul class="dropdown-menu drp-mnu">
                                     <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                                    <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+                                    <li><a href="widgets.html"><i class="fa fa-user"></i> Profile</a></li>
                                     <li><a href="login.html"><i class="fa fa-sign-out"></i> Logout</a></li>
                                 </ul>
                             </li>
@@ -563,56 +563,7 @@
                 <div id="chartdiv"></div>
             </div>
             <div class="chat-grids">
-                <div class="col-md-6 chat-grid">
-                    <div class="grid-1">
-                        <h3>Bar</h3>
-                        <canvas id="bar1" height="250" width="700" style="width: 500px; height: 300px;"></canvas>
-                        <script>
-                            var barChartData = {
-                                labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Mon", "Tue", "Wed", "Thu"],
-                                datasets: [
-                                    {
-                                        fillColor: "#7c38bc",
-                                        strokeColor: "#7c38bc",
-                                        data: [25, 40, 50, 65, 55, 30, 20, 10, 6, 4]
-                                    },
-                                    {
-                                        fillColor: "#7c38bc",
-                                        strokeColor: "#7c38bc",
-                                        data: [30, 45, 55, 70, 40, 25, 15, 8, 5, 2]
-                                    }
-                                ]
-
-                            };
-                            new Chart(document.getElementById("bar1").getContext("2d")).Bar(barChartData);
-                        </script>
-                    </div>
-                </div>
-                <div class="col-md-6 chat-grid1">
-                    <div class="grid-1">
-                        <h3>Line</h3>
-                        <canvas id="line1" height="300" width="700" style="width: 500px; height: 300px;"></canvas>
-                        <script>
-                            var lineChartData = {
-                                labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Mon"],
-                                datasets: [
-                                    {
-                                        fillColor: "#fff",
-                                        strokeColor: "#0e62c7",
-                                        pointColor: "#0e62c7",
-                                        pointStrokeColor: "#0e62c7",
-                                        data: [20, 35, 45, 30, 10, 65, 40]
-                                    }
-                                ]
-                            };
-                            new Chart(document.getElementById("line1").getContext("2d")).Line(lineChartData);
-                        </script>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <div class="weathers-grids">
-                <div class="col-md-6 weather-grid">
+                <div class="col-md-5 weather-grid">
                     <div class="main-info">
                         <div class="weather-top">
                             <div class="weather-grids">
@@ -708,6 +659,56 @@
                                 icons.set(list[i], list[i]);
 
                             icons.play();
+                        </script>
+                    </div>
+                </div>
+				
+                <div class="col-md-6 chat-grid1">
+                    <div class="grid-1">
+                        <h3>Line</h3>
+                        <canvas id="line1" height="300" width="700" style="width: 500px; height: 300px;"></canvas>
+                        <script>
+                            var lineChartData = {
+                                labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Mon"],
+                                datasets: [
+                                    {
+                                        fillColor: "#fff",
+                                        strokeColor: "#0e62c7",
+                                        pointColor: "#0e62c7",
+                                        pointStrokeColor: "#0e62c7",
+                                        data: [20, 35, 45, 30, 10, 65, 40]
+                                    }
+                                ]
+                            };
+                            new Chart(document.getElementById("line1").getContext("2d")).Line(lineChartData);
+                        </script>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="weathers-grids">
+                <div class="col-md-5 chat-grid">
+                    <div class="grid-1">
+                        <h3>Bar</h3>
+                        <canvas id="bar1" height="250" width="700" style="width: 500px; height: 300px;"></canvas>
+                        <script>
+                            var barChartData = {
+                                labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Mon", "Tue", "Wed", "Thu"],
+                                datasets: [
+                                    {
+                                        fillColor: "#7c38bc",
+                                        strokeColor: "#7c38bc",
+                                        data: [25, 40, 50, 65, 55, 30, 20, 10, 6, 4]
+                                    },
+                                    {
+                                        fillColor: "#7c38bc",
+                                        strokeColor: "#7c38bc",
+                                        data: [30, 45, 55, 70, 40, 25, 15, 8, 5, 2]
+                                    }
+                                ]
+
+                            };
+                            new Chart(document.getElementById("bar1").getContext("2d")).Bar(barChartData);
                         </script>
                     </div>
                 </div>

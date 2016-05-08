@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>dubbo</name>
+    <name>ThirdPartPay</name>
 
     <properties>
         <!-- project -->
@@ -84,7 +84,7 @@
     </modules>
 
     <build>
-        <finalName>yuzhouwan</finalName>
+        <finalName>ThirdPartPay</finalName>
         <defaultGoal>install</defaultGoal>
 
         <plugins>
