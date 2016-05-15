@@ -14,7 +14,7 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>
             classpath*:spring/spring-mybatis.xml
-            classpath*:dubbo/dubbo-consumer.xml
+            classpath*:dubbo/dubbo-provider.xml
         </param-value>
     </context-param>
 

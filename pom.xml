@@ -11,6 +11,13 @@
 
     <name>ThirdPartPay</name>
 
+    <modules>
+        <module>thirdpartpay-server</module>
+        <module>thirdpartpay-web</module>
+        <module>thirdpartpay-mbg</module>
+        <module>thirdpartpay-common</module>
+    </modules>
+
     <properties>
         <!-- project -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,6 +36,11 @@
         <junit.version>4.12</junit.version>
 
         <jackson.core.version>2.7.3</jackson.core.version>
+
+        <!-- dubbo -->
+        <dubbo.version>2.4.9</dubbo.version>
+        <zookeeper.version>3.4.8</zookeeper.version>
+        <zk.client.version>0.1</zk.client.version>
 
         <!-- spring -->
         <spring.version>4.2.5.RELEASE</spring.version>
@@ -76,12 +88,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <modules>
-        <module>thirdpartpay-web</module>
-        <module>thirdpartpay-mbg</module>
-        <module>thirdpartpay-common</module>
-    </modules>
 
     <build>
         <finalName>ThirdPartPay</finalName>

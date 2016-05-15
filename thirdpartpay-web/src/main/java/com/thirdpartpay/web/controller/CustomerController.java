@@ -1,10 +1,11 @@
 package com.thirdpartpay.web.controller;
 
-import com.thirdpartpay.common.str.StringUtils;
-import com.thirdpartpay.web.model.Customer;
-import com.thirdpartpay.web.model.CustomerExample;
-import com.thirdpartpay.web.service.customer.ICustomerDisplayService;
-import com.thirdpartpay.web.service.customer.ICustomerService;
+import com.thirdpartpay.common.model.Customer;
+import com.thirdpartpay.common.model.CustomerExample;
+import com.thirdpartpay.common.service.customer.ICustomerDisplayService;
+import com.thirdpartpay.common.service.customer.ICustomerService;
+import com.thirdpartpay.common.util.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +22,12 @@ import java.util.Map;
 @RequestMapping("/customer")
 public class CustomerController {
 
-    @Resource
+//    @Resource
+    @Autowired
     private ICustomerService customerService;
 
-    @Resource
+//    @Resource
+    @Autowired
     private ICustomerDisplayService customerDisplayService;
 
     //过时的用法

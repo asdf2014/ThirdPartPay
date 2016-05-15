@@ -1,7 +1,7 @@
 package com.thirdpartpay.web.controller;
 
-import com.thirdpartpay.web.model.Customer;
-import com.thirdpartpay.web.service.pay.IPayService;
+import com.thirdpartpay.common.model.Customer;
+import com.thirdpartpay.common.service.pay.IPayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +28,7 @@ public class PayController {
     @RequestMapping(value = "/transfer", method = RequestMethod.GET, produces = "text/plain")
     @ResponseBody
     public Boolean locationAnalyzer(Integer originId,
-                                    Integer aimId, BigInteger money) {
+                                    Integer aimId, Long money) {
         Customer origin = new Customer();
         origin.setCustomerId(originId);
 

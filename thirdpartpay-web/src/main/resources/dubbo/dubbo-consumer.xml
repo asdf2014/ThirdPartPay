@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ - Copyright 1999-2011 Alibaba Group.
+ -  
+ - Licensed under the Apache License, Version 2.0 (the "License");
+ - you may not use this file except in compliance with the License.
+ - You may obtain a copy of the License at
+ -  
+ -      http://www.apache.org/licenses/LICENSE-2.0
+ -  
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS,
+ - WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ - See the License for the specific language governing permissions and
+ - limitations under the License.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 延迟到Spring初始化完成后，再暴露服务,服务调用超时设置为30秒,3次重试-->
+    <dubbo:provider delay="3" timeout="30000" retries="0"/>
+
+    <!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+    <dubbo:application name="thirdpartpay"/>
+
+    <!--<dubbo:registry address="zookeeper://127.0.0.1:2181"/>-->
+    <dubbo:registry address="zookeeper://192.168.1.101:2181"/>
+    <!-- 使用multicast广播注册中心暴露发现服务地址 -->
+    <!--   <dubbo:registry address="multicast://224.5.6.7:1234" />  -->
+
+    <!-- 生成远程服务代理， -->
+    <dubbo:reference id="payService" interface="com.thirdpartpay.common.service.pay.IPayService"/>
+    <dubbo:reference id="customerService" interface="com.thirdpartpay.common.service.customer.ICustomerService"/>
+    <dubbo:reference id="customerDisplayService" interface="com.thirdpartpay.common.service.customer.ICustomerDisplayService"/>
+</beans>
