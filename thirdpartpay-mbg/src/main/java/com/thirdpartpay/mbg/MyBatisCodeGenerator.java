@@ -17,7 +17,8 @@ public class MyBatisCodeGenerator {
     public static void main(String[] args) throws Exception {
         List<String> warnings = new ArrayList<>();
         boolean overwrite = true;
-        File configFile = new File("F:\\如何成为 Java 高手\\笔记\\Framework\\Dubbo\\[code]\\ThirdPartPay\\thirdpartpay-mbg\\src\\main\\resources\\MapperConfig.xml");
+        File configFile = new File("F:\\如何成为 Java 高手\\笔记\\Framework\\Dubbo\\[code]\\" +
+                "ThirdPartPay\\thirdpartpay-mbg\\src\\main\\resources\\MapperConfig.xml");
 
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(configFile);

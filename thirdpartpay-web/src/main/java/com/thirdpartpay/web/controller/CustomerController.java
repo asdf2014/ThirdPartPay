@@ -1,8 +1,8 @@
 package com.thirdpartpay.web.controller;
 
 import com.thirdpartpay.common.str.StringUtils;
-import com.thirdpartpay.web.model.customer.Customer;
-import com.thirdpartpay.web.model.customer.CustomerExample;
+import com.thirdpartpay.web.model.Customer;
+import com.thirdpartpay.web.model.CustomerExample;
 import com.thirdpartpay.web.service.customer.ICustomerDisplayService;
 import com.thirdpartpay.web.service.customer.ICustomerService;
 import org.springframework.stereotype.Controller;
@@ -27,6 +27,7 @@ public class CustomerController {
     @Resource
     private ICustomerDisplayService customerDisplayService;
 
+    //过时的用法
     @RequestMapping("/query")
     public String queryCustomerByID(HttpServletRequest request, Model model) {
 

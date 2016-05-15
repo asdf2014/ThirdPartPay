@@ -1,0 +1,1 @@
+select customer.customer_name, account.remain from account, customer where customer.customer_name = 'jcloud'

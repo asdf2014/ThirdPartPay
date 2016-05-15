@@ -1,7 +1,7 @@
 package com.thirdpartpay.web.service.customer;
 
-import com.thirdpartpay.web.model.customer.Customer;
-import com.thirdpartpay.web.model.customer.CustomerExample;
+import com.thirdpartpay.web.model.Customer;
+import com.thirdpartpay.web.model.CustomerExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

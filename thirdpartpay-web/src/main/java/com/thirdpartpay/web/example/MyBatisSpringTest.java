@@ -1,7 +1,7 @@
 package com.thirdpartpay.web.example;
 
-import com.thirdpartpay.web.model.customer.Customer;
-import com.thirdpartpay.web.model.customer.CustomerExample;
+import com.thirdpartpay.web.model.Customer;
+import com.thirdpartpay.web.model.CustomerExample;
 import com.thirdpartpay.web.service.customer.ICustomerService;
 import org.apache.log4j.Logger;
 import org.junit.Test;

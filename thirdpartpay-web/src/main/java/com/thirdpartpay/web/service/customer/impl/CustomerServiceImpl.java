@@ -1,8 +1,8 @@
 package com.thirdpartpay.web.service.customer.impl;
 
 import com.thirdpartpay.web.mapper.CustomerMapper;
-import com.thirdpartpay.web.model.customer.Customer;
-import com.thirdpartpay.web.model.customer.CustomerExample;
+import com.thirdpartpay.web.model.Customer;
+import com.thirdpartpay.web.model.CustomerExample;
 import com.thirdpartpay.web.service.customer.ICustomerService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
