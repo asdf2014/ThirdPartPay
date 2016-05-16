@@ -124,7 +124,8 @@
                         </li>
 
                         <li>
-                            <a href="#"><i class="fa fa-check-square-o nav_icon"></i>DBControl<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-check-square-o nav_icon"></i>DBControl<span
+                                    class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse">
                                 <li>
                                     <a href="inputs.html">Inputs</a>
@@ -662,25 +663,36 @@
                         </script>
                     </div>
                 </div>
-				
+
                 <div class="col-md-6 chat-grid1">
                     <div class="grid-1">
                         <h3>Line</h3>
                         <canvas id="line1" height="300" width="700" style="width: 500px; height: 300px;"></canvas>
                         <script>
-                            var lineChartData = {
-                                labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Mon"],
-                                datasets: [
-                                    {
-                                        fillColor: "#fff",
-                                        strokeColor: "#0e62c7",
-                                        pointColor: "#0e62c7",
-                                        pointStrokeColor: "#0e62c7",
-                                        data: [20, 35, 45, 30, 10, 65, 40]
-                                    }
-                                ]
-                            };
-                            new Chart(document.getElementById("line1").getContext("2d")).Line(lineChartData);
+                            alert("start")
+                            $.ajax({
+                                type: "GET",
+                                dataType: "json",
+                                url: "http://localhost:8080/web/pay/recoder",
+                                success: function(return_data){
+                                    alert(return_data);
+
+                                    var lineChartData = {
+                                        labels: ["Day01", "Day02", "Day03", "Day04", "Day05", "Day06", "Day07"],
+                                        datasets: [
+                                            {
+                                                fillColor: "#fff",
+                                                strokeColor: "#0e62c7",
+                                                pointColor: "#0e62c7",
+                                                pointStrokeColor: "#0e62c7",
+                                                data: return_data
+                                            }
+                                        ]
+                                    };
+                                    new Chart(document.getElementById("line1").getContext("2d")).Line(lineChartData);
+                                }
+                            });
+                            alert("end")
                         </script>
                     </div>
                 </div>

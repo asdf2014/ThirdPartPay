@@ -20,16 +20,16 @@
                         password="jin1234$#@!">
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="com.thirdpartpay.web.model"
-                            targetProject="F:\如何成为 Java 高手\笔记\Framework\Dubbo\[code]\ThirdPartPay\thirdpartpay-web\src\main\java">
+        <javaModelGenerator targetPackage="com.thirdpartpay.common.model"
+                            targetProject="F:\如何成为 Java 高手\笔记\Framework\Dubbo\[code]\ThirdPartPay\thirdpartpay-common\src\main\java">
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
         <sqlMapGenerator targetPackage="mapper"
-                         targetProject="F:\如何成为 Java 高手\笔记\Framework\Dubbo\[code]\ThirdPartPay\thirdpartpay-web\src\main\resources"/>
+                         targetProject="F:\如何成为 Java 高手\笔记\Framework\Dubbo\[code]\ThirdPartPay\thirdpartpay-server\src\main\resources"/>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.thirdpartpay.web.mapper"
-                             targetProject="F:\如何成为 Java 高手\笔记\Framework\Dubbo\[code]\ThirdPartPay\thirdpartpay-web\src\main\java"/>
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.thirdpartpay.server.mapper"
+                             targetProject="F:\如何成为 Java 高手\笔记\Framework\Dubbo\[code]\ThirdPartPay\thirdpartpay-server\src\main\java"/>
 
         <table tableName="%">
             <generatedKey column="id" sqlStatement="Mysql"/>
