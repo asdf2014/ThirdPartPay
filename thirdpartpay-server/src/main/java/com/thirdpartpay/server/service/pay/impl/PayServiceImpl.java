@@ -40,6 +40,46 @@ public class PayServiceImpl implements IPayService {
         return true;
     }
 
+    @Override
+    public boolean recharge(Customer aim, Long money) {
+        if(aim.getCustomerId() == null){
+            return false;
+        }
+        Integer aimID=aim.getCustomerId();
+        CustomerAccountExample customerAccountExample = new CustomerAccountExample();
+        customerAccountExample.or().andCustomerIdEqualTo(aimID);
+        List<CustomerAccount> customerAccounts = customerAccountMapper.selectByExample(customerAccountExample);
+        //查不到客户
+        if (customerAccounts == null || customerAccounts.size() == 0) {
+            return false;
+        }
+        Integer accountId = customerAccounts.get(0).getAccountId();
+        if (accountId == null) {
+            return false;
+        }
+        Long remain = accountMapper.selectByPrimaryKey(accountId).getRemain();
+        if (remain == null) {
+            remain = 0L;
+        }
+        Account account = new Account();
+        account.setAccountId(accountId);
+        account.setModifyDate(new Date());
+        account.setRemain(remain + money.longValue());
+
+        AccountExample accountExample = new AccountExample();
+        accountExample.or().andAccountIdEqualTo(accountId);
+        accountMapper.updateByExample(account, accountExample);
+        return true;
+
+    }
+
+    /**
+     * 先从源账户扣除 money
+     *
+     * @param customerId
+     * @param money
+     * @return
+     */
     private boolean reduceOrigin(Integer customerId, BigInteger money) {
         Integer accountId = customerAccountMapper.selectByPrimaryKey(customerId).getAccountId();
         //查不到客户
@@ -63,6 +103,13 @@ public class PayServiceImpl implements IPayService {
         return true;
     }
 
+    /**
+     * 后往目标账户增加 money
+     *
+     * @param customerId
+     * @param money
+     * @return
+     */
     private boolean addAim(Integer customerId, BigInteger money) {
         CustomerAccountExample customerAccountExample = new CustomerAccountExample();
         customerAccountExample.or().andCustomerIdEqualTo(customerId);

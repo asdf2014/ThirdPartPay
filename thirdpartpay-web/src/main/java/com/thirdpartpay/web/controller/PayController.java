@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.math.BigInteger;
-
 /**
  * Created by Benedict Jin on 2016/5/15.
  */
@@ -35,6 +33,19 @@ public class PayController {
         Customer aim = new Customer();
         aim.setCustomerId(aimId);
         return payService.transfer(origin, aim, money);
+    }
+
+    /**
+     * 充值
+     **/
+    @RequestMapping(value = "/recharge", method = RequestMethod.GET, produces = "test/plain")
+    @ResponseBody
+    public Boolean locationAnalyser(Integer aimID, Long money) {
+
+        Customer aim = new Customer();
+        aim.setCustomerId(aimID);
+        return payService.recharge(aim, money);
+
     }
 
 }

@@ -10,4 +10,6 @@ public interface IPayService {
 
     //B2B P2B B2P
     boolean transfer(Customer origin, Customer aim, Long money);
+
+    boolean recharge(Customer aim, Long money);
 }
