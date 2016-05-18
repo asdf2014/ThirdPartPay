@@ -669,14 +669,11 @@
                         <h3>Line</h3>
                         <canvas id="line1" height="300" width="700" style="width: 500px; height: 300px;"></canvas>
                         <script>
-                            alert("start")
                             $.ajax({
                                 type: "GET",
                                 dataType: "json",
                                 url: "http://localhost:8080/web/pay/recoder",
                                 success: function(return_data){
-                                    alert(return_data);
-
                                     var lineChartData = {
                                         labels: ["Day01", "Day02", "Day03", "Day04", "Day05", "Day06", "Day07"],
                                         datasets: [
@@ -692,7 +689,6 @@
                                     new Chart(document.getElementById("line1").getContext("2d")).Line(lineChartData);
                                 }
                             });
-                            alert("end")
                         </script>
                     </div>
                 </div>

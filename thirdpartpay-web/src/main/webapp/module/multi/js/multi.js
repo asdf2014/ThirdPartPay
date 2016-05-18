@@ -4,8 +4,6 @@ $(function () {
         url: "/customer/location",
         dataType: "json",
         success: function (data) {
-            alert("/customer/location");
-
             var colors = Highcharts.getOptions().colors,
                 categories = [],
                 browserData = [],
