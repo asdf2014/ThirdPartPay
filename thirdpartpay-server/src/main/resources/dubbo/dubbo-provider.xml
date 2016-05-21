@@ -43,4 +43,5 @@
     <dubbo:service interface="com.thirdpartpay.common.service.pay.IPayService" ref="payService"/>
     <dubbo:service interface="com.thirdpartpay.common.service.customer.ICustomerService" ref="customerService"/>
     <dubbo:service interface="com.thirdpartpay.common.service.customer.ICustomerDisplayService" ref="customerDisplayService"/>
+    <dubbo:service interface="com.thirdpartpay.common.service.recoder.IRecoderService" ref="recoderService"/>
 </beans>

@@ -1,13 +1,16 @@
 package com.thirdpartpay.web.controller;
 
+import com.thirdpartpay.common.model.BusinessRecoder;
 import com.thirdpartpay.common.model.Customer;
 import com.thirdpartpay.common.service.pay.IPayService;
+import com.thirdpartpay.common.service.recoder.IRecoderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +23,9 @@ public class PayController {
     @Autowired
     private IPayService payService;
 
+    @Autowired
+    private IRecoderService recoderNote;
+
     /**
      * 转账
      *
@@ -29,12 +35,22 @@ public class PayController {
     @ResponseBody
     public Boolean locationAnalyzer(Integer originId,
                                     Integer aimId, Long money) {
+        BusinessRecoder br = new BusinessRecoder();
+        br.setStartTime(new Date());
+        br.setFirstPart(originId);
+        br.setSecondPart(aimId);
+        br.setMoney(money);
+
         Customer origin = new Customer();
         origin.setCustomerId(originId);
 
         Customer aim = new Customer();
         aim.setCustomerId(aimId);
-        return payService.transfer(origin, aim, money);
+        boolean isSuccess = payService.transfer(origin, aim, money);
+        br.setEndTime(new Date());
+        br.setFlag(isSuccess ? 0 : 1);
+        recoderNote.recoderNote(br);
+        return isSuccess;
     }
 
     /**
