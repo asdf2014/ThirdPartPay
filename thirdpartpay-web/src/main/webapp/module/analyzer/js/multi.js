@@ -1,7 +1,7 @@
 $(function () {
 
     $.ajax({
-        url: "/customer/location",
+        url: "/web/customer/location",
         dataType: "json",
         success: function (data) {
             var colors = Highcharts.getOptions().colors,
@@ -48,14 +48,14 @@ $(function () {
                     type: 'pie'
                 },
                 title: {
-                    text: 'Revenue Support Chart for Shanxi'
+                    text: '用户地域分布图'
                 },
                 subtitle: {
-                    text: 'Source: <a href="http://yuzhouwan.com/">yuzhouwan.com</a>'
+                    text: 'Source: <a href="/module/analyzer/view/main.html">Slant Pay</a>'
                 },
                 yAxis: {
                     title: {
-                        text: 'Revenue Support System'
+                        text: 'Slant Pay'
                     }
                 },
                 plotOptions: {

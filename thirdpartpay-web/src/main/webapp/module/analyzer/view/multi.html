@@ -1,23 +1,31 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Settings</title>
+    <title>My Profile</title>
+    <meta charset="UTF-8">
+    <title>Multi Analyzer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="keywords" content="Bootstrap"/>
+    <meta name="keywords" content="Ultra Modern Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design"/>
     <script type="application/x-javascript"> addEventListener("load", function () {
         setTimeout(hideURLbar, 0);
     }, false);
     function hideURLbar() {
         window.scrollTo(0, 1);
     } </script>
+    <script src="../../../common/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../common/lib/bs-table/bootstrap-table.min.js"></script>
+    <script src="../../../common/lib/bs-table/bootstrap-table-zh-CN.min.js"></script>
+    <link rel="stylesheet" href="../less/multi.css">
+
     <!-- Bootstrap Core CSS -->
     <link href="../../../common/lib/bootstrap/css/bootstrap.css" rel='stylesheet' type='text/css'/>
     <!-- Custom CSS -->
     <link href="../less/style.css" rel='stylesheet' type='text/css'/>
 
     <!-- font CSS -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../../common/img/index/favicon.ico" type="image/x-icon">
     <!-- font-awesome icons -->
     <link href="../../../common/font/font-awesome/css/font-awesome.css" rel="stylesheet">
     <!-- //font-awesome icons -->
@@ -33,7 +41,6 @@
     <script src="../js/custom.js"></script>
     <link href="../less/custom.css" rel="stylesheet">
     <!--//Metis Menu -->
-    <script type="text/javascript" src="../../index/js/jsAddress.js"></script>
 </head>
 <body class="cbp-spmenu-push">
 <div class="main-content">
@@ -82,7 +89,8 @@
                             <li class="dropdown profile_details_drop">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                     <div class="profile_img">
-                                        <span class="prfil-img"><img src="../../../common/img/analyzer/images/a.png" alt=""> </span>
+                                        <span class="prfil-img"><img src="../../../common/img/analyzer/images/a.png"
+                                                                     alt=""> </span>
                                         <div class="clearfix"></div>
                                     </div>
                                 </a>
@@ -196,77 +204,16 @@
         </div>
         <div class="clearfix"></div>
     </div>
-    <!-- //header-ends -->
-    <div id="page-wrapper">
-		      <form class="form-horizontal templatemo-create-account templatemo-container" role="form" action="#"
-              method="post">
-            <fieldset>
-                <div class="form-group">
-                    <label for="inputUserName" class="col-lg-2 control-label">UserName</label>
-                    <div class="col-lg-8">
-                        <input class="form-control" id="inputUserName" placeholder="Grace" type="text">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail" class="col-lg-2 control-label">Email</label>
-                    <div class="col-lg-8">
-                        <input class="form-control" id="inputEmail" placeholder="549172594@qq.com" type="email">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputPassword" class="col-lg-2 control-label">Password</label>
-                    <div class="col-lg-8">
-                        <input class="form-control" id="inputPassword" placeholder="******" type="password">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">gender</label>
-                    <div class="col-lg-8">
-                        <div class="radio">
-                            <label>
-                                <input name="optionsRadios" id="optionsRadios1" value="option1" checked="" type="radio">
-                                I'm female
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input name="optionsRadios" id="optionsRadios2" value="option2" type="radio">
-                                I'm male
-                            </label>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="select1" class="col-lg-2 control-label">Country</label>
-                    <div class="col-lg-8">
-                        <select class="form-control" id="select1"></select>
-                        <br>
-                        <select class="form-control" id="select2"></select>
-                        <br>
-                        <select class="form-control" id="select3"></select>
-                        <script type="text/javascript">
-                            addressInit('select1', 'select2', 'select3');
-                        </script>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <input type="submit" value="Save" class="btn btn-info">
-                        <button type="reset" class="btn btn-default">Cancel</button>
-                        <a href="./login.html" class="pull-right">Login</a>
-                    </div>
-                </div>
-            </fieldset>
-        </form>
-    </div>
-  
+    <div class="widget_4">
+        <!-- 用户地域分布图 -->
+        <div class="container">
+            <script src="../../../common/lib/highcharts/highcharts.js"></script>
+            <script src="../../../common/lib/highcharts/modules/exporting.js"></script>
 
-    <div class="copy-section">
-
-        <p>Copyright &copy; 2016.Company name All rights reserved.<a target="_blank" href="../../../index.html">
-            Slant Pay</a></p>
+            <div id="container" style="width: 600px; height: 400px; margin: 0 auto "></div>
+            <script src="../js/multi.js"></script>
+        </div>
     </div>
 </div>
 <!-- Classie -->
