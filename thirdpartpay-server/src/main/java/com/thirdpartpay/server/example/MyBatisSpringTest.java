@@ -33,7 +33,7 @@ public class MyBatisSpringTest {
     @Test
     public void testInsert() {
         Customer customer = new Customer();
-        customer.setCustomerId(2);
+        customer.setCustomerId(10);
         customer.setCustomerName("Jin");
         customer.setCustomerPassword("123456");
         customer.setEmail("grace@gmail.com");
@@ -42,12 +42,11 @@ public class MyBatisSpringTest {
         customerService.insert(customer);
     }
 
-
     @Test
     public void testDelete() {
 
         CustomerExample customerExample = new CustomerExample();
-        customerExample.or().andCustomerIdIn(new LinkedList<>(Arrays.asList(2)));
+        customerExample.or().andCustomerIdIn(new LinkedList<>(Arrays.asList(10)));
 
         customerService.deleteByExample(customerExample);
     }
@@ -67,7 +66,7 @@ public class MyBatisSpringTest {
     public void testUpdate() {
 
         Customer customer = new Customer();
-        customer.setCustomerPassword("654321");
+        customer.setCustomerPassword("268479135");
         _log.debug(customer.toString());
 
         CustomerExample customerExample = new CustomerExample();
