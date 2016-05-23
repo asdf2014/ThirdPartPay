@@ -14,9 +14,9 @@
  - See the License for the specific language governing permissions and
  - limitations under the License.
 -->
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
@@ -42,6 +42,7 @@
     <!-- 声明需要暴露的服务接口 -->
     <dubbo:service interface="com.thirdpartpay.common.service.pay.IPayService" ref="payService"/>
     <dubbo:service interface="com.thirdpartpay.common.service.customer.ICustomerService" ref="customerService"/>
-    <dubbo:service interface="com.thirdpartpay.common.service.customer.ICustomerDisplayService" ref="customerDisplayService"/>
+    <dubbo:service interface="com.thirdpartpay.common.service.customer.ICustomerDisplayService"
+                   ref="customerDisplayService"/>
     <dubbo:service interface="com.thirdpartpay.common.service.recoder.IRecoderService" ref="recoderService"/>
 </beans>

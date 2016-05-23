@@ -6311,9 +6311,9 @@
                             0,
                             0,
                             labelOptions.useHTML
-                            )
-                            //.attr(attr)
-                            // without position absolute, IE export sometimes is wrong
+                        )
+                        //.attr(attr)
+                        // without position absolute, IE export sometimes is wrong
                             .css(merge(labelOptions.style))
                             .add(axis.labelGroup) :
                         null;
@@ -6766,7 +6766,7 @@
                     0,
                     0,
                     optionsLabel.useHTML
-                    )
+                )
                     .attr(attribs)
                     .css(optionsLabel.style)
                     .add();
@@ -8743,7 +8743,7 @@
                         0,
                         0,
                         axisTitleOptions.useHTML
-                        )
+                    )
                         .attr({
                             zIndex: 7,
                             rotation: axisTitleOptions.rotation || 0,
@@ -10486,7 +10486,7 @@
                             zoomHor ? 1 : plotWidth,
                             zoomVert ? 1 : plotHeight,
                             0
-                            )
+                        )
                             .attr({
                                 fill: chartOptions.selectionMarkerFill || 'rgba(69,114,167,0.25)',
                                 zIndex: 7
@@ -11379,9 +11379,9 @@
                 item.legendItem = li = renderer.text(
                     '',
                     ltr ? symbolWidth + symbolPadding : -symbolPadding,
-                        legend.baseline || 0,
+                    legend.baseline || 0,
                     useHTML
-                    )
+                )
                     .css(merge(item.visible ? itemStyle : itemHiddenStyle)) // merge to prevent modifying original (#1021)
                     .attr({
                         align: ltr ? 'left' : 'right',
@@ -11599,10 +11599,10 @@
                         options.borderRadius,
                         legendBorderWidth || 0
                     ).attr({
-                            stroke: options.borderColor,
-                            'stroke-width': legendBorderWidth || 0,
-                            fill: legendBackgroundColor || NONE
-                        })
+                        stroke: options.borderColor,
+                        'stroke-width': legendBorderWidth || 0,
+                        fill: legendBackgroundColor || NONE
+                    })
                         .add(legendGroup)
                         .shadow(options.shadow);
                     box.isNew = true;
@@ -11799,8 +11799,8 @@
                     visibility: VISIBLE
                 });
                 this.up.attr({
-                        fill: currentPage === 1 ? inactiveColor : activeColor
-                    })
+                    fill: currentPage === 1 ? inactiveColor : activeColor
+                })
                     .css({
                         cursor: currentPage === 1 ? 'default' : 'pointer'
                     });
@@ -11808,9 +11808,9 @@
                     text: currentPage + '/' + pageCount
                 });
                 this.down.attr({
-                        x: 18 + this.pager.getBBox().width, // adjust to text width
-                        fill: currentPage === pageCount ? inactiveColor : activeColor
-                    })
+                    x: 18 + this.pager.getBBox().width, // adjust to text width
+                    fill: currentPage === pageCount ? inactiveColor : activeColor
+                })
                     .css({
                         cursor: currentPage === pageCount ? 'default' : 'pointer'
                     });
@@ -11883,13 +11883,13 @@
                     attr.dashstyle = options.dashStyle;
                 }
                 this.legendLine = renderer.path([
-                        M,
-                        0,
-                        verticalCenter,
-                        L,
-                        symbolWidth,
-                        verticalCenter
-                    ])
+                    M,
+                    0,
+                    verticalCenter,
+                    L,
+                    symbolWidth,
+                    verticalCenter
+                ])
                     .attr(attr)
                     .add(legendItemGroup);
             }
@@ -11899,12 +11899,12 @@
                 radius = markerOptions.radius;
                 this.legendSymbol = legendSymbol = renderer.symbol(
                     this.symbol,
-                        (symbolWidth / 2) - radius,
-                        verticalCenter - radius,
-                        2 * radius,
-                        2 * radius,
+                    (symbolWidth / 2) - radius,
+                    verticalCenter - radius,
+                    2 * radius,
+                    2 * radius,
                     markerOptions
-                    )
+                )
                     .add(legendItemGroup);
                 legendSymbol.isMarker = true;
             }
@@ -12383,7 +12383,7 @@
                         0,
                         0,
                         chartTitleOptions.useHTML
-                        )
+                    )
                         .attr({
                             align: chartTitleOptions.align,
                             'class': PREFIX + name,
@@ -13073,7 +13073,7 @@
                         label.html,
                         x,
                         y
-                        )
+                    )
                         .attr({zIndex: 2})
                         .css(style)
                         .add();
@@ -13177,7 +13177,7 @@
                     credits.text,
                     0,
                     0
-                    )
+                )
                     .on('click', function () {
                         if (credits.href) {
                             win.location.href = credits.href;
@@ -14652,12 +14652,12 @@
                         } else if (isInside && (radius > 0 || isImage)) {
                             point.graphic = graphic = chart.renderer.symbol(
                                 symbol,
-                                    plotX - radius,
-                                    plotY - radius,
-                                    2 * radius,
-                                    2 * radius,
+                                plotX - radius,
+                                plotY - radius,
+                                2 * radius,
+                                2 * radius,
                                 hasPointMarker ? pointMarkerOptions : seriesMarkerOptions
-                                )
+                            )
                                 .attr(pointAttr)
                                 .add(markerGroup);
                         }
@@ -18439,11 +18439,11 @@
 
                             } else {
                                 point.connector = connector = series.chart.renderer.path(connectorPath).attr({
-                                        'stroke-width': connectorWidth,
-                                        stroke: options.connectorColor || point.color || '#606060',
-                                        visibility: visibility
-                                        //zIndex: 0 // #2722 (reversed)
-                                    })
+                                    'stroke-width': connectorWidth,
+                                    stroke: options.connectorColor || point.color || '#606060',
+                                    visibility: visibility
+                                    //zIndex: 0 // #2722 (reversed)
+                                })
                                     .add(series.dataLabelsGroup);
                             }
                         } else if (connector) {
@@ -18920,9 +18920,9 @@
             var legend = this;
             // Set the events on the item group, or in case of useHTML, the item itself (#1249)
             (useHTML ? legendItem : item.legendGroup).on('mouseover', function () {
-                    item.setState(HOVER_STATE);
-                    legendItem.css(legend.options.itemHoverStyle);
-                })
+                item.setState(HOVER_STATE);
+                legendItem.css(legend.options.itemHoverStyle);
+            })
                 .on('mouseout', function () {
                     legendItem.css(item.visible ? itemStyle : itemHiddenStyle);
                     item.setState();
@@ -19308,11 +19308,11 @@
                         if (newSymbol) {
                             series.stateMarkerGraphic = stateMarkerGraphic = chart.renderer.symbol(
                                 newSymbol,
-                                    plotX - radius,
-                                    plotY - radius,
-                                    2 * radius,
-                                    2 * radius
-                                )
+                                plotX - radius,
+                                plotY - radius,
+                                2 * radius,
+                                2 * radius
+                            )
                                 .attr(pointAttr)
                                 .add(series.markerGroup);
                             stateMarkerGraphic.currentSymbol = newSymbol;

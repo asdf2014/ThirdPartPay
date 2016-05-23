@@ -12,9 +12,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * MyBatis 生成器的 增删查改 测试例子
+ * <p>
  * Created by Benedict Jin on 2016/4/3.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -44,7 +47,7 @@ public class MyBatisSpringTest {
     public void testDelete() {
 
         CustomerExample customerExample = new CustomerExample();
-        customerExample.or().andCustomerIdIn(Arrays.asList(2));
+        customerExample.or().andCustomerIdIn(new LinkedList<>(Arrays.asList(2)));
 
         customerService.deleteByExample(customerExample);
     }
@@ -52,7 +55,7 @@ public class MyBatisSpringTest {
     @Test
     public void testQuery() {
         CustomerExample customerExample = new CustomerExample();
-        customerExample.or().andCustomerIdIn(Arrays.asList(1));
+        customerExample.or().andCustomerIdIn(new LinkedList<>(Arrays.asList(1)));
 
         List<Customer> customers = customerService.selectByExample(customerExample);
         for (Customer customer : customers) {
@@ -68,7 +71,7 @@ public class MyBatisSpringTest {
         _log.debug(customer.toString());
 
         CustomerExample customerExample = new CustomerExample();
-        customerExample.or().andCustomerIdIn(Arrays.asList(1));
+        customerExample.or().andCustomerIdIn(new LinkedList<>(Arrays.asList(1)));
 
         customerService.updateByExampleSelective(customer, customerExample);
     }

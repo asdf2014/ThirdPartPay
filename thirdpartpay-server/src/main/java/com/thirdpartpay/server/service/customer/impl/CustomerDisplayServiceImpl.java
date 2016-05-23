@@ -5,7 +5,6 @@ import com.thirdpartpay.common.model.CustomerExample;
 import com.thirdpartpay.common.model.customer.MultiDao;
 import com.thirdpartpay.common.service.customer.ICustomerDisplayService;
 import com.thirdpartpay.common.service.customer.ICustomerService;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +21,7 @@ import java.util.Map;
 public class CustomerDisplayServiceImpl implements ICustomerDisplayService {
 
     private static final DecimalFormat df = new DecimalFormat("#.00");
-    private static Logger _log = Logger.getLogger(CustomerDisplayServiceImpl.class);
+
     @Autowired
     private ICustomerService customerService;
 
@@ -36,11 +35,9 @@ public class CustomerDisplayServiceImpl implements ICustomerDisplayService {
 
         CustomerExample customerExample = new CustomerExample();
         customerExample.or().andCityIsNotNull().andCountryIsNotNull();
-
         List<Customer> customers = customerService.selectByExample(customerExample);
-        /**
-         * County: <City: sum>
-         */
+
+        //统计每个国家、每个城市的总人数，<County, <City, sum>>
         int total = 0;
         Map<String, Map<String, Integer>> countryAll = new HashMap<>();
         Map<String, Integer> cityAll;
@@ -96,6 +93,13 @@ public class CustomerDisplayServiceImpl implements ICustomerDisplayService {
         return MultiDao.getMaps(multiDaoList);
     }
 
+    /**
+     * 计算地域人口数 的百分比，并保留精度到 小数点后两位
+     *
+     * @param total
+     * @param sumNest
+     * @return
+     */
     private double getPrettyFormat(double total, double sumNest) {
         return 100 * Double.valueOf(df.format(sumNest / total));
     }

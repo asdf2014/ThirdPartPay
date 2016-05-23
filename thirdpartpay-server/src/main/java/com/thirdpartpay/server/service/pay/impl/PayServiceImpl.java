@@ -18,6 +18,13 @@ import java.util.*;
 @Service("payService")
 public class PayServiceImpl implements IPayService {
 
+    /**
+     * 控制从过去第几天 开始统计，例如，
+     * index=6, date=2016-5-23 ，则统计范围：2016-5-23~2016-5-27
+     * index=6, date=2016-5-23 ，则统计范围：2016-5-22~2016-5-26
+     */
+    private static final int index = 6;
+
     @Autowired
     private CustomerAccountMapper customerAccountMapper;
 
@@ -34,21 +41,30 @@ public class PayServiceImpl implements IPayService {
         if (origin.getCustomerId() == null || aim.getCustomerId() == null) {
             return false;
         }
-
+        //从源账号里面扣除 money
         if (!reduceOrigin(origin.getCustomerId(), new BigInteger(money + ""))) {
             return false;
         }
+        //往目标账号里面增加 money
         if (!addAim(aim.getCustomerId(), new BigInteger(money + ""))) {
             return false;
         }
         return true;
     }
 
+    /**
+     * 往某个账户里 充值
+     *
+     * @param aim
+     * @param money
+     * @return
+     */
     @Override
     public boolean recharge(Customer aim, Long money) {
         if (aim.getCustomerId() == null) {
             return false;
         }
+        //依据 账号ID，查找客户
         Integer aimID = aim.getCustomerId();
         CustomerAccountExample customerAccountExample = new CustomerAccountExample();
         customerAccountExample.or().andCustomerIdEqualTo(aimID);
@@ -61,6 +77,7 @@ public class PayServiceImpl implements IPayService {
         if (accountId == null) {
             return false;
         }
+        //查看账户余额
         Long remain = accountMapper.selectByPrimaryKey(accountId).getRemain();
         if (remain == null) {
             remain = 0L;
@@ -70,11 +87,78 @@ public class PayServiceImpl implements IPayService {
         account.setModifyDate(new Date());
         account.setRemain(remain + money.longValue());
 
+        //完成最终的扣除动作
         AccountExample accountExample = new AccountExample();
         accountExample.or().andAccountIdEqualTo(accountId);
         accountMapper.updateByExample(account, accountExample);
         return true;
 
+    }
+
+    /**
+     * 先从源账户扣除 money
+     *
+     * @param customerId
+     * @param money
+     * @return
+     */
+    private boolean reduceOrigin(Integer customerId, BigInteger money) {
+        Integer accountId = customerAccountMapper.selectByPrimaryKey(customerId).getAccountId();
+        //查不到客户
+        if (accountId == null || accountId <= 0) {
+            return false;
+        }
+        Long remain = accountMapper.selectByPrimaryKey(accountId).getRemain();
+        //账户余额不足
+        if (remain == null || new BigInteger(remain + "").compareTo(money) == -1) {
+            return false;
+        }
+        //完成余额扣除
+        Account account = new Account();
+        account.setAccountId(accountId);
+        account.setModifyDate(new Date());
+        account.setRemain(remain - money.longValue());
+
+        AccountExample accountExample = new AccountExample();
+        accountExample.or().andAccountIdEqualTo(accountId);
+        accountMapper.updateByExample(account, accountExample);
+        return true;
+    }
+
+    /**
+     * 后往目标账户增加 money
+     *
+     * @param customerId
+     * @param money
+     * @return
+     */
+    private boolean addAim(Integer customerId, BigInteger money) {
+        //依据 账号ID，查找客户
+        CustomerAccountExample customerAccountExample = new CustomerAccountExample();
+        customerAccountExample.or().andCustomerIdEqualTo(customerId);
+        List<CustomerAccount> customerAccounts = customerAccountMapper.selectByExample(customerAccountExample);
+        //查不到客户
+        if (customerAccounts == null || customerAccounts.size() == 0) {
+            return false;
+        }
+        Integer accountId = customerAccounts.get(0).getAccountId();
+        if (accountId == null || accountId <= 0) {
+            return false;
+        }
+        Long remain = accountMapper.selectByPrimaryKey(accountId).getRemain();
+        //账户余额不足
+        if (remain == null) {
+            remain = 0L;
+        }
+        Account account = new Account();
+        account.setAccountId(accountId);
+        account.setModifyDate(new Date());
+        account.setRemain(remain + money.longValue());
+        //完成最终的增加 money的动作
+        AccountExample accountExample = new AccountExample();
+        accountExample.or().andAccountIdEqualTo(accountId);
+        accountMapper.updateByExample(account, accountExample);
+        return true;
     }
 
     /**
@@ -85,7 +169,6 @@ public class PayServiceImpl implements IPayService {
     @Override
     public List<Long> businessRecoder() {
 
-        int index = 6;
         BusinessRecoderExample businessRecoderExample = new BusinessRecoderExample();
         // 取出过去一周内的交易记录
         businessRecoderExample.or().andStartTimeBetween(TimeUtils.pastWeekStart(index), TimeUtils.yesterdayEnd(index - 7));
@@ -96,17 +179,15 @@ public class PayServiceImpl implements IPayService {
         }
         List<Long> result = new LinkedList<>();
         List<BusinessRecoder> businessRecoderList = businessRecoderMapper.selectByExample(businessRecoderExample);
-
+        //判断是否能找到，过去一周内交易记录
         if (businessRecoderList == null || businessRecoderList.size() == 0) {
             return result;
         }
-
-        long sum = 0L;
+        //找到交易记录
         for (BusinessRecoder businessRecoder : businessRecoderList) {
-
+            //按照时间进行统计，将过去一周的数据，统计出每天的总交易额
             Long startTime = businessRecoder.getStartTime().getTime();
             Long money = businessRecoder.getMoney();
-            sum += money;
             if (startTime >= TimeUtils.pastWeekStart(index).getTime()
                     && startTime < TimeUtils.yesterdayEnd(index - 1).getTime()) {
                 if (week.containsKey(0)) {
@@ -158,76 +239,10 @@ public class PayServiceImpl implements IPayService {
                 }
             }
         }
+        //只保留过去 7天，每天对应的 交易总额
         for (Integer day : week.keySet()) {
-//            result.add(day, (long) (week.get(day) / (double) sum) * 100);
             result.add(day, week.get(day));
         }
         return result;
     }
-
-    /**
-     * 先从源账户扣除 money
-     *
-     * @param customerId
-     * @param money
-     * @return
-     */
-    private boolean reduceOrigin(Integer customerId, BigInteger money) {
-        Integer accountId = customerAccountMapper.selectByPrimaryKey(customerId).getAccountId();
-        //查不到客户
-        if (accountId == null || accountId <= 0) {
-            return false;
-        }
-        Long remain = accountMapper.selectByPrimaryKey(accountId).getRemain();
-        //账户余额不足
-        if (remain == null || new BigInteger(remain + "").compareTo(money) == -1) {
-            return false;
-        }
-        //完成余额扣除
-        Account account = new Account();
-        account.setAccountId(accountId);
-        account.setModifyDate(new Date());
-        account.setRemain(remain - money.longValue());
-
-        AccountExample accountExample = new AccountExample();
-        accountExample.or().andAccountIdEqualTo(accountId);
-        accountMapper.updateByExample(account, accountExample);
-        return true;
-    }
-
-    /**
-     * 后往目标账户增加 money
-     *
-     * @param customerId
-     * @param money
-     * @return
-     */
-    private boolean addAim(Integer customerId, BigInteger money) {
-        CustomerAccountExample customerAccountExample = new CustomerAccountExample();
-        customerAccountExample.or().andCustomerIdEqualTo(customerId);
-        List<CustomerAccount> customerAccounts = customerAccountMapper.selectByExample(customerAccountExample);
-        //查不到客户
-        if (customerAccounts == null || customerAccounts.size() == 0) {
-            return false;
-        }
-        Integer accountId = customerAccounts.get(0).getAccountId();
-        if (accountId == null || accountId <= 0) {
-            return false;
-        }
-        Long remain = accountMapper.selectByPrimaryKey(accountId).getRemain();
-        //账户余额不足
-        if (remain == null) {
-            remain = 0l;
-        }
-        Account account = new Account();
-        account.setAccountId(accountId);
-        account.setModifyDate(new Date());
-        account.setRemain(remain + money.longValue());
-
-        AccountExample accountExample = new AccountExample();
-        accountExample.or().andAccountIdEqualTo(accountId);
-        accountMapper.updateByExample(account, accountExample);
-        return true;
-    }
-
 }

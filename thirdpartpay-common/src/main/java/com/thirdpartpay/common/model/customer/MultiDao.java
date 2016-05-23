@@ -1,7 +1,5 @@
 package com.thirdpartpay.common.model.customer;
 
-import com.alibaba.fastjson.JSON;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -9,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 用户地域分布图 实体类，存放必需的几个参数
+ * <p>
  * Created by Benedict Jin on 2016/4/16.
  */
 public class MultiDao implements Serializable {
@@ -41,12 +41,14 @@ public class MultiDao implements Serializable {
         this.colorNest = colorNest;
     }
 
-    public static String getJsonString(List<MultiDao> multiDaoList) {
-        List<Map<String, Object>> result = getMaps(multiDaoList);
-        return JSON.toJSONString(result);
-    }
-
+    /**
+     * 封装为前端绘 用户地域分布图 所需的 数据格式
+     *
+     * @param multiDaoList
+     * @return
+     */
     public static List<Map<String, Object>> getMaps(List<MultiDao> multiDaoList) {
+
         List<Map<String, Object>> result = new LinkedList();
         MultiDao multiDao;
         for (int i = 0; i < multiDaoList.size(); i++) {
