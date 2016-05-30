@@ -170,8 +170,9 @@ public class PayServiceImpl implements IPayService {
     public List<Long> businessRecoder() {
 
         BusinessRecoderExample businessRecoderExample = new BusinessRecoderExample();
-        // 取出过去一周内的交易记录
-        businessRecoderExample.or().andStartTimeBetween(TimeUtils.pastWeekStart(index), TimeUtils.yesterdayEnd(index - 7));
+        // 取出过去一周内的交易记录，即（6天前的最开始一秒，到今天的最后一秒）
+        businessRecoderExample.or().andStartTimeBetween(TimeUtils.pastWeekStart(index),
+                TimeUtils.yesterdayEnd(index - 7));
 
         Map<Integer, Long> week = new HashMap<>();
         for (int i = 0; i < 7; i++) {
@@ -188,6 +189,7 @@ public class PayServiceImpl implements IPayService {
             //按照时间进行统计，将过去一周的数据，统计出每天的总交易额
             Long startTime = businessRecoder.getStartTime().getTime();
             Long money = businessRecoder.getMoney();
+            //6天前的最开始一秒，到 6天前的最后一秒
             if (startTime >= TimeUtils.pastWeekStart(index).getTime()
                     && startTime < TimeUtils.yesterdayEnd(index - 1).getTime()) {
                 if (week.containsKey(0)) {
@@ -195,6 +197,7 @@ public class PayServiceImpl implements IPayService {
                 } else {
                     week.put(0, money);
                 }
+                //5天前
             } else if (startTime >= TimeUtils.pastWeekStart(index - 1).getTime()
                     && startTime < TimeUtils.yesterdayEnd(index - 2).getTime()) {
                 if (week.containsKey(1)) {
@@ -202,6 +205,7 @@ public class PayServiceImpl implements IPayService {
                 } else {
                     week.put(1, money);
                 }
+                //4天前
             } else if (startTime >= TimeUtils.pastWeekStart(index - 2).getTime()
                     && startTime < TimeUtils.yesterdayEnd(index - 3).getTime()) {
                 if (week.containsKey(2)) {
@@ -209,6 +213,7 @@ public class PayServiceImpl implements IPayService {
                 } else {
                     week.put(2, money);
                 }
+                //3天前
             } else if (startTime >= TimeUtils.pastWeekStart(index - 3).getTime()
                     && startTime < TimeUtils.yesterdayEnd(index - 4).getTime()) {
                 if (week.containsKey(3)) {
@@ -216,6 +221,7 @@ public class PayServiceImpl implements IPayService {
                 } else {
                     week.put(3, money);
                 }
+                //2天前
             } else if (startTime >= TimeUtils.pastWeekStart(index - 4).getTime()
                     && startTime < TimeUtils.yesterdayEnd(index - 5).getTime()) {
                 if (week.containsKey(4)) {
@@ -223,6 +229,7 @@ public class PayServiceImpl implements IPayService {
                 } else {
                     week.put(4, money);
                 }
+                //1天前
             } else if (startTime >= TimeUtils.pastWeekStart(index - 5).getTime()
                     && startTime < TimeUtils.yesterdayEnd(index - 6).getTime()) {
                 if (week.containsKey(5)) {
@@ -230,6 +237,7 @@ public class PayServiceImpl implements IPayService {
                 } else {
                     week.put(5, money);
                 }
+                //当天
             } else if (startTime >= TimeUtils.pastWeekStart(index - 6).getTime()
                     && startTime < TimeUtils.yesterdayEnd(index - 7).getTime()) {
                 if (week.containsKey(6)) {
