@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /classes
 # Created by .ignore support plugin (hsz.mobi)
 ### Example user template template
@@ -71,6 +72,8 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 ### Java template
+=======
+>>>>>>> a225d36c80c5ef15d706c6634301b90fee76b538
 *.class
 
 # Mobile Tools for Java (J2ME)
@@ -83,4 +86,7 @@ buildNumber.properties
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+<<<<<<< HEAD
 
+=======
+>>>>>>> a225d36c80c5ef15d706c6634301b90fee76b538
