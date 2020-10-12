@@ -33,7 +33,7 @@
         <maven.eclipse.plugin.version>2.9</maven.eclipse.plugin.version>
 
         <!-- junit -->
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
 
         <jackson.core.version>2.7.3</jackson.core.version>
 
